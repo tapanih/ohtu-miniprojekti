@@ -42,6 +42,7 @@ public class DBlukuvinkkiDAO {
                 // kirja.setUserName(rs.getString("user_username"));
                 kirja.setOtsikko(rs.getString("title"));
                 kirja.setKirjailija(rs.getString("author"));
+                kirja.setSivut(rs.getInt("pageCount"));
                 books.add(kirja);
             }
             c.close();

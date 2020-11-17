@@ -5,15 +5,17 @@ public class Kirja {
     
     private String otsikko;
     private String kirjailija;
+    private int sivumaara;
 
 
     public Kirja(){
-        
+
     }
     
-    public Kirja(String otsikko, String kirjailija) {
+    public Kirja(String otsikko, String kirjailija, int sivut) {
         this.otsikko = otsikko;
         this.kirjailija = kirjailija;
+        this.sivumaara = sivut;
     }
 
     public String getOtsikko() {
@@ -32,9 +34,17 @@ public class Kirja {
         this.kirjailija = kirjailija;
     }
 
+    public int getSivut(){
+        return sivumaara;
+    }
+
+    public void setSivut(int sivut){
+        this.sivumaara = sivut;
+    }
+
     @Override
     public String toString() {
-        return otsikko + ", " + kirjailija;
+        return otsikko + ", " + kirjailija + ", " + sivumaara;
     }
     
 }
