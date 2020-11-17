@@ -16,11 +16,6 @@ public class Kirja {
         this.kirjailija = kirjailija;
         this.sivumaara = sivut;
     }
-    
-    public Kirja(String otsikko, String kirjailija) {
-        this.otsikko = otsikko;
-        this.kirjailija = kirjailija;
-    }
 
     public String getOtsikko() {
         return otsikko;
@@ -28,6 +23,10 @@ public class Kirja {
 
     public String getKirjailija() {
         return kirjailija;
+    }
+    
+    public int getSivut(){
+        return sivumaara;
     }
 
     public void setOtsikko(String otsikko) {
@@ -37,10 +36,7 @@ public class Kirja {
     public void setKirjailija(String kirjailija) {
         this.kirjailija = kirjailija;
     }
-
-    public int getSivut(){
-        return sivumaara;
-    }
+    
 
     public void setSivut(int sivut){
         this.sivumaara = sivut;

@@ -1,7 +1,6 @@
 
 package gui;
 
-import dao.lukuvinkkiDatabase;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 import dao.lukuvinkkiDatabase;
+import java.sql.SQLException;
 import logiikka.lukuvinkkiService;
 
 public class GUI extends Application {
@@ -70,8 +70,11 @@ public class GUI extends Application {
         Label kirjailija = new Label("Kirjailija: ");
         TextField kirjailijaInput = new TextField();
         kirjailijaInput.setMaxWidth(350);
+        Label sivumaara = new Label("Sivumaara: ");
+        TextField sivumaaraInput = new TextField();
+        sivumaaraInput.setMaxWidth(100);
         
-        lisaaAsettelu.getChildren().addAll(luoUusiLukuvinkki, otsikko, otsikkoInput, kirjailija, kirjailijaInput, lisaa);
+        lisaaAsettelu.getChildren().addAll(luoUusiLukuvinkki, otsikko, otsikkoInput, kirjailija, kirjailijaInput, sivumaara, sivumaaraInput, lisaa);
         
         lisaa.setOnAction(e -> nayttamo.setScene(paavalikko));
         
