@@ -22,6 +22,10 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:29.0-jre'
+
+    // https://mvnrepository.com/artifact/org.webjars.npm/sqlite3
+    compile group: 'org.webjars.npm', name: 'sqlite3', version: '3.1.13'
+
 }
 
 application {
