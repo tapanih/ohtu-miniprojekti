@@ -17,6 +17,11 @@ public class Kirja {
         this.kirjailija = kirjailija;
         this.sivumaara = sivut;
     }
+    
+    public Kirja(String otsikko, String kirjailija) {
+        this.otsikko = otsikko;
+        this.kirjailija = kirjailija;
+    }
 
     public String getOtsikko() {
         return otsikko;
