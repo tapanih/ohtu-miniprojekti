@@ -5,6 +5,11 @@ public class Kirja {
     
     private String otsikko;
     private String kirjailija;
+
+
+    public Kirja(){
+        
+    }
     
     public Kirja(String otsikko, String kirjailija) {
         this.otsikko = otsikko;

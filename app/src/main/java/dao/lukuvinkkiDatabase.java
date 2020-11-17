@@ -99,7 +99,7 @@ public class lukuvinkkiDatabase {
         try {
             Connection connection = connect();
 
-            PreparedStatement createBookTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS balance ("
+            PreparedStatement createBookTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS books ("
                     + "id INTEGER PRIMARY KEY,"
                     + "user_username varchar(100),"
                     + "title  varchar(100), "
