@@ -24,13 +24,13 @@ public class lukuvinkkiService {
         dbLukuvinkkiDAO = new DBlukuvinkkiDAO(db);
     }
 
-    public boolean addBook( String title, String author, int pageCount ) throws SQLException {
+    public boolean addBook( String title, String author, int pageCount ) throws Exception {
 
         Kirja kirja = new Kirja(title, author, pageCount);
      
         try {
           
-                DBlukuvinkkiDAO.addBook(kirja);
+                dbLukuvinkkiDAO.addBook(kirja);
                 return true;
 
         } catch (SQLException ex) {

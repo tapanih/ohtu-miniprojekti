@@ -47,9 +47,9 @@ public class DBlukuvinkkiDAO {
                     "INSERT OR REPLACE INTO books (title, author, pageCount) VALUES (?,?, ?);"
             );
 
-            statement.setString(2, kirja.getOtsikko());
-            statement.setString(3,kirja.getKirjailija());
-            statement.setInt(4, kirja.getSivut());
+            statement.setString(1, kirja.getOtsikko());
+            statement.setString(2,kirja.getKirjailija());
+            statement.setInt(3, kirja.getSivut());
             statement.executeUpdate();
             statement.close();
             c.close();

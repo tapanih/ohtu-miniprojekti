@@ -29,7 +29,7 @@ public class GUI extends Application {
     @Override
     public void init() throws SQLException, Exception {
         db = new lukuvinkkiDatabase("lukuvinkki.db");
-        // service = new lukuvinkkiService(database, username);
+        service = new lukuvinkkiService(db);
 
     }
     @Override
