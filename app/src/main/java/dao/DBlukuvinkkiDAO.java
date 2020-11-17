@@ -24,60 +24,87 @@ public class DBlukuvinkkiDAO {
         /**
      * DBlukuvinkkiDAO class constructor. The database is initialized in the
      * constructor.
-     *
      * @param db database given as a parameter
      */
     public DBlukuvinkkiDAO(lukuvinkkiDatabase db){
         this.db = db;
         db.initializeDatabase();
-        Statement stmt = null;
-        // books = new ArrayList<>();
-        try {
-            c = db.connect();
-            db = new lukuvinkkiDatabase(database);
-            stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery("Select*FROM books");
-            while (rs.next()) {
-                Kirja kirja= new Kirja();
-                // kirja.setUserName(rs.getString("user_username"));
-                kirja.setOtsikko(rs.getString("title"));
-                kirja.setKirjailija(rs.getString("author"));
-                kirja.setSivut(rs.getInt("pageCount"));
-                books.add(kirja);
-            }
-            c.close();
-            rs.close();
-            stmt.close();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
 
     }
 
+        /**
+     * 
+     *
+     * @param Kirja object
+     * @throws SQLException if saving the book object fails
+     */
+ 
+    public void addBook(Kirja kirja) throws SQLException, Exception {
+        c = db.connect();
+
+        try {
+            PreparedStatement statement = c.prepareStatement(
+                    "INSERT OR REPLACE INTO books (title, author, pageCount) VALUES (?,?, ?);"
+            );
+
+            statement.setString(2, kirja.getOtsikko());
+            statement.setString(3,kirja.getKirjailija());
+            statement.setInt(4, kirja.getSivut());
+            statement.executeUpdate();
+            statement.close();
+            c.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+        /**
+     *
+     * @return returns a list of categories created by the given user
+     * @throws SQLException when retrieving data from the database fails
+     */
+
+  
+    public List<Kirja> getAllBooks() throws SQLException {
+        c = db.connect();
+        try {
+            PreparedStatement stmt = c.prepareStatement("SELECT*FROM books");
+            
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                 Kirja kirja = new Kirja(rs.getString("title").trim(), rs.getString("author"), rs.getInt("pageCount"));
+                 books.add(kirja);
+            }
+            stmt.close();
+            rs.close();
+        } catch (Throwable t) {
+        } finally {
+            c.close();
+        }
+        return books;
+    }
 
     /**
-     * Finds the most recent balance entry created by the user to a list
-     *
-     * @param username user's username
-     * @return the logged in user's book by author
+     * 
+     * Retrieves all the books in the database
+     * @return a book by title
      * @throws SQLException if retrieving data from the database fails
      *
      */
-    public Kirja findOne(String username, String author) throws SQLException {
+    public Kirja findOne(String title) throws SQLException {
         c = db.connect();
-        PreparedStatement stmt = c.prepareStatement("SELECT*FROM books WHERE author = ? AND user_username = ?");
-        stmt.setString(1, author);
+        PreparedStatement stmt = c.prepareStatement("SELECT*FROM books WHERE title = ?");
+        stmt.setString(1, title);
         rs = stmt.executeQuery();
         boolean findOne = rs.next();
         if (!findOne) {
             return null;
         } else {
-          
-            Kirja b = new Kirja(rs.getString("user_username"), rs.getString("author"));
+            Kirja book = new Kirja(rs.getString("title"), rs.getString("author"), rs.getInt("pageCount"));
             stmt.close();
             rs.close();
             c.close();
-            return b;
+            return book;
         }
     }
     }

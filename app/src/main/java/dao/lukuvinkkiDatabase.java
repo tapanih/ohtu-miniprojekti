@@ -21,8 +21,6 @@ public class lukuvinkkiDatabase {
      * constructor without parameters
      *
      * @throws SQLException when connection fails
-     *
-     * 
      */
 
     public lukuvinkkiDatabase(){
@@ -55,7 +53,7 @@ public class lukuvinkkiDatabase {
     public boolean initializeDatabase() {
         try {
           
-            initializeUser();
+            initializeBookTable();
         } catch (Throwable t) {
 
             System.out.println(t.getMessage());
@@ -64,48 +62,20 @@ public class lukuvinkkiDatabase {
         return true;
     }
 
-        /**
-     * The method initializeUser will create the table user if it does not
-     * already exist in the database
-     */
-    public void initializeUser() {
-        try {
-            Connection connection = connect();
-
-            PreparedStatement createUserTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS user ("
-                    + "id INTEGER PRIMARY KEY, "
-                    + "username VARCHAR(100),"
-                    + "password VARCHAR(100),"
-                    + "UNIQUE(username, password)"
-                    + ");"
-            );
-            createUserTable.execute();
-            createUserTable.close();
-
-            connection.close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        finally{ 
-            System.out.println("finally block executed"); 
-        } 
-    }
 
      /**
-     * The method initializeBalance will create the table Balance if it does not
+     * The method initializeBookTable will create the table books if it does not
      * already exist in the database
      */
-    public void initializeBookEntry() {
+    public void initializeBookTable() {
         try {
             Connection connection = connect();
 
             PreparedStatement createBookTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS books ("
                     + "id INTEGER PRIMARY KEY,"
-                    + "user_username varchar(100),"
                     + "title  varchar(100), "
                     + "author  varchar(100), "
-                    + "pageCount  integer, "
-                    + "FOREIGN KEY (user_username) REFERENCES User(username));"
+                    + "pageCount  integer; "
             );
             createBookTable.execute();
             createBookTable.close();

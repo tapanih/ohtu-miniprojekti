@@ -7,7 +7,6 @@ public class Kirja {
     private String kirjailija;
     private int sivumaara;
 
-
     public Kirja(){
 
     }

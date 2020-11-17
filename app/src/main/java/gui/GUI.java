@@ -1,6 +1,7 @@
 
 package gui;
 
+import dao.lukuvinkkiDatabase;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,6 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
+import dao.lukuvinkkiDatabase;
+import logiikka.lukuvinkkiService;
 
 public class GUI extends Application {
     
@@ -20,7 +23,15 @@ public class GUI extends Application {
     private Scene lukuvinkinLisays;
     
     private Stage nayttamo;
+    private lukuvinkkiDatabase db;
+    private lukuvinkkiService service;
 
+    @Override
+    public void init() throws SQLException, Exception {
+        db = new lukuvinkkiDatabase("lukuvinkki.db");
+        // service = new lukuvinkkiService(database, username);
+
+    }
     @Override
     public void start(Stage stage) {
         
