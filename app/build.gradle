@@ -24,13 +24,15 @@ dependencies {
     implementation 'com.google.guava:guava:29.0-jre'
 
     // https://mvnrepository.com/artifact/org.webjars.npm/sqlite3
-    compile group: 'org.webjars.npm', name: 'sqlite3', version: '3.1.13'
+    implementation 'org.webjars.npm:sqlite3:3.1.13'
+
+    implementation 'org.webjars.npm:gauge:2.7.3'
 
 }
 
 application {
     // Define the main class for the application.
-    mainClass = 'logiikka.Main'
+    mainClassName = 'logiikka.Main'
 }
 
 checkstyle {
