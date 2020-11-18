@@ -60,23 +60,36 @@ public class GUI extends Application {
     
     private Scene lukuvinkinLisays() {
         VBox lisaaAsettelu = new VBox(10);
-        lisaaAsettelu.setPadding(new Insets(10,10,10,10));
+        lisaaAsettelu.setPadding(new Insets(10, 10, 10, 10));
         
         Label luoUusiLukuvinkki = new Label("Luo uusi lukuvinkki");
         Button lisaa = new Button("Lisää!");
-        Label otsikko = new Label("Otsikko: ");
+        Label otsikkoLabel = new Label("Otsikko: ");
         TextField otsikkoInput = new TextField();
         otsikkoInput.setMaxWidth(350);
-        Label kirjailija = new Label("Kirjailija: ");
+        Label kirjailijaLabel = new Label("Kirjailija: ");
         TextField kirjailijaInput = new TextField();
         kirjailijaInput.setMaxWidth(350);
-        Label sivumaara = new Label("Sivumaara: ");
+        Label sivumaaraLabel = new Label("Sivumaara: ");
         TextField sivumaaraInput = new TextField();
+
+        sivumaaraInput.setTextFormatter((new TextFormatter<>(new IntegerStringConverter())));
         sivumaaraInput.setMaxWidth(100);
         
-        lisaaAsettelu.getChildren().addAll(luoUusiLukuvinkki, otsikko, otsikkoInput, kirjailija, kirjailijaInput, sivumaara, sivumaaraInput, lisaa);
+        lisaaAsettelu.getChildren().addAll(luoUusiLukuvinkki, otsikkoLabel, otsikkoInput, kirjailijaLabel,
+            kirjailijaInput, sivumaaraLabel, sivumaaraInput, lisaa);
         
-        lisaa.setOnAction(e -> nayttamo.setScene(paavalikko));
+        lisaa.setOnAction(e -> {
+            String otsikko = otsikkoInput.getText();
+            String kirjailija = kirjailijaInput.getText();
+            int sivumaara = Integer.parseInt(sivumaaraInput.getText());
+            try {
+                service.addBook(otsikko, kirjailija, sivumaara);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            nayttamo.setScene(paavalikko);
+        });
         
         return new Scene(lisaaAsettelu, ikkunanLeveys, ikkunanKorkeus);
     }
