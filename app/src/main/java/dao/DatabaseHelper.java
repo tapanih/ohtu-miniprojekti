@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import logiikka.Kirja;
 
-public class DBlukuvinkkiDAO {
+public class DatabaseHelper {
     
     private Database db;
     private List<Kirja> books = new ArrayList<>();
@@ -24,7 +24,7 @@ public class DBlukuvinkkiDAO {
      * constructor.
      * @param db database given as a parameter
      */
-    public DBlukuvinkkiDAO(Database db) {
+    public DatabaseHelper(Database db) {
         this.db = db;
     }
 

@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import logiikka.Kirja;
 
-public interface LukuvinkkiInterface {
+public interface LukuvinkkiDAO {
 
     /**
      * @param kirja

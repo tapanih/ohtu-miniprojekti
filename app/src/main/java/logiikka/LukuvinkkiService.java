@@ -2,28 +2,28 @@ package logiikka;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import dao.DBlukuvinkkiDAO;
-import dao.LukuvinkkiInterface;
+import dao.DatabaseHelper;
 import java.util.List;
+import dao.LukuvinkkiDAO;
 
-public class LukuvinkkiService implements LukuvinkkiInterface {
+public class LukuvinkkiService implements LukuvinkkiDAO {
     
-    private DBlukuvinkkiDAO dbLukuvinkkiDAO;
+    private DatabaseHelper helper;
 
     /**
      * the constructor for lukuvinkkiService
      *
-     * @param dbDAO
+     * @param helper
      * @throws SQLException when connection to the database fails
      */
-    public LukuvinkkiService(DBlukuvinkkiDAO dbDAO) throws SQLException {
-        this.dbLukuvinkkiDAO = dbDAO;
+    public LukuvinkkiService(DatabaseHelper helper) throws SQLException {
+        this.helper = helper;
     }
 
     @Override
     public boolean addBook(Kirja kirja) throws SQLException, Exception {
         try {
-            dbLukuvinkkiDAO.addBook(kirja);
+            helper.addBook(kirja);
             return true;
         } catch (SQLException ex) {
             System.out.println("createExpense error message is..." + ex.getMessage());
@@ -39,7 +39,7 @@ public class LukuvinkkiService implements LukuvinkkiInterface {
     @Override
     public List<Kirja> getAllBooks() throws SQLException {
         try {
-            return dbLukuvinkkiDAO.getAllBooks();
+            return helper.getAllBooks();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return new ArrayList<>();

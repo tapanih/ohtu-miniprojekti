@@ -1,7 +1,7 @@
 
 package gui;
 
-import dao.DBlukuvinkkiDAO;
+import dao.DatabaseHelper;
 import javafx.application.Application;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
@@ -18,12 +18,12 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
-import dao.LukuvinkkiInterface;
 import dao.Database;
 import java.sql.SQLException;
 import javafx.util.converter.IntegerStringConverter;
 import logiikka.Kirja;
 import logiikka.LukuvinkkiService;
+import dao.LukuvinkkiDAO;
 
 public class GUI extends Application {
     
@@ -35,13 +35,13 @@ public class GUI extends Application {
     private Scene lukuvinkkienListaus;
     
     private Stage nayttamo;
-    private LukuvinkkiInterface service;
+    private LukuvinkkiDAO service;
 
     @Override
     public void init() throws SQLException, Exception {
         Database db = new Database("lukuvinkki.db");
         db.initializeDatabase();
-        DBlukuvinkkiDAO dbDAO = new DBlukuvinkkiDAO(db);
+        DatabaseHelper dbDAO = new DatabaseHelper(db);
         service = new LukuvinkkiService(dbDAO);
 
     }

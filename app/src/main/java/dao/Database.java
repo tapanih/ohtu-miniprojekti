@@ -23,7 +23,6 @@ public class Database {
      * constructor without parameters
      *
      */
-
     public Database() {
         this.dbName = "lukuvinkki.db";
     } 
@@ -34,7 +33,6 @@ public class Database {
      * @return connection to the database
      * @throws java.sql.SQLException when the connection to the database fails
      */
-
     public Connection connect() throws SQLException {
         Connection connection = null;
         try {
