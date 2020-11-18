@@ -3,18 +3,24 @@ package gui;
 
 import dao.DBlukuvinkkiDAO;
 import javafx.application.Application;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
-import dao.Database;
 import dao.LukuvinkkiInterface;
+import dao.Database;
 import java.sql.SQLException;
-import javafx.scene.control.TextFormatter;
 import javafx.util.converter.IntegerStringConverter;
 import logiikka.Kirja;
 import logiikka.LukuvinkkiService;
@@ -26,6 +32,7 @@ public class GUI extends Application {
     
     private Scene paavalikko;
     private Scene lukuvinkinLisays;
+    private Scene lukuvinkkienListaus;
     
     private Stage nayttamo;
     private LukuvinkkiInterface service;
@@ -40,29 +47,53 @@ public class GUI extends Application {
     }
     
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws SQLException {
         
         nayttamo = stage;
         nayttamo.setTitle("Lukuvinkkikirjanpito");
         paavalikko = paavalikko();
         lukuvinkinLisays = lukuvinkinLisays();
+        lukuvinkkienListaus = lukuvinkkienListaus();
         
         nayttamo.setScene(paavalikko);
         nayttamo.show();
     }
     
     private Scene paavalikko() {
-        
+
+        Button listaaLukuvinkit = new Button();
+        listaaLukuvinkit.setText("Listaa kirjat");
+
         Button lisaaLukuvinkki = new Button();
         lisaaLukuvinkki.setText("Lisää kirja");
+
         
         VBox valikko = new VBox(10);
-        valikko.getChildren().add(lisaaLukuvinkki);
+        valikko.getChildren().addAll(listaaLukuvinkit, lisaaLukuvinkki);
         valikko.setAlignment(Pos.CENTER);
-        
+
+        listaaLukuvinkit.setOnAction(e -> nayttamo.setScene(lukuvinkkienListaus));
         lisaaLukuvinkki.setOnAction(e -> nayttamo.setScene(lukuvinkinLisays));
         
         return new Scene(valikko, ikkunanLeveys, ikkunanKorkeus);
+    }
+
+    private Scene lukuvinkkienListaus() throws SQLException {
+        ObservableList<Kirja> kirjaLista = FXCollections.observableArrayList(service.getAllBooks());
+        ListView<Kirja> kirjaListaus = new ListView<>(kirjaLista);
+        kirjaListaus.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(Kirja kirja, boolean tyhja) {
+                super.updateItem(kirja, tyhja);
+
+                if (tyhja || kirja == null || kirja.getOtsikko() == null) {
+                    setText(null);
+                } else {
+                    setText(kirja.getOtsikko());
+                }
+            }
+        });
+        return new Scene(kirjaListaus);
     }
     
     private Scene lukuvinkinLisays() {

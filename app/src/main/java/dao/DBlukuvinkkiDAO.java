@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import logiikka.Kirja;
 
-public class DBlukuvinkkiDAO implements LukuvinkkiInterface {
+public class DBlukuvinkkiDAO {
     
     private Database db;
     private List<Kirja> books = new ArrayList<>();
@@ -32,7 +32,6 @@ public class DBlukuvinkkiDAO implements LukuvinkkiInterface {
      * @param kirja
      * @throws SQLException if saving the book object fails
      */
-    @Override
     public boolean addBook(Kirja kirja) throws SQLException, Exception {
         c = db.connect();
         try {
@@ -45,6 +44,7 @@ public class DBlukuvinkkiDAO implements LukuvinkkiInterface {
             statement.setInt(3, kirja.getSivut());
             statement.executeUpdate();
             statement.close();
+            rs.close();
             c.close();
             
         } catch (Exception e) {
@@ -57,19 +57,18 @@ public class DBlukuvinkkiDAO implements LukuvinkkiInterface {
      * @return returns a list of categories created by the given user
      * @throws SQLException when retrieving data from the database fails
      */
-    @Override
     public List<Kirja> getAllBooks() throws SQLException {
+        List<Kirja> books = new ArrayList<>();
         c = db.connect();
         try {
             PreparedStatement stmt = c.prepareStatement("SELECT*FROM books");
-            
+
             rs = stmt.executeQuery();
             while (rs.next()) {
                 Kirja kirja = new Kirja(rs.getString("title").trim(), rs.getString("author"), rs.getInt("pageCount"));
                 books.add(kirja);
             }
             stmt.close();
-            rs.close();
         } catch (Throwable t) {
         } finally {
             c.close();
@@ -84,7 +83,6 @@ public class DBlukuvinkkiDAO implements LukuvinkkiInterface {
      * @throws SQLException if retrieving data from the database fails
      *
      */
-    @Override
     public Kirja findOne(String title) throws SQLException {
         c = db.connect();
         PreparedStatement stmt = c.prepareStatement("SELECT*FROM books WHERE title = ?");

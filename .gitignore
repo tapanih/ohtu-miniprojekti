@@ -6,3 +6,6 @@ build
 
 # IntelliJ IDEA workspace settings
 .idea
+
+# database file
+lukuvinkki.db

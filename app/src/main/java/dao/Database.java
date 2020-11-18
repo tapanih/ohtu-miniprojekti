@@ -75,7 +75,7 @@ public class Database {
                     + "id INTEGER PRIMARY KEY,"
                     + "title  varchar(100), "
                     + "author  varchar(100), "
-                    + "pageCount  integer; "
+                    + "pageCount  integer); "
             );
             createBookTable.execute();
             createBookTable.close();

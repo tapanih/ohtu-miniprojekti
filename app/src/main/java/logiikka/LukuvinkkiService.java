@@ -1,6 +1,7 @@
 package logiikka;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import dao.DBlukuvinkkiDAO;
 import dao.LukuvinkkiInterface;
 import java.util.List;
@@ -37,7 +38,11 @@ public class LukuvinkkiService implements LukuvinkkiInterface {
 
     @Override
     public List<Kirja> getAllBooks() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            return dbLukuvinkkiDAO.getAllBooks();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return new ArrayList<>();
+        }
     }
-
 }
