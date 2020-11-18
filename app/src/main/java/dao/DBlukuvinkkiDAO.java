@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import logiikka.Kirja;
 
-public class DBlukuvinkkiDAO {
+public class DBlukuvinkkiDAO implements LukuvinkkiInterface {
     
-    private LukuvinkkiDatabase db;
+    private Database db;
     private List<Kirja> books = new ArrayList<>();
     private String sql1 = "SELECT * FROM kirja where user_username = ?";
     private String sql2 = "SELECT * FROM kirja where author = ?";
@@ -24,16 +24,16 @@ public class DBlukuvinkkiDAO {
      * constructor.
      * @param db database given as a parameter
      */
-    public DBlukuvinkkiDAO(LukuvinkkiDatabase db) {
+    public DBlukuvinkkiDAO(Database db) {
         this.db = db;
-        db.initializeDatabase();
     }
 
     /**
      * @param kirja
      * @throws SQLException if saving the book object fails
      */
-    public void addBook(Kirja kirja) throws SQLException, Exception {
+    @Override
+    public boolean addBook(Kirja kirja) throws SQLException, Exception {
         c = db.connect();
         try {
             PreparedStatement statement = c.prepareStatement(
@@ -50,12 +50,14 @@ public class DBlukuvinkkiDAO {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return true; //Väliaikainen
     }
 
     /**
      * @return returns a list of categories created by the given user
      * @throws SQLException when retrieving data from the database fails
      */
+    @Override
     public List<Kirja> getAllBooks() throws SQLException {
         c = db.connect();
         try {
@@ -82,6 +84,7 @@ public class DBlukuvinkkiDAO {
      * @throws SQLException if retrieving data from the database fails
      *
      */
+    @Override
     public Kirja findOne(String title) throws SQLException {
         c = db.connect();
         PreparedStatement stmt = c.prepareStatement("SELECT*FROM books WHERE title = ?");
@@ -99,5 +102,3 @@ public class DBlukuvinkkiDAO {
         }
     }
 }
-
-

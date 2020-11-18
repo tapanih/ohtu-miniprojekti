@@ -1,6 +1,7 @@
 
 package gui;
 
+import dao.DBlukuvinkkiDAO;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,10 +11,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
-import dao.LukuvinkkiDatabase;
+import dao.Database;
+import dao.LukuvinkkiInterface;
 import java.sql.SQLException;
 import javafx.scene.control.TextFormatter;
 import javafx.util.converter.IntegerStringConverter;
+import logiikka.Kirja;
 import logiikka.LukuvinkkiService;
 
 public class GUI extends Application {
@@ -25,15 +28,17 @@ public class GUI extends Application {
     private Scene lukuvinkinLisays;
     
     private Stage nayttamo;
-    private LukuvinkkiDatabase db;
-    private LukuvinkkiService service;
+    private LukuvinkkiInterface service;
 
     @Override
     public void init() throws SQLException, Exception {
-        db = new LukuvinkkiDatabase("lukuvinkki.db");
-        service = new LukuvinkkiService(db);
+        Database db = new Database("lukuvinkki.db");
+        db.initializeDatabase();
+        DBlukuvinkkiDAO dbDAO = new DBlukuvinkkiDAO(db);
+        service = new LukuvinkkiService(dbDAO);
 
     }
+    
     @Override
     public void start(Stage stage) {
         
@@ -86,7 +91,8 @@ public class GUI extends Application {
             String kirjailija = kirjailijaInput.getText().trim();
             int sivumaara = Integer.parseInt(sivumaaraInput.getText().trim());
             try {
-                service.addBook(otsikko, kirjailija, sivumaara);
+                Kirja kirja = new Kirja(otsikko, kirjailija, sivumaara);
+                service.addBook(kirja);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }

@@ -2,29 +2,25 @@ package logiikka;
 
 import java.sql.SQLException;
 import dao.DBlukuvinkkiDAO;
-import dao.LukuvinkkiDatabase;
+import dao.LukuvinkkiInterface;
+import java.util.List;
 
-public class LukuvinkkiService {
+public class LukuvinkkiService implements LukuvinkkiInterface {
     
-    private LukuvinkkiDatabase db;
     private DBlukuvinkkiDAO dbLukuvinkkiDAO;
 
     /**
      * the constructor for lukuvinkkiService
      *
-     * @param datab the database given as a parameter
+     * @param dbDAO
      * @throws SQLException when connection to the database fails
      */
-    public LukuvinkkiService(LukuvinkkiDatabase datab) throws SQLException {
-        this.db = datab;
-        this.db.initializeDatabase();
-        dbLukuvinkkiDAO = new DBlukuvinkkiDAO(db);
+    public LukuvinkkiService(DBlukuvinkkiDAO dbDAO) throws SQLException {
+        this.dbLukuvinkkiDAO = dbDAO;
     }
 
-    public boolean addBook(String title, String author, int pageCount) throws Exception {
-
-        Kirja kirja = new Kirja(title, author, pageCount);
-     
+    @Override
+    public boolean addBook(Kirja kirja) throws SQLException, Exception {
         try {
             dbLukuvinkkiDAO.addBook(kirja);
             return true;
@@ -32,6 +28,16 @@ public class LukuvinkkiService {
             System.out.println("createExpense error message is..." + ex.getMessage());
             return false;
         }
+    }
+
+    @Override
+    public Kirja findOne(String title) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public List<Kirja> getAllBooks() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

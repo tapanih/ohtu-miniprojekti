@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class LukuvinkkiDatabase {
+public class Database {
     
     private String dbName;
     
@@ -15,7 +15,7 @@ public class LukuvinkkiDatabase {
      *
      * @param databaseName the address of database given as a parameter
      */
-    public LukuvinkkiDatabase(String databaseName) {
+    public Database(String databaseName) {
         this.dbName = databaseName;
     }
     
@@ -24,7 +24,7 @@ public class LukuvinkkiDatabase {
      *
      */
 
-    public LukuvinkkiDatabase() {
+    public Database() {
         this.dbName = "lukuvinkki.db";
     } 
 
