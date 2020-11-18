@@ -2,6 +2,8 @@ package logiikka;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
 import dao.DBlukuvinkkiDAO;
 import dao.lukuvinkkiDatabase;
 
@@ -39,4 +41,12 @@ public class lukuvinkkiService {
         }
     }
 
+    public List<Kirja> getBooks() {
+        try {
+            return dbLukuvinkkiDAO.getAllBooks();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
 }

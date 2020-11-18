@@ -3,7 +3,6 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,6 @@ public class DBlukuvinkkiDAO {
     private String description;
     private lukuvinkkiDatabase db;
     private String database;
-    private List<Kirja> books= new ArrayList<>();
     private String sql1 = "SELECT*FROM kirja where user_username = ?";
     private String sql2 = "SELECT*FROM kirja where author = ?";
     private String sql3 = "SELECT*FROM kirja where title = ?";
@@ -35,7 +33,7 @@ public class DBlukuvinkkiDAO {
         /**
      * 
      *
-     * @param Kirja object
+     * @param kirja object
      * @throws SQLException if saving the book object fails
      */
  
@@ -52,6 +50,7 @@ public class DBlukuvinkkiDAO {
             statement.setInt(3, kirja.getSivut());
             statement.executeUpdate();
             statement.close();
+            rs.close();
             c.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -66,17 +65,17 @@ public class DBlukuvinkkiDAO {
 
   
     public List<Kirja> getAllBooks() throws SQLException {
+        List<Kirja> books = new ArrayList<>();
         c = db.connect();
         try {
             PreparedStatement stmt = c.prepareStatement("SELECT*FROM books");
-            
+
             rs = stmt.executeQuery();
             while (rs.next()) {
                  Kirja kirja = new Kirja(rs.getString("title").trim(), rs.getString("author"), rs.getInt("pageCount"));
                  books.add(kirja);
             }
             stmt.close();
-            rs.close();
         } catch (Throwable t) {
         } finally {
             c.close();

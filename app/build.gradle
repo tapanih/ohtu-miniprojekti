@@ -25,6 +25,7 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.webjars.npm/sqlite3
     implementation 'org.webjars.npm:sqlite3:3.1.13'
+    compile group:'org.xerial', name:'sqlite-jdbc', version:'3.8.11.2'
 
     implementation 'org.webjars.npm:gauge:2.7.3'
 
