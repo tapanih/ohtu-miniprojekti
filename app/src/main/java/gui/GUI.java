@@ -1,9 +1,7 @@
 
 package gui;
 
-import dao.DatabaseHelper;
 import javafx.application.Application;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -13,17 +11,21 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
-import dao.Database;
 import java.sql.SQLException;
 import javafx.util.converter.IntegerStringConverter;
+
 import logiikka.Kirja;
 import logiikka.LukuvinkkiService;
+
 import dao.LukuvinkkiDAO;
+import dao.DatabaseHelper;
+import dao.Database;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 
 public class GUI extends Application {
     
@@ -32,7 +34,7 @@ public class GUI extends Application {
     
     private Scene paavalikko;
     private Scene lukuvinkinLisays;
-    private Scene lukuvinkkienListaus;
+    private BorderPane asettelu;
     
     private Stage nayttamo;
     private LukuvinkkiDAO service;
@@ -53,39 +55,45 @@ public class GUI extends Application {
         nayttamo.setTitle("Lukuvinkkikirjanpito");
         paavalikko = paavalikko();
         lukuvinkinLisays = lukuvinkinLisays();
-        lukuvinkkienListaus = lukuvinkkienListaus();
         
         nayttamo.setScene(paavalikko);
         nayttamo.show();
     }
     
     private Scene paavalikko() {
-
-        Button listaaLukuvinkit = new Button();
-        listaaLukuvinkit.setText("Listaa kirjat");
+        
+        asettelu = new BorderPane();
 
         Button lisaaLukuvinkki = new Button();
         lisaaLukuvinkki.setText("Lisää kirja");
 
         
-        VBox valikko = new VBox(10);
-        valikko.getChildren().addAll(listaaLukuvinkit, lisaaLukuvinkki);
+        HBox valikko = new HBox(10);
+        valikko.getChildren().addAll(lisaaLukuvinkki);
         valikko.setAlignment(Pos.CENTER);
+        
+        asettelu.setTop(valikko);
 
-        listaaLukuvinkit.setOnAction(e -> nayttamo.setScene(lukuvinkkienListaus));
+        try {
+            asettelu.setCenter(lukuvinkkienListaus());
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
         lisaaLukuvinkki.setOnAction(e -> nayttamo.setScene(lukuvinkinLisays));
         
-        return new Scene(valikko, ikkunanLeveys, ikkunanKorkeus);
+        return new Scene(asettelu, ikkunanLeveys, ikkunanKorkeus);
     }
 
-    private Scene lukuvinkkienListaus() throws SQLException {
+    private ListView lukuvinkkienListaus() throws SQLException {
         ObservableList<Kirja> kirjaLista = FXCollections.observableArrayList(service.getAllBooks());
         ListView<Kirja> kirjaListaus = new ListView<>(kirjaLista);
         kirjaListaus.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(Kirja kirja, boolean tyhja) {
+                
                 super.updateItem(kirja, tyhja);
-
+                
                 if (tyhja || kirja == null || kirja.getOtsikko() == null) {
                     setText(null);
                 } else {
@@ -93,7 +101,7 @@ public class GUI extends Application {
                 }
             }
         });
-        return new Scene(kirjaListaus);
+        return kirjaListaus;
     }
     
     private Scene lukuvinkinLisays() {
@@ -110,11 +118,11 @@ public class GUI extends Application {
         kirjailijaInput.setMaxWidth(350);
         Label sivumaaraLabel = new Label("Sivumaara: ");
         TextField sivumaaraInput = new TextField();
-
         sivumaaraInput.setTextFormatter((new TextFormatter<>(new IntegerStringConverter())));
         sivumaaraInput.setMaxWidth(100);
+        Button takaisin = new Button("Takaisin");
         
-        lisaaAsettelu.getChildren().addAll(luoUusiLukuvinkki, otsikkoLabel, otsikkoInput, kirjailijaLabel,
+        lisaaAsettelu.getChildren().addAll(takaisin, luoUusiLukuvinkki, otsikkoLabel, otsikkoInput, kirjailijaLabel,
             kirjailijaInput, sivumaaraLabel, sivumaaraInput, lisaa);
         
         lisaa.setOnAction(e -> {
@@ -127,10 +135,23 @@ public class GUI extends Application {
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
-            nayttamo.setScene(paavalikko);
+            returnToMainPage();
+        });
+        
+        takaisin.setOnAction(e -> {
+            returnToMainPage();
         });
         
         return new Scene(lisaaAsettelu, ikkunanLeveys, ikkunanKorkeus);
+    }
+    
+    private void returnToMainPage() {
+        try {
+            asettelu.setCenter(lukuvinkkienListaus());
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        nayttamo.setScene(paavalikko);
     }
 
 }

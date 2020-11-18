@@ -21,12 +21,12 @@ public class LukuvinkkiService implements LukuvinkkiDAO {
     }
 
     @Override
-    public boolean addBook(Kirja kirja) throws SQLException, Exception {
+    public boolean addBook(Kirja kirja) throws SQLException {
         try {
             helper.addBook(kirja);
             return true;
         } catch (SQLException ex) {
-            System.out.println("createExpense error message is..." + ex.getMessage());
+            System.out.println("addBook error message is..." + ex.getMessage());
             return false;
         }
     }

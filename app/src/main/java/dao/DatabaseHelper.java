@@ -32,7 +32,7 @@ public class DatabaseHelper {
      * @param kirja
      * @throws SQLException if saving the book object fails
      */
-    public boolean addBook(Kirja kirja) throws SQLException, Exception {
+    public boolean addBook(Kirja kirja) throws SQLException {
         c = db.connect();
         try {
             PreparedStatement statement = c.prepareStatement(
