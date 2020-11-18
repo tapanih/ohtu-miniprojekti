@@ -6,28 +6,29 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class lukuvinkkiDatabase {
+public class LukuvinkkiDatabase {
+    
     private String dbName;
-        /**
+    
+    /**
      * constructor where user gives the name for the database when invoked
      *
      * @param databaseName the address of database given as a parameter
-     * @throws SQLException when connection fails
      */
-    public lukuvinkkiDatabase(String databaseName){
+    public LukuvinkkiDatabase(String databaseName) {
         this.dbName = databaseName;
-    } 
+    }
+    
     /**
      * constructor without parameters
      *
-     * @throws SQLException when connection fails
      */
 
-    public lukuvinkkiDatabase(){
+    public LukuvinkkiDatabase() {
         this.dbName = "lukuvinkki.db";
     } 
 
-        /**
+    /**
      * Connects to the database
      *
      * @return connection to the database
@@ -45,6 +46,7 @@ public class lukuvinkkiDatabase {
         }
         return connection;
     }
+    
     /**
      * initializeDatabase method initializes the five database tables
      *
@@ -52,10 +54,8 @@ public class lukuvinkkiDatabase {
      */
     public boolean initializeDatabase() {
         try {
-          
             initializeBookTable();
         } catch (Throwable t) {
-
             System.out.println(t.getMessage());
             return false;
         }
@@ -82,7 +82,7 @@ public class lukuvinkkiDatabase {
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        }        finally { 
+        } finally { 
             System.out.println("finally block executed"); 
         } 
     }
