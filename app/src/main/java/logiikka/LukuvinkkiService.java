@@ -1,38 +1,33 @@
 package logiikka;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import dao.DBlukuvinkkiDAO;
-import dao.lukuvinkkiDatabase;
+import dao.LukuvinkkiDatabase;
 
-public class lukuvinkkiService {
+public class LukuvinkkiService {
     
-    private lukuvinkkiDatabase db;
+    private LukuvinkkiDatabase db;
     private DBlukuvinkkiDAO dbLukuvinkkiDAO;
 
- 
-
-        /**
+    /**
      * the constructor for lukuvinkkiService
      *
      * @param datab the database given as a parameter
      * @throws SQLException when connection to the database fails
      */
-    public lukuvinkkiService(lukuvinkkiDatabase datab) throws SQLException {
+    public LukuvinkkiService(LukuvinkkiDatabase datab) throws SQLException {
         this.db = datab;
         this.db.initializeDatabase();
         dbLukuvinkkiDAO = new DBlukuvinkkiDAO(db);
     }
 
-    public boolean addBook( String title, String author, int pageCount ) throws Exception {
+    public boolean addBook(String title, String author, int pageCount) throws Exception {
 
         Kirja kirja = new Kirja(title, author, pageCount);
      
         try {
-          
-                dbLukuvinkkiDAO.addBook(kirja);
-                return true;
-
+            dbLukuvinkkiDAO.addBook(kirja);
+            return true;
         } catch (SQLException ex) {
             System.out.println("createExpense error message is..." + ex.getMessage());
             return false;

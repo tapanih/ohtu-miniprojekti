@@ -10,9 +10,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
-import dao.lukuvinkkiDatabase;
+import dao.LukuvinkkiDatabase;
 import java.sql.SQLException;
-import logiikka.lukuvinkkiService;
+import javafx.scene.control.TextFormatter;
+import javafx.util.converter.IntegerStringConverter;
+import logiikka.LukuvinkkiService;
 
 public class GUI extends Application {
     
@@ -23,13 +25,13 @@ public class GUI extends Application {
     private Scene lukuvinkinLisays;
     
     private Stage nayttamo;
-    private lukuvinkkiDatabase db;
-    private lukuvinkkiService service;
+    private LukuvinkkiDatabase db;
+    private LukuvinkkiService service;
 
     @Override
     public void init() throws SQLException, Exception {
-        db = new lukuvinkkiDatabase("lukuvinkki.db");
-        service = new lukuvinkkiService(db);
+        db = new LukuvinkkiDatabase("lukuvinkki.db");
+        service = new LukuvinkkiService(db);
 
     }
     @Override
@@ -80,9 +82,9 @@ public class GUI extends Application {
             kirjailijaInput, sivumaaraLabel, sivumaaraInput, lisaa);
         
         lisaa.setOnAction(e -> {
-            String otsikko = otsikkoInput.getText();
-            String kirjailija = kirjailijaInput.getText();
-            int sivumaara = Integer.parseInt(sivumaaraInput.getText());
+            String otsikko = otsikkoInput.getText().trim();
+            String kirjailija = kirjailijaInput.getText().trim();
+            int sivumaara = Integer.parseInt(sivumaaraInput.getText().trim());
             try {
                 service.addBook(otsikko, kirjailija, sivumaara);
             } catch (Exception exception) {

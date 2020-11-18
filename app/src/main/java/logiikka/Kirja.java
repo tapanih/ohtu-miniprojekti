@@ -25,7 +25,7 @@ public class Kirja {
         return kirjailija;
     }
     
-    public int getSivut(){
+    public int getSivut() {
         return sivumaara;
     }
 
@@ -38,7 +38,7 @@ public class Kirja {
     }
     
 
-    public void setSivut(int sivut){
+    public void setSivut(int sivut) {
         this.sivumaara = sivut;
     }
 
