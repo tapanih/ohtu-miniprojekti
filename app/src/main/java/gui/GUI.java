@@ -12,6 +12,8 @@ import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 import dao.lukuvinkkiDatabase;
 import java.sql.SQLException;
+import javafx.scene.control.TextFormatter;
+import javafx.util.converter.IntegerStringConverter;
 import logiikka.lukuvinkkiService;
 
 public class GUI extends Application {
