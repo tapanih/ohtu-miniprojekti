@@ -28,6 +28,8 @@ dependencies {
     compile group:'org.xerial', name:'sqlite-jdbc', version:'3.8.11.2'
 
     implementation 'org.webjars.npm:gauge:2.7.3'
+	testImplementation 'io.cucumber:cucumber-java:6.8.1'
+    testImplementation 'io.cucumber:cucumber-junit:6.8.1'
 
 }
 
@@ -47,4 +49,25 @@ checkstyleMain {
 
 checkstyleTest {
     source ='src/test/java'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
+
+task cucumber() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'ohtu', 'src/test/resources']
+        }
+    }
 }
