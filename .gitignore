@@ -7,5 +7,9 @@ build
 # IntelliJ IDEA workspace settings
 .idea
 
+# VS code settings file
+.vscode
+
 # database file
 lukuvinkki.db
+
