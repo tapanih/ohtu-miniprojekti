@@ -4,11 +4,12 @@
 # Ignore Gradle build output directory
 build
 
-# IntelliJ IDEA workspace settings
+# Other setting files
 .idea
-
-# VS code settings file
 .vscode
+app/.settings
+app/.project
+app/.classpath
 
 # database file
 lukuvinkki.db
