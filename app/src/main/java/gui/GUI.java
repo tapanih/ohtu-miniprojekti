@@ -29,14 +29,14 @@ import javafx.scene.layout.HBox;
 
 public class GUI extends Application {
     
-    private int ikkunanLeveys = 500;
-    private int ikkunanKorkeus = 500;
+    private int windowWidth = 500;
+    private int windowHeight = 500;
     
-    private Scene paavalikko;
-    private Scene lukuvinkinLisays;
-    private BorderPane asettelu;
+    private Scene mainMenu;
+    private Scene addRecommendation;
+    private BorderPane layout;
     
-    private Stage nayttamo;
+    private Stage stage;
     private LukuvinkkiDAO service;
 
     @Override
@@ -51,84 +51,84 @@ public class GUI extends Application {
     @Override
     public void start(Stage stage) throws SQLException {
         
-        nayttamo = stage;
-        nayttamo.setTitle("Lukuvinkkikirjanpito");
-        paavalikko = paavalikko();
-        lukuvinkinLisays = lukuvinkinLisays();
+        this.stage = stage;
+        this.stage.setTitle("Lukuvinkkikirjanpito");
+        mainMenu = mainMenu();
+        addRecommendation = addRecommendation();
         
-        nayttamo.setScene(paavalikko);
-        nayttamo.show();
+        this.stage.setScene(mainMenu);
+        this.stage.show();
     }
     
-    private Scene paavalikko() {
+    private Scene mainMenu() {
         
-        asettelu = new BorderPane();
+        layout = new BorderPane();
 
-        Button lisaaLukuvinkki = new Button();
-        lisaaLukuvinkki.setText("Lisää kirja");
+        Button addReco = new Button();
+        addReco.setText("Lisää kirja");
 
         
         HBox valikko = new HBox(10);
-        valikko.getChildren().addAll(lisaaLukuvinkki);
+        valikko.getChildren().addAll(addReco);
         valikko.setAlignment(Pos.CENTER);
         
-        asettelu.setTop(valikko);
+        layout.setTop(valikko);
 
         try {
-            asettelu.setCenter(lukuvinkkienListaus());
+            layout.setCenter(listRecommendations());
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         
-        lisaaLukuvinkki.setOnAction(e -> nayttamo.setScene(lukuvinkinLisays));
+        addReco.setOnAction(e -> stage.setScene(addRecommendation));
         
-        return new Scene(asettelu, ikkunanLeveys, ikkunanKorkeus);
+        return new Scene(layout, windowWidth, windowHeight);
     }
 
-    private ListView lukuvinkkienListaus() throws SQLException {
+    private ListView listRecommendations() throws SQLException {
         ObservableList<Book> kirjaLista = FXCollections.observableArrayList(service.getAllBooks());
         ListView<Book> kirjaListaus = new ListView<>(kirjaLista);
         kirjaListaus.setCellFactory(param -> new ListCell<>() {
             @Override
-            protected void updateItem(Book kirja, boolean tyhja) {
+            protected void updateItem(Book book, boolean empty) {
                 
-                super.updateItem(kirja, tyhja);
+                super.updateItem(book, empty);
                 
-                if (tyhja || kirja == null || kirja.getOtsikko() == null) {
+                if (empty || book == null || book.getOtsikko() == null) {
                     setText(null);
                 } else {
-                    setText(kirja.getOtsikko());
+                    setText(book.getOtsikko());
                 }
             }
         });
         return kirjaListaus;
     }
     
-    private Scene lukuvinkinLisays() {
-        VBox lisaaAsettelu = new VBox(10);
-        lisaaAsettelu.setPadding(new Insets(10, 10, 10, 10));
+    private Scene addRecommendation() {
+        VBox addLayout = new VBox(10);
+        addLayout.setPadding(new Insets(10, 10, 10, 10));
         
-        Label luoUusiLukuvinkki = new Label("Luo uusi lukuvinkki");
-        Button lisaa = new Button("Lisää!");
-        Label otsikkoLabel = new Label("Otsikko: ");
-        TextField otsikkoInput = new TextField();
-        otsikkoInput.setMaxWidth(350);
-        Label kirjailijaLabel = new Label("Kirjailija: ");
-        TextField kirjailijaInput = new TextField();
-        kirjailijaInput.setMaxWidth(350);
-        Label sivumaaraLabel = new Label("Sivumaara: ");
-        TextField sivumaaraInput = new TextField();
-        sivumaaraInput.setTextFormatter((new TextFormatter<>(new IntegerStringConverter())));
-        sivumaaraInput.setMaxWidth(100);
-        Button takaisin = new Button("Takaisin");
+        Label createNewRecommendation = new Label("Luo uusi lukuvinkki");
+        Button add = new Button("Lisää!");
+        Label titleLabel = new Label("Otsikko: ");
+        TextField titleInput = new TextField();
+        titleInput.setMaxWidth(350);
+        Label authorLabel = new Label("Kirjailija: ");
+        TextField authorInput = new TextField();
+        authorInput.setMaxWidth(350);
+        Label pageCountLabel = new Label("Sivumaara: ");
+        TextField pageCountInput = new TextField();
+        pageCountInput.setTextFormatter((new TextFormatter<>(new IntegerStringConverter())));
+        pageCountInput.setMaxWidth(100);
+        Button back = new Button("Takaisin");
         
-        lisaaAsettelu.getChildren().addAll(takaisin, luoUusiLukuvinkki, otsikkoLabel, otsikkoInput, kirjailijaLabel,
-            kirjailijaInput, sivumaaraLabel, sivumaaraInput, lisaa);
+        addLayout.getChildren().addAll(back, createNewRecommendation, titleLabel, titleInput, authorLabel,
+            authorInput, pageCountLabel, pageCountInput, add);
         
-        lisaa.setOnAction(e -> {
-            String otsikko = otsikkoInput.getText().trim();
-            String kirjailija = kirjailijaInput.getText().trim();
-            int sivumaara = Integer.parseInt(sivumaaraInput.getText().trim());
+        add.setOnAction(e -> {
+            String otsikko = titleInput.getText().trim();
+            String kirjailija = authorInput.getText().trim();
+            int sivumaara = Integer.parseInt(pageCountInput.getText().trim());
             try {
                 Book kirja = new Book(otsikko, kirjailija, sivumaara);
                 service.addBook(kirja);
@@ -138,20 +138,20 @@ public class GUI extends Application {
             returnToMainPage();
         });
         
-        takaisin.setOnAction(e -> {
+        back.setOnAction(e -> {
             returnToMainPage();
         });
         
-        return new Scene(lisaaAsettelu, ikkunanLeveys, ikkunanKorkeus);
+        return new Scene(addLayout, windowWidth, windowHeight);
     }
     
     private void returnToMainPage() {
         try {
-            asettelu.setCenter(lukuvinkkienListaus());
+            layout.setCenter(listRecommendations());
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        nayttamo.setScene(paavalikko);
+        stage.setScene(mainMenu);
     }
 
 }
