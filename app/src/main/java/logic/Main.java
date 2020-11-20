@@ -1,4 +1,4 @@
-package logiikka;
+package logic;
 
 import gui.GUI;
 import javafx.application.Application;

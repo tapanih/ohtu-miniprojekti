@@ -18,8 +18,8 @@ import javafx.scene.control.TextField;
 import java.sql.SQLException;
 import javafx.util.converter.IntegerStringConverter;
 
-import logiikka.Kirja;
-import logiikka.LukuvinkkiService;
+import logic.Book;
+import logic.LukuvinkkiService;
 
 import dao.LukuvinkkiDAO;
 import dao.DatabaseHelper;
@@ -86,11 +86,11 @@ public class GUI extends Application {
     }
 
     private ListView lukuvinkkienListaus() throws SQLException {
-        ObservableList<Kirja> kirjaLista = FXCollections.observableArrayList(service.getAllBooks());
-        ListView<Kirja> kirjaListaus = new ListView<>(kirjaLista);
+        ObservableList<Book> kirjaLista = FXCollections.observableArrayList(service.getAllBooks());
+        ListView<Book> kirjaListaus = new ListView<>(kirjaLista);
         kirjaListaus.setCellFactory(param -> new ListCell<>() {
             @Override
-            protected void updateItem(Kirja kirja, boolean tyhja) {
+            protected void updateItem(Book kirja, boolean tyhja) {
                 
                 super.updateItem(kirja, tyhja);
                 
@@ -130,7 +130,7 @@ public class GUI extends Application {
             String kirjailija = kirjailijaInput.getText().trim();
             int sivumaara = Integer.parseInt(sivumaaraInput.getText().trim());
             try {
-                Kirja kirja = new Kirja(otsikko, kirjailija, sivumaara);
+                Book kirja = new Book(otsikko, kirjailija, sivumaara);
                 service.addBook(kirja);
             } catch (Exception exception) {
                 exception.printStackTrace();

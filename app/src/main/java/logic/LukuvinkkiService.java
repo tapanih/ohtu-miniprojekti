@@ -1,4 +1,4 @@
-package logiikka;
+package logic;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,9 +21,9 @@ public class LukuvinkkiService implements LukuvinkkiDAO {
     }
 
     @Override
-    public boolean addBook(Kirja kirja) throws SQLException {
+    public boolean addBook(Book book) throws SQLException {
         try {
-            helper.addBook(kirja);
+            helper.addBook(book);
             return true;
         } catch (SQLException ex) {
             System.out.println("addBook error message is..." + ex.getMessage());
@@ -32,12 +32,12 @@ public class LukuvinkkiService implements LukuvinkkiDAO {
     }
 
     @Override
-    public Kirja findOne(String title) throws SQLException {
+    public Book findOne(String title) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public List<Kirja> getAllBooks() throws SQLException {
+    public List<Book> getAllBooks() throws SQLException {
         try {
             return helper.getAllBooks();
         } catch (SQLException ex) {

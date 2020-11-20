@@ -6,12 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import logiikka.Kirja;
+import logic.Book;
 
 public class DatabaseHelper {
     
     private Database db;
-    private List<Kirja> books = new ArrayList<>();
+    private List<Book> books = new ArrayList<>();
     private String sql1 = "SELECT * FROM kirja where user_username = ?";
     private String sql2 = "SELECT * FROM kirja where author = ?";
     private String sql3 = "SELECT * FROM kirja where title = ?";
@@ -32,7 +32,7 @@ public class DatabaseHelper {
      * @param kirja
      * @throws SQLException if saving the book object fails
      */
-    public boolean addBook(Kirja kirja) throws SQLException {
+    public boolean addBook(Book kirja) throws SQLException {
         c = db.connect();
         try {
             PreparedStatement statement = c.prepareStatement(
@@ -57,15 +57,15 @@ public class DatabaseHelper {
      * @return returns a list of categories created by the given user
      * @throws SQLException when retrieving data from the database fails
      */
-    public List<Kirja> getAllBooks() throws SQLException {
-        List<Kirja> books = new ArrayList<>();
+    public List<Book> getAllBooks() throws SQLException {
+        List<Book> books = new ArrayList<>();
         c = db.connect();
         try {
             PreparedStatement stmt = c.prepareStatement("SELECT*FROM books");
 
             rs = stmt.executeQuery();
             while (rs.next()) {
-                Kirja kirja = new Kirja(rs.getString("title").trim(), rs.getString("author"), rs.getInt("pageCount"));
+                Book kirja = new Book(rs.getString("title").trim(), rs.getString("author"), rs.getInt("pageCount"));
                 books.add(kirja);
             }
             stmt.close();
@@ -83,7 +83,7 @@ public class DatabaseHelper {
      * @throws SQLException if retrieving data from the database fails
      *
      */
-    public Kirja findOne(String title) throws SQLException {
+    public Book findOne(String title) throws SQLException {
         c = db.connect();
         PreparedStatement stmt = c.prepareStatement("SELECT*FROM books WHERE title = ?");
         stmt.setString(1, title);
@@ -92,7 +92,7 @@ public class DatabaseHelper {
         if (!findOne) {
             return null;
         } else {
-            Kirja book = new Kirja(rs.getString("title"), rs.getString("author"), rs.getInt("pageCount"));
+            Book book = new Book(rs.getString("title"), rs.getString("author"), rs.getInt("pageCount"));
             stmt.close();
             rs.close();
             c.close();

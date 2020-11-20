@@ -1,17 +1,17 @@
 
-package logiikka;
+package logic;
 
-public class Kirja {
+public class Book {
     
     private String otsikko;
     private String kirjailija;
     private int sivumaara;
 
-    public Kirja(){
+    public Book(){
 
     }
     
-    public Kirja(String otsikko, String kirjailija, int sivut) {
+    public Book(String otsikko, String kirjailija, int sivut) {
         this.otsikko = otsikko;
         this.kirjailija = kirjailija;
         this.sivumaara = sivut;
