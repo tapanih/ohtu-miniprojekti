@@ -3,48 +3,48 @@ package logic;
 
 public class Book {
     
-    private String otsikko;
-    private String kirjailija;
-    private int sivumaara;
+    private String title;
+    private String author;
+    private int pageCount;
 
     public Book(){
 
     }
     
-    public Book(String otsikko, String kirjailija, int sivut) {
-        this.otsikko = otsikko;
-        this.kirjailija = kirjailija;
-        this.sivumaara = sivut;
+    public Book(String title, String author, int pageCount) {
+        this.title = title;
+        this.author = author;
+        this.pageCount = pageCount;
     }
 
-    public String getOtsikko() {
-        return otsikko;
+    public String getTitle() {
+        return title;
     }
 
-    public String getKirjailija() {
-        return kirjailija;
+    public String getAuthor() {
+        return author;
     }
     
-    public int getSivut() {
-        return sivumaara;
+    public int getPages() {
+        return pageCount;
     }
 
-    public void setOtsikko(String otsikko) {
-        this.otsikko = otsikko;
+    public void setTitle(String otsikko) {
+        this.title = otsikko;
     }
 
-    public void setKirjailija(String kirjailija) {
-        this.kirjailija = kirjailija;
+    public void setAuthor(String kirjailija) {
+        this.author = kirjailija;
     }
     
 
-    public void setSivut(int sivut) {
-        this.sivumaara = sivut;
+    public void setPages(int sivut) {
+        this.pageCount = sivut;
     }
 
     @Override
     public String toString() {
-        return otsikko + ", " + kirjailija + ", " + sivumaara;
+        return title + ", " + author + ", " + pageCount;
     }
     
 }

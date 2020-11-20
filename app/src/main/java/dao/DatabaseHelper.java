@@ -39,9 +39,9 @@ public class DatabaseHelper {
                     "INSERT OR REPLACE INTO books (title, author, pageCount) VALUES (?, ?, ?);"
             );
 
-            statement.setString(1, kirja.getOtsikko());
-            statement.setString(2, kirja.getKirjailija());
-            statement.setInt(3, kirja.getSivut());
+            statement.setString(1, kirja.getTitle());
+            statement.setString(2, kirja.getAuthor());
+            statement.setInt(3, kirja.getPages());
             statement.executeUpdate();
             statement.close();
             rs.close();

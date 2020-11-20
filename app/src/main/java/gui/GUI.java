@@ -94,10 +94,10 @@ public class GUI extends Application {
                 
                 super.updateItem(book, empty);
                 
-                if (empty || book == null || book.getOtsikko() == null) {
+                if (empty || book == null || book.getTitle() == null) {
                     setText(null);
                 } else {
-                    setText(book.getOtsikko());
+                    setText(book.getTitle());
                 }
             }
         });
