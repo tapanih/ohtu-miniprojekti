@@ -12,4 +12,5 @@ build
 
 # database file
 lukuvinkki.db
+jdbc:slite:lukuvinkki.db
 
