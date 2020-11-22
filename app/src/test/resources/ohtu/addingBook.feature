@@ -12,6 +12,7 @@ Feature: As a user I want to be able to add a book to the application
       | Correct_Name   | Correct_Author  | 0          | No     |
       | Correct_Name   | Correct_Author  | -28        | No     |
       | Correct_Name   | not found       | 1000       | No     |
+      | Correct_Name   | not found       | 0          | No     |
       | not found      | Correct_Author  | 100        | No     |
       | not found      | Correct_Author  | 0          | No     |
       | not found      | not found       | 1          | No     |
