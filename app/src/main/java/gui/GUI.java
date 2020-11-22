@@ -68,11 +68,11 @@ public class GUI extends Application {
         addReco.setText("Lisää kirja");
 
         
-        HBox valikko = new HBox(10);
-        valikko.getChildren().addAll(addReco);
-        valikko.setAlignment(Pos.CENTER);
+        HBox menu = new HBox(10);
+        menu.getChildren().addAll(addReco);
+        menu.setAlignment(Pos.CENTER);
         
-        layout.setTop(valikko);
+        layout.setTop(menu);
 
         try {
             layout.setCenter(listRecommendations());
@@ -86,9 +86,9 @@ public class GUI extends Application {
     }
 
     private ListView listRecommendations() throws SQLException {
-        ObservableList<Book> kirjaLista = FXCollections.observableArrayList(service.getAllBooks());
-        ListView<Book> kirjaListaus = new ListView<>(kirjaLista);
-        kirjaListaus.setCellFactory(param -> new ListCell<>() {
+        ObservableList<Book> bookList = FXCollections.observableArrayList(service.getAllBooks());
+        ListView<Book> bookListView = new ListView<>(bookList);
+        bookListView.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(Book book, boolean empty) {
                 
@@ -97,11 +97,11 @@ public class GUI extends Application {
                 if (empty || book == null || book.getTitle() == null) {
                     setText(null);
                 } else {
-                    setText(book.getTitle());
+                    setText(book.toString());
                 }
             }
         });
-        return kirjaListaus;
+        return bookListView;
     }
     
     private Scene addRecommendation() {
@@ -126,12 +126,12 @@ public class GUI extends Application {
             authorInput, pageCountLabel, pageCountInput, add);
         
         add.setOnAction(e -> {
-            String otsikko = titleInput.getText().trim();
-            String kirjailija = authorInput.getText().trim();
-            int sivumaara = Integer.parseInt(pageCountInput.getText().trim());
+            String title = titleInput.getText().trim();
+            String author = authorInput.getText().trim();
+            int pageCount = Integer.parseInt(pageCountInput.getText().trim());
             try {
-                Book kirja = new Book(otsikko, kirjailija, sivumaara);
-                service.addBook(kirja);
+                Book book = new Book(title, author, pageCount);
+                service.addBook(book);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }

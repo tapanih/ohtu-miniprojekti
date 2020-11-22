@@ -44,7 +44,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return title + ", " + author + ", " + pageCount;
+        return title + ", " + author + ", " + pageCount + " sivua";
     }
     
 }
