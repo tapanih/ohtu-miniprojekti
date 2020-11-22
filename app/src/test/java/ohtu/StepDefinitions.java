@@ -12,7 +12,6 @@ class IsEverythingCorrect {
     }
 }
 
-
 public class StepDefinitions {
     private String name;
     private String author;
