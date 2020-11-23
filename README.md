@@ -13,8 +13,6 @@ Tässä on linkki projektin product backlogiin.
 
 ## [Release 1](https://github.com/tapanih/ohtu-miniprojekti/releases/tag/release1) ##
 
-___
-
 ## Asennusohjeet ##
 
 Jarin ajaminen komentoriviltä:
