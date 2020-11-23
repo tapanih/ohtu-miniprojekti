@@ -5,7 +5,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import logic.Book;
+import logic.*;
+import dao.*;
 import ohtu.miniprojekti.TestFXBase;
 import org.testfx.api.FxAssert;
 
