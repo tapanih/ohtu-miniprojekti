@@ -115,3 +115,10 @@ test {
         logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message)
     }
 }
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+}
