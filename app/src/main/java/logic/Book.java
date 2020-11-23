@@ -1,6 +1,8 @@
 
 package logic;
 
+import java.util.Objects;
+
 public class Book {
     
     private String title;
@@ -36,7 +38,22 @@ public class Book {
     public void setAuthor(String kirjailija) {
         this.author = kirjailija;
     }
-    
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return pageCount == book.pageCount &&
+                title.equals(book.title) &&
+                author.equals(book.author);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, author, pageCount);
+    }
 
     public void setPages(int sivut) {
         this.pageCount = sivut;

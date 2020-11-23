@@ -17,3 +17,9 @@ Feature: As a user I want to be able to add a book to the application
       | not found      | Correct_Author  | 0          | No     |
       | not found      | not found       | 1          | No     |
       | not found      | not found       | 0          | No     |
+
+    Scenario Outline: Book can be added
+      Given application has opened
+      When add book button is clicked
+      When form is filled with "Clean Code" as name and "Robert Martin" as author and "400" as page count
+      Then book list contains a book with "Clean Code" as name and "Robert Martin" as author and 400 as page count

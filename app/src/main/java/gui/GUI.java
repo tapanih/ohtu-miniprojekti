@@ -70,7 +70,7 @@ public class GUI extends Application {
 
         Button addReco = new Button();
         addReco.setText("Lisää kirja");
-
+        addReco.setId("add");
         
         HBox menu = new HBox(10);
         menu.getChildren().addAll(addReco);
@@ -92,6 +92,7 @@ public class GUI extends Application {
     private ListView listRecommendations() throws SQLException {
         ObservableList<Book> bookList = FXCollections.observableArrayList(service.getAllBooks());
         ListView<Book> bookListView = new ListView<>(bookList);
+        bookListView.setId("listview");
         bookListView.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(Book book, boolean empty) {
@@ -114,14 +115,18 @@ public class GUI extends Application {
         
         Label createNewRecommendation = new Label("Luo uusi lukuvinkki");
         Button add = new Button("Lisää!");
+        add.setId("submit");
         Label titleLabel = new Label("Otsikko: ");
         TextField titleInput = new TextField();
+        titleInput.setId("name");
         titleInput.setMaxWidth(350);
         Label authorLabel = new Label("Kirjailija: ");
         TextField authorInput = new TextField();
+        authorInput.setId("author");
         authorInput.setMaxWidth(350);
         Label pageCountLabel = new Label("Sivumaara: ");
         TextField pageCountInput = new TextField();
+        pageCountInput.setId("pageCount");
         pageCountInput.setTextFormatter((new TextFormatter<>(new IntegerStringConverter())));
         pageCountInput.setMaxWidth(100);
         Button back = new Button("Takaisin");
