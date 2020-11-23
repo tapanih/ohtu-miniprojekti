@@ -10,18 +10,12 @@ public class BookmarkService implements BookmarkDao {
     
     private DatabaseHelper helper;
 
-    /**
-     * the constructor for lukuvinkkiService
-     *
-     * @param helper
-     * @throws SQLException when connection to the database fails
-     */
     public BookmarkService(DatabaseHelper helper) throws SQLException {
         this.helper = helper;
     }
 
     @Override
-    public boolean addBook(Book book) throws SQLException {
+    public boolean addBook(Book book) {
         try {
             helper.addBook(book);
             return true;
@@ -32,16 +26,17 @@ public class BookmarkService implements BookmarkDao {
     }
 
     @Override
-    public Book findOne(String title) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Book findOne(String title) {
+        System.out.println("Työn alla!");
+        return new Book("Koiramäen vipinäviikot", "Mauri Lunnas", 333);
     }
 
     @Override
-    public List<Book> getAllBooks() throws SQLException {
+    public List<Book> getAllBooks() {
         try {
             return helper.getAllBooks();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
             return new ArrayList<>();
         }
     }

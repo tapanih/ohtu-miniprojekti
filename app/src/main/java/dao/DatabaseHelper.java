@@ -19,29 +19,25 @@ public class DatabaseHelper {
     private ResultSet rs = null;
     private PreparedStatement stmt = null;
     
-    /**
-     * DBlukuvinkkiDAO class constructor. The database is initialized in the
-     * constructor.
-     * @param db database given as a parameter
-     */
     public DatabaseHelper(Database db) {
         this.db = db;
     }
 
     /**
-     * @param kirja
-     * @throws SQLException if saving the book object fails
+     * Adds a book to the database.
+     * @param book
+     * @throws SQLException if adding book to the database fails.
      */
-    public boolean addBook(Book kirja) throws SQLException {
+    public boolean addBook(Book book) throws SQLException {
         c = db.connect();
         try {
             PreparedStatement statement = c.prepareStatement(
                     "INSERT OR REPLACE INTO books (title, author, pageCount) VALUES (?, ?, ?);"
             );
 
-            statement.setString(1, kirja.getTitle());
-            statement.setString(2, kirja.getAuthor());
-            statement.setInt(3, kirja.getPages());
+            statement.setString(1, book.getTitle());
+            statement.setString(2, book.getAuthor());
+            statement.setInt(3, book.getPages());
             statement.executeUpdate();
             statement.close();
             rs.close();
@@ -54,14 +50,15 @@ public class DatabaseHelper {
     }
 
     /**
-     * @return returns a list of categories created by the given user
-     * @throws SQLException when retrieving data from the database fails
+     * Returns all books from the database.
+     * @return returns a list of Books.
+     * @throws SQLException if retrieving data from the database fails.
      */
     public List<Book> getAllBooks() throws SQLException {
         List<Book> books = new ArrayList<>();
         c = db.connect();
         try {
-            PreparedStatement stmt = c.prepareStatement("SELECT*FROM books");
+            PreparedStatement stmt = c.prepareStatement("SELECT * FROM books");
 
             rs = stmt.executeQuery();
             while (rs.next()) {
@@ -77,11 +74,10 @@ public class DatabaseHelper {
     }
 
     /**
-     * Retrieves all the books in the database
+     * Retrieves a book with the given title from the database.
      * @param title
-     * @return a book by title
-     * @throws SQLException if retrieving data from the database fails
-     *
+     * @return a Book with the given title.
+     * @throws SQLException if retrieving data from the database fails.
      */
     public Book findOne(String title) throws SQLException {
         c = db.connect();

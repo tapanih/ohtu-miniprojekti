@@ -10,28 +10,18 @@ public class Database {
     
     private String dbName;
     
-    /**
-     * constructor where user gives the name for the database when invoked
-     *
-     * @param databaseName the address of database given as a parameter
-     */
     public Database(String databaseName) {
         this.dbName = databaseName;
     }
     
-    /**
-     * constructor without parameters
-     *
-     */
     public Database() {
         this.dbName = "lukuvinkki.db";
     } 
 
     /**
-     * Connects to the database
-     *
-     * @return connection to the database
-     * @throws java.sql.SQLException when the connection to the database fails
+     * Connects to the database.
+     * @return Connection to the database.
+     * @throws java.sql.SQLException when connecting to the database is unsuccessful.
      */
     public Connection connect() throws SQLException {
         Connection connection = null;
@@ -46,9 +36,8 @@ public class Database {
     }
     
     /**
-     * initializeDatabase method initializes the five database tables
-     *
-     * @return returns true if the database tables are created
+     * Initializes the five database tables.
+     * @return true if the database tables are created and false otherwise.
      */
     public boolean initializeDatabase() {
         try {
@@ -62,8 +51,7 @@ public class Database {
 
 
      /**
-     * The method initializeBookTable will create the table books if it does not
-     * already exist in the database
+     * Creates the table "books" if it does not already exist.
      */
     public void initializeBookTable() {
         try {

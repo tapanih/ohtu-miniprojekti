@@ -10,7 +10,6 @@ import dao.*;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import ohtu.junit.TestFXBase;
-import org.junit.After;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

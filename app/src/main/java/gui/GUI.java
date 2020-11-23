@@ -29,8 +29,8 @@ import dao.BookmarkDao;
 
 public class GUI extends Application {
     
-    private int windowWidth = 500;
-    private int windowHeight = 500;
+    private final int windowWidth = 500;
+    private final int windowHeight = 500;
     
     private Scene mainMenu;
     private Scene addRecommendation;
@@ -44,16 +44,20 @@ public class GUI extends Application {
     }
 
     @Override
-    public void init() throws SQLException, Exception {
+    public void init() {
         Database db = new Database("lukuvinkki.db");
         db.initializeDatabase();
         DatabaseHelper dbDAO = new DatabaseHelper(db);
-        service = new BookmarkService(dbDAO);
+        try {
+            service = new BookmarkService(dbDAO);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
 
     }
     
     @Override
-    public void start(Stage stage) throws SQLException {
+    public void start(Stage stage) {
         
         this.stage = stage;
         this.stage.setTitle("Lukuvinkkikirjanpito");
@@ -90,7 +94,8 @@ public class GUI extends Application {
     }
 
     private ListView listBookmarks() throws SQLException {
-        ObservableList<Book> bookList = FXCollections.observableArrayList(service.getAllBooks());
+        ObservableList<Book> bookList;
+        bookList = FXCollections.observableArrayList(service.getAllBooks());
         ListView<Book> bookListView = new ListView<>(bookList);
         bookListView.setId("listview");
         bookListView.setCellFactory(param -> new ListCell<>() {
@@ -149,8 +154,8 @@ public class GUI extends Application {
             try {
                 Book book = new Book(title, author, pageCountInt);
                 service.addBook(book);
-            } catch (Exception exception) {
-                exception.printStackTrace();
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
             }
             returnToMainPage();
         });
