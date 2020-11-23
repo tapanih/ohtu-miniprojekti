@@ -15,11 +15,21 @@ Tässä on linkki projektin product backlogiin.
 
 + [Release 1](https://github.com/tapanih/ohtu-miniprojekti/releases/tag/release1)
 
-## Asennusohjeet ##
+## Asennus- ja käyttöohjeet ##
 
 Jarin ajaminen komentoriviltä:
 
 `java -jar ohtu-miniprojekti.jar`
+
+Gradle-projektin ajaminen kun repositorio on kloonattu koneelle, tapahtuu ajamalla /app/ kansiosta:
+
+`./gradlew run`
+
+Jarin voi generoida /app/ kansiossa komennolla:
+
+`./gradlew build`
+
+Valmis jar ilmestyy polkuun /app/build/libs/ohtu-miniprojekti.jar
 
 Checkstylen suorittaminen: mene ensin /app/ kansioon, ja aja:
 
@@ -30,7 +40,5 @@ Raportti löytyy kansiosta /app/build/reports/checkstyle/main.html
 Testien ajaminen /app/ kansiosta:
 
 `./gradlew test`
-
-## Käyttöohjeet ##
 
 Sovelluksen käyttö on yksinkertaista. Alkunäkymässä sovellus listaa siihen syötetyt kirjat. Voit lisätä kirjan painamalla lisää kirja, syöttämällä kirjan tiedot lomakkeisiin, ja painamalla Lisää.
