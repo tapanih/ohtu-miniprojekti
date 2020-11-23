@@ -9,8 +9,9 @@ Projekti on Ohjelmistotuotanto-kurssin miniprojekti.
 ## Projektin oleelliset tiedot
 **Definition of Done**  
 * Kaikki ryhmän jäsenet ovat sitä mieltä, että product backlogiin kirjatut asiakkaan kanssa neuvotellut hyväksymiskriteerit toteutuvat ja ovat kokeilleet ohjelman toimintaa omalla koneellaan. 
-* User storylle, jolle on mahdollista ja järkevää kirjoittaa automatisoidut testit (JUnit, Cucumber), testit pitää olla valmiit, suoritettavissa ja ne pitää mennä läpi sekä jokaisen omalla koneella, (että GitHub Actionissa, sitten kun se saadaan käyttöön).  
+* User storylle, jolle on mahdollista ja järkevää kirjoittaa automatisoidut testit (JUnit, Cucumber), testit pitää olla valmiit, suoritettavissa ja ne pitää mennä läpi sekä jokaisen omalla koneella että GitHub Actionissa.  
 * Checkstyle-virheitä ei saa olla ja koodin pitää olla yleisesti siistiä ja luokka/metodi-jaon tulee olla järkevä.  
+* User storyn osalta oleellisten testien rivi- ja haaraumakattavuuden tulee olla vähintään 70%.
   
 **[Product Backlog](https://docs.google.com/spreadsheets/d/1f-38FdB34sLDpAlHOOb8wHRx4k4TWji5HSkWHmvbnTc/)**
 
