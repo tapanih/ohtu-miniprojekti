@@ -38,6 +38,10 @@ public class GUI extends Application {
     
     private Stage stage;
     private LukuvinkkiDAO service;
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void init() throws SQLException, Exception {
