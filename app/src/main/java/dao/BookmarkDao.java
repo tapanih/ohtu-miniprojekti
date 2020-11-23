@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import logic.Book;
 
-public interface LukuvinkkiDAO {
+public interface BookmarkDao {
 
     /**
      * @param kirja

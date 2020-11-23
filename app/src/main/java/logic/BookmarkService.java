@@ -4,9 +4,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import dao.DatabaseHelper;
 import java.util.List;
-import dao.LukuvinkkiDAO;
+import dao.BookmarkDao;
 
-public class LukuvinkkiService implements LukuvinkkiDAO {
+public class BookmarkService implements BookmarkDao {
     
     private DatabaseHelper helper;
 
@@ -16,7 +16,7 @@ public class LukuvinkkiService implements LukuvinkkiDAO {
      * @param helper
      * @throws SQLException when connection to the database fails
      */
-    public LukuvinkkiService(DatabaseHelper helper) throws SQLException {
+    public BookmarkService(DatabaseHelper helper) throws SQLException {
         this.helper = helper;
     }
 

@@ -19,13 +19,13 @@ import java.sql.SQLException;
 import javafx.util.converter.IntegerStringConverter;
 
 import logic.Book;
-import logic.LukuvinkkiService;
+import logic.BookmarkService;
 
-import dao.LukuvinkkiDAO;
 import dao.DatabaseHelper;
 import dao.Database;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import dao.BookmarkDao;
 
 public class GUI extends Application {
     
@@ -37,7 +37,7 @@ public class GUI extends Application {
     private BorderPane layout;
     
     private Stage stage;
-    private LukuvinkkiDAO service;
+    private BookmarkDao service;
     
     public static void main(String[] args) {
         launch(args);
@@ -48,7 +48,7 @@ public class GUI extends Application {
         Database db = new Database("lukuvinkki.db");
         db.initializeDatabase();
         DatabaseHelper dbDAO = new DatabaseHelper(db);
-        service = new LukuvinkkiService(dbDAO);
+        service = new BookmarkService(dbDAO);
 
     }
     
