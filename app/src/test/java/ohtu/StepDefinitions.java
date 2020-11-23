@@ -25,6 +25,9 @@ public class StepDefinitions extends TestFXBase {
     private int pages;
     private String actualAnswer;
     private int listViewItemCount;
+    private Book book;
+    LukuvinkkiDAO service;
+    private String comparableBook;
 
     @Given("book has name {string} author {string} and pages {int}")
     public void bookHasNameAuthorAndPages(String name, String author, int pages) {
@@ -80,5 +83,24 @@ public class StepDefinitions extends TestFXBase {
        Book book = new Book(name, author, pageCount);
        assertTrue(listView.getItems().contains(book));
        assertEquals(listViewItemCount + 1, listView.getItems().size());
+    }
+    @Given("book is not initialised with name author and pages")
+    public void book_is_not_initialised_with_name_author_and_pages() {
+        book = new Book();
+    }
+
+    @When("the book is added into the application")
+    public void the_book_is_added_into_the_application() {
+        try {
+            this.service.addBook(book);
+            this.comparableBook = this.service.findOne(this.book.getTitle()).getTitle();
+        }  catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Then("it should not save the book into the service")
+    public void it_should_not_save_the_book_into_the_service() {
+        assertEquals(null, this.comparableBook);
     }
 }
