@@ -10,8 +10,10 @@ build
 app/.settings
 app/.project
 app/.classpath
+app/target/*
+app/build/*
 
 # database file
 lukuvinkki.db
-jdbc:slite:lukuvinkki.db
+jdbc:sqlite:lukuvinkki.db
 
