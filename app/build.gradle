@@ -5,11 +5,13 @@ plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.9'
     id 'checkstyle'
+    id 'jacoco'
 }
 
 repositories {
     mavenLocal()
     mavenCentral()
+    jcenter()
 }
 
 javafx {
