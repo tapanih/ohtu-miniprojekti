@@ -11,7 +11,9 @@ Tässä on linkki projektin product backlogiin.
 [Product Backlog](https://docs.google.com/spreadsheets/d/1f-38FdB34sLDpAlHOOb8wHRx4k4TWji5HSkWHmvbnTc/)
 
 
-## [Release 1](https://github.com/tapanih/ohtu-miniprojekti/releases/tag/release1) ##
+## Releaset ## 
+
++ [Release 1](https://github.com/tapanih/ohtu-miniprojekti/releases/tag/release1)
 
 ## Asennusohjeet ##
 
@@ -24,6 +26,10 @@ Checkstylen suorittaminen: mene ensin /app/ kansioon, ja aja:
 `./gradlew checkstyleMain`
 
 Raportti löytyy kansiosta /app/build/reports/checkstyle/main.html
+
+Testien ajaminen /app/ kansiosta:
+
+`./gradlew test`
 
 ## Käyttöohjeet ##
 
