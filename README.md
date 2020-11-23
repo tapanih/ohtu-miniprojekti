@@ -10,5 +10,23 @@ Projekti on Ohjelmistotuotanto-kurssin miniprojekti.
 Tässä on linkki projektin product backlogiin.  
 [Product Backlog](https://docs.google.com/spreadsheets/d/1f-38FdB34sLDpAlHOOb8wHRx4k4TWji5HSkWHmvbnTc/)
 
-## Käyttöohjeet
-Sovelluksesta ei ole vielä suoritettavaa tiedostoa. Kun sellainen saadaan aikaiseksi, käyttöohjeet tulevat tänne.
+
+## [Release 1](https://github.com/tapanih/ohtu-miniprojekti/releases/tag/release1) ##
+
+___
+
+## Asennusohjeet ##
+
+Jarin ajaminen komentoriviltä:
+
+`java -jar ohtu-miniprojekti.jar`
+
+Checkstylen suorittaminen: mene ensin /app/ kansioon, ja aja:
+
+`./gradlew checkstyleMain`
+
+Raportti löytyy kansiosta /app/build/reports/checkstyle/main.html
+
+## Käyttöohjeet ##
+
+Sovelluksen käyttö on yksinkertaista. Alkunäkymässä sovellus listaa siihen syötetyt kirjat. Voit lisätä kirjan painamalla lisää kirja, syöttämällä kirjan tiedot lomakkeisiin, ja painamalla Lisää.
