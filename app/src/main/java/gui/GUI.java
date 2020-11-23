@@ -112,6 +112,7 @@ public class GUI extends Application {
     private Scene addBookmark() {
         VBox addLayout = new VBox(10);
         addLayout.setPadding(new Insets(10, 10, 10, 10));
+        addLayout.setId("addview");
         
         Label createNewRecommendation = new Label("Luo uusi lukuvinkki");
         Button add = new Button("Lisää!");
@@ -131,6 +132,7 @@ public class GUI extends Application {
         pageCountInput.setTextFormatter((new TextFormatter<>(new IntegerStringConverter())));
         pageCountInput.setMaxWidth(100);
         Button back = new Button("Takaisin");
+        back.setId("back");
         
         addLayout.getChildren().addAll(back, createNewRecommendation, titleLabel, titleInput, authorLabel,
             authorInput, pageCountLabel, pageCountInput, error, add);

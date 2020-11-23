@@ -31,4 +31,5 @@ public class TestFXBase extends ApplicationTest {
     public <T extends Node> T find(final String query) {
         return lookup(query).query();
     }
+    
 }

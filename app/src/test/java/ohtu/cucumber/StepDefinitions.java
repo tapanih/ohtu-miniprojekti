@@ -7,18 +7,19 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import logic.*;
 import dao.*;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import ohtu.junit.TestFXBase;
-
-import org.testfx.api.FxAssert;
+import org.junit.After;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class StepDefinitions extends TestFXBase {
+    
     private int listViewItemCount;
-    private Book book;
     BookmarkDao service;
-    private String comparableBook;
+    private final int errorMessageInd = 8;
 
     @Given("application has opened")
     public void applicationHasOpened() {
@@ -50,23 +51,17 @@ public class StepDefinitions extends TestFXBase {
         assertTrue(listView.getItems().contains(book));
         assertEquals(listViewItemCount + 1, listView.getItems().size());
     }
-    @Given("book is not initialised with name author and pages")
-    public void bookIsNotInitializedWithNameAuthorAndPages() {
-        book = new Book();
+    
+    @Then("view contains error message {string}")
+    public void viewContainsErrorMessage(String message) {
+        VBox addView = find("#addview");
+        Label error = (Label) addView.getChildren().get(errorMessageInd);
+        assertTrue(error.getText().equals(message));
+        returnToMainPage();
     }
-
-    @When("the book is added into the application")
-    public void theBookIsAddedIntoTheApplication() {
-        try {
-            this.service.addBook(book);
-            this.comparableBook = this.service.findOne(this.book.getTitle()).getTitle();
-        }  catch (Exception e) {
-            e.printStackTrace();
-        }
+    
+    public void returnToMainPage() {
+        clickOn("#back");
     }
-
-    @Then("it should not save the book into the service")
-    public void itShouldNotSaveTheBookIntoTheService() {
-        assertEquals(null, this.comparableBook);
-    }
+    
 }
