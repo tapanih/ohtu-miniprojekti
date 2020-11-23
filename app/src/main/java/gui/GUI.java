@@ -21,7 +21,6 @@ import javafx.util.converter.IntegerStringConverter;
 import logic.Book;
 import logic.BookmarkService;
 
-import dao.DatabaseHelper;
 import dao.Database;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -44,10 +43,8 @@ public class GUI extends Application {
     }
 
     @Override
-    public void init() {
-        Database db = new Database("lukuvinkki.db");
-        db.initializeDatabase();
-        DatabaseHelper helper = new DatabaseHelper(db);
+    public void init() throws SQLException {
+        Database helper = new Database("lukuvinkki.db");
         try {
             service = new BookmarkService(helper);
         } catch (SQLException ex) {
