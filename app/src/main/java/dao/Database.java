@@ -80,8 +80,7 @@ public class Database {
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        } finally { 
-        } 
+        }
     }
 
 }  
