@@ -1,6 +1,6 @@
 package ohtu.cucumber;
 
-import gui.GUI;
+import gui.TestGUI;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.BeforeClass;
@@ -13,7 +13,7 @@ public class RunCucumberTest {
     
     @BeforeClass
     public static void setupHeadlessMode() throws Exception {
-        ApplicationTest.launch(GUI.class);
+        ApplicationTest.launch(TestGUI.class);
         System.setProperty("testfx.robot", "glass");
         System.setProperty("testfx.headless", "true");
         System.setProperty("glass.platform", "Monocle");
