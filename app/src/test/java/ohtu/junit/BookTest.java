@@ -1,5 +1,5 @@
 
-package ohtu.miniprojekti;
+package ohtu.junit;
 
 import logic.Book;
 import org.junit.Test;

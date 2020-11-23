@@ -1,4 +1,4 @@
-package ohtu;
+package ohtu.cucumber;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -7,7 +7,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import logic.*;
 import dao.*;
-import ohtu.miniprojekti.TestFXBase;
+import ohtu.junit.TestFXBase;
 
 import org.testfx.api.FxAssert;
 

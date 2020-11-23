@@ -1,4 +1,4 @@
-package ohtu.miniprojekti;
+package ohtu.junit;
 
 import javafx.scene.Node;
 import javafx.stage.Stage;

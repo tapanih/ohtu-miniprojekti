@@ -1,4 +1,4 @@
-package ohtu;
+package ohtu.cucumber;
 
 import gui.GUI;
 import io.cucumber.junit.Cucumber;
