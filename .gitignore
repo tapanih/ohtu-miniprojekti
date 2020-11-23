@@ -11,7 +11,7 @@ app/.settings
 app/.project
 app/.classpath
 app/target/*
-app/build/*
+app/bin/*
 
 # database file
 lukuvinkki.db
