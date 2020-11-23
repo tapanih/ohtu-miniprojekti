@@ -3,6 +3,8 @@ Projektin aiheena on luoda lukuvinkkisovellus, jonka avulla voi ylläpitää oma
 
 Projekti on Ohjelmistotuotanto-kurssin miniprojekti.  
 
+![GitHub Actions](https://github.com/tapanih/ohtu-miniprojekti/workflows/Java%20CI%20with%20Gradle/badge.svg)
+
 ## Projektin oleelliset tiedot
 **Definition of Done**  
 * Kaikki ryhmän jäsenet ovat sitä mieltä, että product backlogiin kirjatut asiakkaan kanssa neuvotellut hyväksymiskriteerit toteutuvat ja ovat kokeilleet ohjelman toimintaa omalla koneellaan. 
@@ -11,6 +13,7 @@ Projekti on Ohjelmistotuotanto-kurssin miniprojekti.
   
 **[Product Backlog](https://docs.google.com/spreadsheets/d/1f-38FdB34sLDpAlHOOb8wHRx4k4TWji5HSkWHmvbnTc/)**
 
+**[Projektin lisenssi](https://github.com/tapanih/ohtu-miniprojekti/blob/main/LICENSE.md)**
 
 ## Releaset ## 
 
