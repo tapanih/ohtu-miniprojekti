@@ -81,7 +81,6 @@ public class Database {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally { 
-            System.out.println("finally block executed"); 
         } 
     }
 
