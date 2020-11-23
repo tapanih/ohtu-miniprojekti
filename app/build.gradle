@@ -95,7 +95,7 @@ jar {
 test {
     // set a system property for the test JVM(s)
     systemProperty 'testfx.robot', 'glass'
-    systemProperty 'testfx.headless', 'false' // set false to see test running
+    systemProperty 'testfx.headless', 'true' // set false to see test running
     systemProperty 'prism.order', 'sw'
     systemProperty 'prism.text', 't2k'
     systemProperty 'java.awt.headless', 'true'
