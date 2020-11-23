@@ -6,7 +6,7 @@ import org.junit.*;
 
 import org.testfx.api.FxAssert;
 import org.testfx.framework.junit.ApplicationTest;
-import gui.GUI;
+import gui.TestGUI;
 import org.testfx.matcher.control.LabeledMatchers;
 import org.testfx.util.WaitForAsyncUtils;
 
@@ -14,7 +14,7 @@ public class TestFXBase extends ApplicationTest {
 
     @Before
     public void setUpClass() throws Exception {
-        ApplicationTest.launch(GUI.class);
+        ApplicationTest.launch(TestGUI.class);
     }
 
     @Override

@@ -19,8 +19,12 @@ public class BookmarkService implements BookmarkDao {
     @Override
     public boolean addBook(Book book) {
         try {
-            db.addBook(book);
-            return true;
+            if (db.titleAvailable(book.getTitle())) {
+                db.addBook(book);
+                return true;
+            } else {
+                return false;
+            }
         } catch (SQLException ex) {
             System.out.println("addBook error message is..." + ex.getMessage());
             return false;

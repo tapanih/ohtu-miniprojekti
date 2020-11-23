@@ -25,8 +25,9 @@ import dao.Database;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import dao.BookmarkDao;
+import javafx.application.Platform;
 
-public class GUI extends Application {
+public class TestGUI extends Application {
     
     private final int windowWidth = 500;
     private final int windowHeight = 500;
@@ -44,7 +45,7 @@ public class GUI extends Application {
 
     @Override
     public void init() throws SQLException {
-        Database helper = new Database("lukuvinkki.db");
+        Database helper = new Database(":memory:");
         try {
             service = new BookmarkService(helper);
         } catch (SQLException ex) {
@@ -72,8 +73,12 @@ public class GUI extends Application {
         addBookmark.setText("Lisää kirja");
         addBookmark.setId("add");
         
+        Button exit = new Button();
+        exit.setText("Sulje ohjelma");
+        exit.setId("exit");
+        
         HBox menu = new HBox(10);
-        menu.getChildren().addAll(addBookmark);
+        menu.getChildren().addAll(addBookmark, exit);
         menu.setAlignment(Pos.CENTER);
         
         layout.setTop(menu);
@@ -85,6 +90,7 @@ public class GUI extends Application {
         }
         
         addBookmark.setOnAction(e -> stage.setScene(addRecommendation));
+        exit.setOnAction(e -> Platform.exit());
         
         return new Scene(layout, windowWidth, windowHeight);
     }

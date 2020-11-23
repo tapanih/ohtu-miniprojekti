@@ -114,4 +114,22 @@ public class Database {
             return book;
         }
     }
+    
+    /**
+     * Tells if a book with the given title already exists in the database.
+     * @param title
+     * @return true if title is already taken and false otherwise.
+     * @throws SQLException if retrieving data from the database fails.
+     */
+    public boolean titleAvailable(String title) throws SQLException {
+        PreparedStatement statement = db.prepareStatement("SELECT COUNT(*) FROM books WHERE title = ?");
+        statement.setString(1, title);
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            int cnt = resultSet.getInt(1);
+            if (cnt == 0) return true;
+            else return false;
+        }
+        return false;
+    }
 }
