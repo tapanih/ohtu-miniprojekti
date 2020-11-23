@@ -10,6 +10,7 @@ import org.testfx.framework.junit.ApplicationTest;
 @RunWith(Cucumber.class)
 @CucumberOptions(plugin = {"pretty"})
 public class RunCucumberTest {
+    
     @BeforeClass
     public static void setupHeadlessMode() throws Exception {
         ApplicationTest.launch(GUI.class);
@@ -21,4 +22,5 @@ public class RunCucumberTest {
         System.setProperty("prism.text", "t2k");
         System.setProperty("java.awt.headless", "true");
     }
+    
 }

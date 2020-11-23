@@ -4,9 +4,6 @@ import javafx.scene.Node;
 import javafx.stage.Stage;
 import org.junit.*;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.testfx.api.FxAssert.verifyThat;
-
 import org.testfx.api.FxAssert;
 import org.testfx.framework.junit.ApplicationTest;
 import gui.GUI;
