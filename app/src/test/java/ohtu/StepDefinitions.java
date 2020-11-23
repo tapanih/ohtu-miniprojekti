@@ -27,7 +27,7 @@ public class StepDefinitions extends TestFXBase {
     private String actualAnswer;
     private int listViewItemCount;
     private Book book;
-    LukuvinkkiDAO service;
+    BookmarkDao service;
     private String comparableBook;
 
     @Given("book has name {string} author {string} and pages {int}")
