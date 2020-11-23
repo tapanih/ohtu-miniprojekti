@@ -1,5 +1,5 @@
 # Lukuvinkkisovellus
-Projektin aiheena on luoda lukuvinkkisovellus, jonka avulla voi ylläpitää omaa lukuvinkkikirjastoa. Sovellukseen voi tallentaa kirjan tiedot, artikkelin tai videon linkin ja omia lukuvinkkejään voi hallinnoida sovelluksen avulle. Sovellus on työpöytäsovellus, joka toteutetaan Javalla.  
+Projektin aiheena on luoda lukuvinkkisovellus, jonka avulla voi ylläpitää omaa lukuvinkkikirjastoa. Sovellukseen voi tallentaa kirjan tiedot, artikkelin tai videon linkin ja omia lukuvinkkejään voi hallinnoida sovelluksen avulla. Sovellus on työpöytäsovellus, joka toteutetaan Javalla.  
 
 Projekti on Ohjelmistotuotanto-kurssin miniprojekti.  
 
