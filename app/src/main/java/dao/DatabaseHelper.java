@@ -46,7 +46,7 @@ public class DatabaseHelper {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return true; //Väliaikainen
+        return true;
     }
 
     /**

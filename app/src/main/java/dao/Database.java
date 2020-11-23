@@ -16,7 +16,11 @@ public class Database {
     
     public Database() {
         this.dbName = "lukuvinkki.db";
-    } 
+    }
+
+    public String getDbName() {
+        return dbName;
+    }
 
     /**
      * Connects to the database.
@@ -49,11 +53,7 @@ public class Database {
         return true;
     }
 
-
-     /**
-     * Creates the table "books" if it does not already exist.
-     */
-    public void initializeBookTable() {
+    private void initializeBookTable() {
         try {
             Connection connection = connect();
 

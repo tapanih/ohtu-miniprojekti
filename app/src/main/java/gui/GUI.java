@@ -47,9 +47,9 @@ public class GUI extends Application {
     public void init() {
         Database db = new Database("lukuvinkki.db");
         db.initializeDatabase();
-        DatabaseHelper dbDAO = new DatabaseHelper(db);
+        DatabaseHelper helper = new DatabaseHelper(db);
         try {
-            service = new BookmarkService(dbDAO);
+            service = new BookmarkService(helper);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
