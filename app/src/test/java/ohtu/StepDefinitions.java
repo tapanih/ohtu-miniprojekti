@@ -76,9 +76,9 @@ public class StepDefinitions extends TestFXBase {
 
     @Then("book list contains a book with {string} as name and {string} as author and {int} as page count")
     public void bookListContainsAddedBook(String name, String author, int pageCount) {
-       ListView<Book> listView = find("#listview");
-       Book book = new Book(name, author, pageCount);
-       assertTrue(listView.getItems().contains(book));
-       assertEquals(listViewItemCount + 1, listView.getItems().size());
+        ListView<Book> listView = find("#listview");
+        Book book = new Book(name, author, pageCount);
+        assertTrue(listView.getItems().contains(book));
+        assertEquals(listViewItemCount + 1, listView.getItems().size());
     }
 }
