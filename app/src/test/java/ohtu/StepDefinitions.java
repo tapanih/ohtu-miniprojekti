@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import logic.*;
 import dao.*;
 import ohtu.miniprojekti.TestFXBase;
+
 import org.testfx.api.FxAssert;
 
 import static org.junit.Assert.assertEquals;
