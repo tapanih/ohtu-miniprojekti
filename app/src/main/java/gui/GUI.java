@@ -58,7 +58,7 @@ public class GUI extends Application {
         this.stage = stage;
         this.stage.setTitle("Lukuvinkkikirjanpito");
         mainMenu = mainMenu();
-        addRecommendation = addRecommendation();
+        addRecommendation = addBookmark();
         
         this.stage.setScene(mainMenu);
         this.stage.show();
@@ -79,7 +79,7 @@ public class GUI extends Application {
         layout.setTop(menu);
 
         try {
-            layout.setCenter(listRecommendations());
+            layout.setCenter(listBookmarks());
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -89,7 +89,7 @@ public class GUI extends Application {
         return new Scene(layout, windowWidth, windowHeight);
     }
 
-    private ListView listRecommendations() throws SQLException {
+    private ListView listBookmarks() throws SQLException {
         ObservableList<Book> bookList = FXCollections.observableArrayList(service.getAllBooks());
         ListView<Book> bookListView = new ListView<>(bookList);
         bookListView.setId("listview");
@@ -109,12 +109,13 @@ public class GUI extends Application {
         return bookListView;
     }
     
-    private Scene addRecommendation() {
+    private Scene addBookmark() {
         VBox addLayout = new VBox(10);
         addLayout.setPadding(new Insets(10, 10, 10, 10));
         
         Label createNewRecommendation = new Label("Luo uusi lukuvinkki");
         Button add = new Button("Lisää!");
+        Label error = new Label("");
         add.setId("submit");
         Label titleLabel = new Label("Otsikko: ");
         TextField titleInput = new TextField();
@@ -132,14 +133,19 @@ public class GUI extends Application {
         Button back = new Button("Takaisin");
         
         addLayout.getChildren().addAll(back, createNewRecommendation, titleLabel, titleInput, authorLabel,
-            authorInput, pageCountLabel, pageCountInput, add);
+            authorInput, pageCountLabel, pageCountInput, error, add);
         
         add.setOnAction(e -> {
             String title = titleInput.getText().trim();
             String author = authorInput.getText().trim();
-            int pageCount = Integer.parseInt(pageCountInput.getText().trim());
+            String pageCount = pageCountInput.getText().trim();
+            if(title.isEmpty() || author.isEmpty() || pageCount.isEmpty()){
+                error.setText("Täytä kaikki tiedot.");
+                return;
+            }
+            int pageCountInt = Integer.parseInt(pageCount);
             try {
-                Book book = new Book(title, author, pageCount);
+                Book book = new Book(title, author, pageCountInt);
                 service.addBook(book);
             } catch (Exception exception) {
                 exception.printStackTrace();
@@ -156,7 +162,7 @@ public class GUI extends Application {
     
     private void returnToMainPage() {
         try {
-            layout.setCenter(listRecommendations());
+            layout.setCenter(listBookmarks());
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
