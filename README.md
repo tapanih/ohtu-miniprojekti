@@ -13,6 +13,7 @@ Projekti on Ohjelmistotuotanto-kurssin miniprojekti.
   
 **[Product Backlog](https://docs.google.com/spreadsheets/d/1f-38FdB34sLDpAlHOOb8wHRx4k4TWji5HSkWHmvbnTc/)**
 
+**[Projektin lisenssi](https://github.com/tapanih/ohtu-miniprojekti/LICENSE.md)
 
 ## Releaset ## 
 
