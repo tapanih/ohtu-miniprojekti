@@ -44,7 +44,12 @@ public class GUI extends Application {
 
     @Override
     public void init() throws SQLException {
-        Database helper = new Database("lukuvinkki.db");
+        Database helper;
+        if (System.getProperty("isTestEnvironment").equals("true")) {
+            helper = new Database(":memory:");
+        } else {
+            helper = new Database("lukuvinkki.db");
+        }
         try {
             service = new BookmarkService(helper);
         } catch (SQLException ex) {
