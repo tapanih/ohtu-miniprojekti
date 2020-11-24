@@ -29,7 +29,7 @@ public interface BookmarkDao {
      */
     List<Book> getAllBooks() throws SQLException;
     
-    boolean deleteBook (Book b) throws SQLException;
+    boolean deleteBook(Book b) throws SQLException;
     
     
     

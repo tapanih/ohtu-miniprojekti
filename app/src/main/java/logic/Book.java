@@ -32,7 +32,7 @@ public class Book {
         return pageCount;
     }
     
-    public int getId(){
+    public int getId() {
         return id;
     }
 
@@ -43,11 +43,6 @@ public class Book {
     public void setAuthor(String kirjailija) {
         this.author = kirjailija;
     }
-    
-    public void setId(int id){
-        this.id = id;
-    }
-
 
     @Override
     public boolean equals(Object o) {

@@ -52,15 +52,12 @@ public class BookmarkService implements BookmarkDao {
     }
     
     @Override
-    public boolean deleteBook (Book b) throws SQLException{
-        
-        try{
-        return db.deleteBook(b);
-        } catch (Exception e){
+    public boolean deleteBook(Book b) throws SQLException {
+        try {
+            return db.deleteBook(b);
+        } catch (Exception e) {
             System.out.println("BookmarkService delteBook method error: " + e.getMessage());
             return false;
         }
     }
-    
-    
 }
