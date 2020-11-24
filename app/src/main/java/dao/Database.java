@@ -145,9 +145,9 @@ public class Database {
       
         try {
 
-            PreparedStatement statement = db.prepareStatement("DELETE FROM books WHERE id = ?");
+            PreparedStatement statement = db.prepareStatement("DELETE FROM books WHERE title = ?");
 
-            statement.setInt(1, book.getId());
+            statement.setString(1, book.getTitle());
 
             statement.executeUpdate();
 

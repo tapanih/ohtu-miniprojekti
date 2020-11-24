@@ -71,6 +71,15 @@ public class BookmarkDaoTest {
         List<Book> books = service.getAllBooks();
         assertFalse(books.contains(book2));
     }
+    @Test 
+    public void deleteBookReturnsTrueIfBookDeleted() throws Exception {
+        Book book = new Book("Creative Title", "Awesome Author", 333);
+        boolean successfulAdd = service.addBook(book);
+        assertTrue(successfulAdd);
+        service.deleteBook(book);
+        List<Book> books = service.getAllBooks();
+        assertFalse(books.contains(book));
+    }
     
     @After
     public void tearDown() {
