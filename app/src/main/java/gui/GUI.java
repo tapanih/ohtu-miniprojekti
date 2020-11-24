@@ -59,7 +59,7 @@ public class GUI extends Application {
     }
     
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws SQLException {
         
         this.stage = stage;
         this.stage.setTitle("Lukuvinkkikirjanpito");
@@ -70,7 +70,7 @@ public class GUI extends Application {
         this.stage.show();
     }
     
-    private Scene mainMenu() {
+    private Scene mainMenu() throws SQLException {
         
         layout = new BorderPane();
 
@@ -78,24 +78,37 @@ public class GUI extends Application {
         addBookmark.setText("Lisää kirja");
         addBookmark.setId("add");
         
+        Button deleteBookmark = new Button();
+        deleteBookmark.setText("Poista kirja");
+        deleteBookmark.setId("delete");
+        
         HBox menu = new HBox(10);
-        menu.getChildren().addAll(addBookmark);
+        menu.getChildren().addAll(addBookmark, deleteBookmark);
         menu.setAlignment(Pos.CENTER);
         
         layout.setTop(menu);
-
-        try {
-            layout.setCenter(listBookmarks());
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        ListView<Book> listView = listBookmarks();
+        listView.getSelectionModel().getSelectedItem();
+        layout.setCenter(listView);
         
         addBookmark.setOnAction(e -> stage.setScene(addRecommendation));
+        
+        
+        deleteBookmark.setOnAction(e -> {
+            Book selectedBook =  listView.getSelectionModel().getSelectedItem();
+            System.out.println(selectedBook.getTitle());
+            try {
+            service.deleteBook(selectedBook);
+            } catch (Exception exception) {
+                System.out.println(exception.getMessage());
+            }
+            returnToMainPage();
+        });
         
         return new Scene(layout, windowWidth, windowHeight);
     }
 
-    private ListView listBookmarks() throws SQLException {
+    private ListView<Book> listBookmarks() throws SQLException {
         ObservableList<Book> bookList;
         bookList = FXCollections.observableArrayList(service.getAllBooks());
         ListView<Book> bookListView = new ListView<>(bookList);
