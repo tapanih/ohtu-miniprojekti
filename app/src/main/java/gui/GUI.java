@@ -98,7 +98,7 @@ public class GUI extends Application {
             Book selectedBook =  listView.getSelectionModel().getSelectedItem();
             System.out.println(selectedBook.getTitle());
             try {
-            service.deleteBook(selectedBook);
+                service.deleteBook(selectedBook);
             } catch (Exception exception) {
                 System.out.println(exception.getMessage());
             }
