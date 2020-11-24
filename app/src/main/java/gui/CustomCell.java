@@ -3,8 +3,10 @@ package gui;
 
 import dao.BookmarkDao;
 import java.sql.SQLException;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -25,12 +27,15 @@ public class CustomCell extends ListCell<Book> {
     private Label pages;
     private BookmarkDao service;
     private Book selectedBook;
-    private GridPane gridPane;
+    private HBox hBox;
+    private ListView<Book> listView;
+    private ObservableList<Book> bookList;
     
-    public CustomCell(BookmarkDao service) {
+    public CustomCell(BookmarkDao service, ListView<Book> listView, 
+            ObservableList<Book> bookList) {
         super();
-        
-        
+        this.listView = listView;
+        this.bookList = bookList;
         
         this.service = service;
         deleteButton = new Button("Poista");
@@ -42,20 +47,27 @@ public class CustomCell extends ListCell<Book> {
                 } catch (SQLException e) {
                     System.out.println("CustomCell handle error: " + 
                             e.getMessage());
+                    return;
                 }
+                bookList.remove(book);
+                updateListView(listView);
                 updateItem(book, true);
             }
             
         });
         
-        gridPane = new GridPane();
+        hBox = new HBox();
         title = new Label();
         author = new Label();
         pages = new Label();
-        gridPane.add(title, 0, 0);
-        gridPane.add(author, 0, 1);
-        gridPane.add(pages, 0, 2);
-        gridPane.add(deleteButton, 0, 3);
+        HBox deleteButtonBox = new HBox();
+        deleteButtonBox.getChildren().add(deleteButton);
+        
+        hBox.getChildren().add(deleteButtonBox);
+        
+        hBox.getChildren().add(title);
+        hBox.getChildren().add(author);
+        hBox.getChildren().add(pages);
         
     }
     @Override
@@ -63,11 +75,13 @@ public class CustomCell extends ListCell<Book> {
         super.updateItem(book, empty);
         this.book = book;
         if (empty || book == null || book.getTitle() == null) {
-            setText("");
+            setText(null);
             setGraphic(null);
+            updateListView(listView);
         } else {
             setText(book.toString());
-            setGraphic(gridPane);
+            setGraphic(hBox);
+            updateListView(listView);
         }
     }
 

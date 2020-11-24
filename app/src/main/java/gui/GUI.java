@@ -99,7 +99,7 @@ public class GUI extends Application {
         bookList = FXCollections.observableArrayList(service.getAllBooks());
         ListView<Book> bookListView = new ListView<>(bookList);
         bookListView.setId("listview");
-        bookListView.setCellFactory(param -> new CustomCell(service));
+        bookListView.setCellFactory(param -> new CustomCell(service, bookListView, bookList));
         return bookListView;
     }
     
