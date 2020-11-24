@@ -8,6 +8,7 @@ public class Book {
     private String title;
     private String author;
     private int pageCount;
+    public int id;
 
     public Book(){
 
@@ -30,6 +31,10 @@ public class Book {
     public int getPages() {
         return pageCount;
     }
+    
+    public int getId(){
+        return id;
+    }
 
     public void setTitle(String otsikko) {
         this.title = otsikko;
@@ -37,6 +42,10 @@ public class Book {
 
     public void setAuthor(String kirjailija) {
         this.author = kirjailija;
+    }
+    
+    public void setId(int id){
+        this.id = id;
     }
 
 

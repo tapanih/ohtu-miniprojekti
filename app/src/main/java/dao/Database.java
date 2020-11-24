@@ -10,14 +10,14 @@ import java.util.List;
 import logic.Book;
 
 public class Database {
-    
+
     private Connection db;
-    
+
     public Database(String databaseName) throws SQLException {
         connect(databaseName);
         initializeDatabase();
     }
-    
+
     private void connect(String databaseName) throws SQLException {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -28,6 +28,7 @@ public class Database {
         }
     }
     
+
     private void initializeDatabase() {
         try {
             initializeBookTable();
@@ -53,6 +54,7 @@ public class Database {
 
     /**
      * Adds a book to the database.
+     *
      * @param book
      * @return true, if book added successfully, false otherwise.
      * @throws SQLException if adding book to the database fails.
@@ -76,12 +78,13 @@ public class Database {
 
     /**
      * Returns all books from the database.
+     *
      * @return returns a list of Books.
      * @throws SQLException if retrieving data from the database fails.
      */
     public List<Book> getAllBooks() throws SQLException {
         List<Book> books = new ArrayList<>();
-       
+
         PreparedStatement statement = db.prepareStatement("SELECT * FROM books");
 
         ResultSet resultSet = statement.executeQuery();
@@ -90,12 +93,13 @@ public class Database {
             books.add(kirja);
         }
         statement.close();
-        
+
         return books;
     }
 
     /**
      * Retrieves a book with the given title from the database.
+     *
      * @param title
      * @return a Book with the given title.
      * @throws SQLException if retrieving data from the database fails.
@@ -114,9 +118,10 @@ public class Database {
             return book;
         }
     }
-    
+
     /**
      * Tells if a book with the given title already exists in the database.
+     *
      * @param title
      * @return true if title is already taken and false otherwise.
      * @throws SQLException if retrieving data from the database fails.
@@ -127,9 +132,32 @@ public class Database {
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             int cnt = resultSet.getInt(1);
-            if (cnt == 0) return true;
-            else return false;
+            if (cnt == 0) {
+                return true;
+            } else {
+                return false;
+            }
         }
         return false;
+    }
+
+    public boolean deleteBook(Book book) throws SQLException {
+      
+        try {
+
+            PreparedStatement statement = db.prepareStatement("DELETE FROM books WHERE id = ?");
+
+            statement.setInt(1, book.getId());
+
+            statement.executeUpdate();
+
+            statement.close();
+        } catch (Exception e) {
+            System.out.println("deleteExpense error message is..." + e.getMessage());
+            return false;
+        }
+
+        return true;
+
     }
 }
