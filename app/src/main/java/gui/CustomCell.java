@@ -6,14 +6,17 @@ import java.sql.SQLException;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import logic.Book;
 
@@ -22,14 +25,13 @@ import logic.Book;
 public class CustomCell extends ListCell<Book> {
     private Button deleteButton;
     private Book book;
-    private Label title;
-    private Label author;
-    private Label pages;
+    private Label bookLabel;
     private BookmarkDao service;
     private Book selectedBook;
-    private HBox hBox;
+    private GridPane pane;
     private ListView<Book> listView;
     private ObservableList<Book> bookList;
+ 
     
     public CustomCell(BookmarkDao service, ListView<Book> listView, 
             ObservableList<Book> bookList) {
@@ -53,23 +55,21 @@ public class CustomCell extends ListCell<Book> {
                 updateListView(listView);
                 updateItem(book, true);
             }
-            
         });
         
-        hBox = new HBox();
-        title = new Label();
-        author = new Label();
-        pages = new Label();
+        pane = new GridPane();
+        bookLabel = new Label();
         HBox deleteButtonBox = new HBox();
         deleteButtonBox.getChildren().add(deleteButton);
-        
-        hBox.getChildren().add(deleteButtonBox);
-        
-        hBox.getChildren().add(title);
-        hBox.getChildren().add(author);
-        hBox.getChildren().add(pages);
-        
+        HBox labelBox = new HBox();
+        pane.add(labelBox, 0, 0);
+        ColumnConstraints contraints = new ColumnConstraints();
+        contraints.setHgrow(Priority.ALWAYS);
+        pane.getColumnConstraints().add(contraints);
+        labelBox.getChildren().add(bookLabel);
+        pane.add(deleteButtonBox, 2, 0);
     }
+    
     @Override
     public void updateItem(Book book, boolean empty) {
         super.updateItem(book, empty);
@@ -79,8 +79,9 @@ public class CustomCell extends ListCell<Book> {
             setGraphic(null);
             updateListView(listView);
         } else {
-            setText(book.toString());
-            setGraphic(hBox);
+            bookLabel.setText(book.getTitle() + ", " + book.getAuthor() + ", " + 
+                    book.getPages() + " sivua");
+            setGraphic(pane);
             updateListView(listView);
         }
     }
