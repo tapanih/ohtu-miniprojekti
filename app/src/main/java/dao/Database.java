@@ -89,8 +89,9 @@ public class Database {
 
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
-            Book kirja = new Book(resultSet.getString("title").trim(), resultSet.getString("author"), resultSet.getInt("pageCount"));
-            books.add(kirja);
+            Book book = new Book(resultSet.getString("title").trim(), resultSet.getString("author"), resultSet.getInt("pageCount"));
+            book.setId(resultSet.getInt("id"));
+            books.add(book);
         }
         statement.close();
 
@@ -145,13 +146,14 @@ public class Database {
       
         try {
 
-            PreparedStatement statement = db.prepareStatement("DELETE FROM books WHERE title = ?");
+            PreparedStatement statement = db.prepareStatement("DELETE FROM books WHERE id = ?");
 
-            statement.setString(1, book.getTitle());
+            statement.setInt(1, book.getId());
 
             statement.executeUpdate();
 
             statement.close();
+            
         } catch (Exception e) {
             System.out.println("deleteExpense error message is..." + e.getMessage());
             return false;

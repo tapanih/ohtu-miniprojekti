@@ -33,6 +33,7 @@ public class Book {
     }
     
     
+    
     public int getId() {
         return id;
     }
@@ -67,6 +68,10 @@ public class Book {
     @Override
     public String toString() {
         return title + ", " + author + ", " + pageCount + " sivua";
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
 }

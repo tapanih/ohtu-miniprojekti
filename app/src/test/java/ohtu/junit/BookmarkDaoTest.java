@@ -74,6 +74,7 @@ public class BookmarkDaoTest {
     @Test 
     public void deleteBookReturnsTrueIfBookDeleted() throws Exception {
         Book book = new Book("Creative Title", "Awesome Author", 333);
+        book.setId(1);
         boolean successfulAdd = service.addBook(book);
         assertTrue(successfulAdd);
         service.deleteBook(book);

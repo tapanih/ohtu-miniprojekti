@@ -78,12 +78,9 @@ public class GUI extends Application {
         addBookmark.setText("Lisää kirja");
         addBookmark.setId("add");
         
-        Button deleteBookmark = new Button();
-        deleteBookmark.setText("Poista kirja");
-        deleteBookmark.setId("delete");
         
         HBox menu = new HBox(10);
-        menu.getChildren().addAll(addBookmark, deleteBookmark);
+        menu.getChildren().addAll(addBookmark);
         menu.setAlignment(Pos.CENTER);
         
         layout.setTop(menu);
@@ -94,17 +91,6 @@ public class GUI extends Application {
         addBookmark.setOnAction(e -> stage.setScene(addRecommendation));
         
         
-        deleteBookmark.setOnAction(e -> {
-            Book selectedBook =  listView.getSelectionModel().getSelectedItem();
-            System.out.println(selectedBook.getTitle());
-            try {
-                service.deleteBook(selectedBook);
-            } catch (Exception exception) {
-                System.out.println(exception.getMessage());
-            }
-            returnToMainPage();
-        });
-        
         return new Scene(layout, windowWidth, windowHeight);
     }
 
@@ -113,19 +99,7 @@ public class GUI extends Application {
         bookList = FXCollections.observableArrayList(service.getAllBooks());
         ListView<Book> bookListView = new ListView<>(bookList);
         bookListView.setId("listview");
-        bookListView.setCellFactory(param -> new ListCell<>() {
-            @Override
-            protected void updateItem(Book book, boolean empty) {
-                
-                super.updateItem(book, empty);
-                
-                if (empty || book == null || book.getTitle() == null) {
-                    setText(null);
-                } else {
-                    setText(book.toString());
-                }
-            }
-        });
+        bookListView.setCellFactory(param -> new CustomCell(service));
         return bookListView;
     }
     
