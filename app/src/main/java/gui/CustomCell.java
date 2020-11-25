@@ -3,8 +3,12 @@ package gui;
 
 import dao.BookmarkDao;
 import java.sql.SQLException;
+import java.util.Optional;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -26,16 +30,27 @@ public class CustomCell extends ListCell<Book> {
  
     
     public CustomCell(BookmarkDao service, ListView<Book> listView, 
-            ObservableList<Book> bookList) {
+        ObservableList<Book> bookList) {
         super();
         this.listView = listView;
         this.bookList = bookList;
         
         this.service = service;
         deleteButton = new Button("Poista");
+        
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setContentText("Are you sure you want to delete this?");
+        
+        
         deleteButton.setOnAction(event -> {
             try {
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.CANCEL){
+                    return;
+                }
+                
                 service.deleteBook(book);
+                
             } catch (SQLException e) {
                 System.out.println("CustomCell handle error: " +
                         e.getMessage());
@@ -75,6 +90,7 @@ public class CustomCell extends ListCell<Book> {
             updateListView(listView);
         }
     }
+    
 
 
 }
