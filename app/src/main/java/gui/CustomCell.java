@@ -45,7 +45,7 @@ public class CustomCell extends ListCell<Book> {
         deleteButton.setOnAction(event -> {
             try {
                 Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.CANCEL){
+                if (result.get() == ButtonType.CANCEL) {
                     return;
                 }
                 
