@@ -4,22 +4,15 @@ package gui;
 import dao.BookmarkDao;
 import java.sql.SQLException;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.HPos;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import logic.Book;
-
 
 
 public class CustomCell extends ListCell<Book> {
@@ -27,7 +20,6 @@ public class CustomCell extends ListCell<Book> {
     private Book book;
     private Label bookLabel;
     private BookmarkDao service;
-    private Book selectedBook;
     private GridPane pane;
     private ListView<Book> listView;
     private ObservableList<Book> bookList;
@@ -41,20 +33,17 @@ public class CustomCell extends ListCell<Book> {
         
         this.service = service;
         deleteButton = new Button("Poista");
-        deleteButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    service.deleteBook(book);
-                } catch (SQLException e) {
-                    System.out.println("CustomCell handle error: " + 
-                            e.getMessage());
-                    return;
-                }
-                bookList.remove(book);
-                updateListView(listView);
-                updateItem(book, true);
+        deleteButton.setOnAction(event -> {
+            try {
+                service.deleteBook(book);
+            } catch (SQLException e) {
+                System.out.println("CustomCell handle error: " +
+                        e.getMessage());
+                return;
             }
+            bookList.remove(book);
+            updateListView(listView);
+            updateItem(book, true);
         });
         
         pane = new GridPane();
@@ -79,6 +68,7 @@ public class CustomCell extends ListCell<Book> {
             setGraphic(null);
             updateListView(listView);
         } else {
+            deleteButton.setId("delete" + book.getId());
             bookLabel.setText(book.getTitle() + ", " + book.getAuthor() + ", " + 
                     book.getPages() + " sivua");
             setGraphic(pane);

@@ -11,7 +11,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import ohtu.junit.TestFXBase;
 import org.testfx.framework.junit.ApplicationTest;
+import org.testfx.util.WaitForAsyncUtils;
 
+import static java.lang.Integer.parseInt;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -22,6 +24,7 @@ public class StepDefinitions extends TestFXBase {
     @Given("application has opened")
     public void applicationHasOpened() throws Exception {
         ApplicationTest.launch(GUI.class);
+        WaitForAsyncUtils.waitForFxEvents();
     }
 
     @When("add book button is clicked")
@@ -52,11 +55,43 @@ public class StepDefinitions extends TestFXBase {
         submitForm();
     }
 
+    @When("the delete button next to a book with {string} as name and {string} as author and {int} as page count is pressed")
+    public void theDeleteButtonNextToBookIsPressed(String name, String author, int pageCount) {
+        ListView<Book> listView = find("#listview");
+        Book book = new Book(name, author, pageCount);
+        int i = listView.getItems().indexOf(book);
+        book = listView.getItems().get(i);
+        clickOn("#delete" + book.getId());
+    }
+
     @Then("book list contains a book with {string} as name and {string} as author and {int} as page count")
     public void bookListContainsAddedBook(String name, String author, int pageCount) {
         ListView<Book> listView = find("#listview");
         Book book = new Book(name, author, pageCount);
         assertTrue(listView.getItems().contains(book));
+    }
+
+    @Then("the first element of the book list is a book with {string} as name and {string} as author " +
+            "and {int} as page count")
+    public void theFirstElementIsABookWith(String name, String author, int pageCount) {
+        theBookAtIndexEquals(0, new Book(name, author, pageCount));
+    }
+
+    @Then("the second element of the book list is a book with {string} as name and {string} as author " +
+            "and {int} as page count")
+    public void theSecondElementIsABookWith(String name, String author, int pageCount) {
+        theBookAtIndexEquals(1, new Book(name, author, pageCount));
+    }
+
+    @Then("the third element of the book list is a book with {string} as name and {string} as author " +
+            "and {int} as page count")
+    public void theThirdElementIsABookWith(String name, String author, int pageCount) {
+        theBookAtIndexEquals(2, new Book(name, author, pageCount));
+    }
+
+    private void theBookAtIndexEquals(int index, Book book) {
+        ListView<Book> listView = find("#listview");
+        assertTrue(listView.getItems().get(index).equals(book));
     }
     
     @Then("view contains error message {string}")
