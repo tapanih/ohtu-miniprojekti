@@ -52,25 +52,6 @@ public class BookmarkDaoTest {
         assertTrue(books.contains(book3));
     }
     
-    @Test
-    public void abbBookReturnsFalseIfNameAlreadyTaken() throws Exception {
-        Book book = new Book("Creative Title", "Awesome Author", 333);
-        boolean successfulAdd = service.addBook(book);
-        assertTrue(successfulAdd);
-        Book book2 = new Book("Creative Title", "Author Who Copied The Name Of The Previous Book", 333);
-        boolean unsuccessfulAdd = service.addBook(book2);
-        assertFalse(unsuccessfulAdd);
-    }
-    
-    @Test
-    public void abbBookDoesNotAddBookToDatabasefNameAlreadyTaken() throws Exception {
-        Book book = new Book("Creative Title", "Awesome Author", 333);
-        service.addBook(book);
-        Book book2 = new Book("Creative Title", "Author Who Copied The Name Of The Previous Book", 333);
-        service.addBook(book2);
-        List<Book> books = service.getAllBooks();
-        assertFalse(books.contains(book2));
-    }
     @Test 
     public void deleteBookReturnsTrueIfBookDeleted() throws Exception {
         Book book = new Book("Creative Title", "Awesome Author", 333);
