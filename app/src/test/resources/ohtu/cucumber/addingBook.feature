@@ -5,28 +5,34 @@ Feature: As a user I want to be able to add a book to the application
       Given application has opened
       When  add book button is clicked
       When  form is filled with "Title" as name and "Author" as author and "444" as page count
+      When  form is submitted
+      Then  the book list contains 1 books
       Then  book list contains a book with "Title" as name and "Author" as author and 444 as page count
 
     Scenario Outline: Book cannot be added without a heading
       Given application has opened
       When  add book button is clicked
       When  form is filled with "" as name and "J. K. Rolling" as author and "400" as page count
+      When  form is submitted
       Then  view contains error message "Täytä kaikki tiedot."
 
     Scenario Outline: Book cannot be added without an author
       Given application has opened
       When  add book button is clicked
       When  form is filled with "Harri Potta" as name and "" as author and "400" as page count
+      When  form is submitted
       Then  view contains error message "Täytä kaikki tiedot."
 
     Scenario Outline: Book cannot be added without a page count
       Given application has opened
       When  add book button is clicked
       When  form is filled with "Harri Potta" as name and "J. K. Rolling" as author and "" as page count
+      When  form is submitted
       Then  view contains error message "Täytä kaikki tiedot."
 
     Scenario Outline: Book cannot be added if all information is blank
       Given application has opened
       When  add book button is clicked
       When  form is filled with "" as name and "" as author and "" as page count
+      When  form is submitted
       Then  view contains error message "Täytä kaikki tiedot."

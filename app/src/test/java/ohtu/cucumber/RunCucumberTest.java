@@ -14,7 +14,6 @@ public class RunCucumberTest {
     @BeforeClass
     public static void setupHeadlessMode() throws Exception {
         System.setProperty("isTestEnvironment", "true");
-        ApplicationTest.launch(GUI.class);
         System.setProperty("testfx.robot", "glass");
         System.setProperty("testfx.headless", "true");
         System.setProperty("glass.platform", "Monocle");
@@ -23,5 +22,4 @@ public class RunCucumberTest {
         System.setProperty("prism.text", "t2k");
         System.setProperty("java.awt.headless", "true");
     }
-    
 }
