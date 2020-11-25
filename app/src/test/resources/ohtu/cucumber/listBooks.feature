@@ -1,6 +1,6 @@
 Feature: As an user, I want to list added books.
 
-    Scenario Outline: No books are listed when none are added when the application is opened.
+    Scenario Outline: No books are listed when none are added.
       Given application has opened
       Then the book list is empty
 

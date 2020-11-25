@@ -111,6 +111,7 @@ public class GUI extends Application {
         Label createNewRecommendation = new Label("Luo uusi lukuvinkki");
         Button add = new Button("Lisää!");
         Label error = new Label("");
+        error.setId("errorMessage");
         add.setId("submit");
         Label titleLabel = new Label("Otsikko: ");
         TextField titleInput = new TextField();

@@ -8,18 +8,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import logic.*;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 import ohtu.junit.TestFXBase;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.util.WaitForAsyncUtils;
 
-import static java.lang.Integer.parseInt;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class StepDefinitions extends TestFXBase {
-
-    private final int errorMessageInd = 8;
 
     @Given("application has opened")
     public void applicationHasOpened() throws Exception {
@@ -96,8 +92,7 @@ public class StepDefinitions extends TestFXBase {
     
     @Then("view contains error message {string}")
     public void viewContainsErrorMessage(String message) {
-        VBox addView = find("#addview");
-        Label error = (Label) addView.getChildren().get(errorMessageInd);
+        Label error = find("#errorMessage");
         assertTrue(error.getText().equals(message));
         returnToMainPage();
     }
