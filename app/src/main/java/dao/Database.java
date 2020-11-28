@@ -105,20 +105,20 @@ public class Database {
      * @return a Book with the given title.
      * @throws SQLException if retrieving data from the database fails.
      */
-    public Book getBookByTitle(String title) throws SQLException {
-        PreparedStatement statement = db.prepareStatement("SELECT * FROM books WHERE title = ?");
-        statement.setString(1, title);
-        ResultSet resultSet = statement.executeQuery();
-        boolean findOne = resultSet.next();
-        if (!findOne) {
-            return null;
-        } else {
-            Book book = new Book(resultSet.getString("title"), resultSet.getString("author"), resultSet.getInt("pageCount"));
-            statement.close();
-            resultSet.close();
-            return book;
-        }
-    }
+//    public Book getBookByTitle(String title) throws SQLException {
+//        PreparedStatement statement = db.prepareStatement("SELECT * FROM books WHERE title = ?");
+//        statement.setString(1, title);
+//        ResultSet resultSet = statement.executeQuery();
+//        boolean findOne = resultSet.next();
+//        if (!findOne) {
+//            return null;
+//        } else {
+//            Book book = new Book(resultSet.getString("title"), resultSet.getString("author"), resultSet.getInt("pageCount"));
+//            statement.close();
+//            resultSet.close();
+//            return book;
+//        }
+//    }
 
     /**
      * Tells if a book with the given title already exists in the database.

@@ -30,15 +30,15 @@ public class BookmarkService implements BookmarkDao {
         }
     }
 
-    @Override
-    public Book getBookByTitle(String title) {
-        try {
-            return db.getBookByTitle(title);
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            return null;
-        }
-    }
+//    @Override
+//    public Book getBookByTitle(String title) {
+//        try {
+//            return db.getBookByTitle(title);
+//        } catch (SQLException ex) {
+//            System.out.println(ex.getMessage());
+//            return null;
+//        }
+//    }
 
     @Override
     public List<Book> getAllBooks() {
