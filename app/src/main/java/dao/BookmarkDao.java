@@ -21,7 +21,7 @@ public interface BookmarkDao {
      * @throws SQLException if retrieving data from the database fails
      *
      */
-    Book getBookByTitle(String title) throws SQLException;
+//    Book getBookByTitle(String title) throws SQLException;
 
     /**
      * @return returns a list of categories created by the given user

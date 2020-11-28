@@ -1,4 +1,3 @@
-
 package ohtu.junit;
 
 import dao.BookmarkDao;
@@ -11,24 +10,38 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 
 public class BookmarkDaoTest {
-    
+
     private BookmarkDao service;
-    
+
     @Before
     public void setUp() throws ClassNotFoundException, SQLException {
         Database db = new Database(":memory:");
         service = new BookmarkService(db);
     }
-    
+
     @Test
     public void abbBookReturnTrueIfBookWithUniqueNameIsAdded() throws Exception {
         Book book = new Book("Creative Title", "Awesome Author", 333);
         boolean bookAdded = service.addBook(book);
         assertTrue(bookAdded);
     }
-    
+
+    @Test
+    public void addBookReturnFalseIfAuthorIsMissing() throws Exception {
+        Book testbook = new Book("TestBook", null, 333);
+        assertFalse(service.addBook(testbook));
+    }
+
+    @Test
+    public void addBookReturnFalseIfTitleIsMissing() throws Exception {
+        Book testbook = new Book(null, "anonymous", 333);
+        assertFalse(service.addBook(testbook));
+    }
+
     @Test
     public void abbedBookIsPreservedInTheDatabase() throws Exception {
         Book book = new Book("Creative Title", "Awesome Author", 333);
@@ -36,7 +49,16 @@ public class BookmarkDaoTest {
         List<Book> books = service.getAllBooks();
         assertTrue(books.contains(book));
     }
-    
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+
+    @Test
+    public void throwsExceptionWithSpecificType() throws SQLException {
+        expectedException.expect(SQLException.class);
+
+        throw new SQLException();
+    }
+
     @Test
     public void getAllBooksReturnsAllBooks() throws Exception {
         Book book1 = new Book("Creative Title", "Awesome Author", 333);
@@ -51,8 +73,8 @@ public class BookmarkDaoTest {
         assertTrue(books.contains(book2));
         assertTrue(books.contains(book3));
     }
-    
-    @Test 
+
+    @Test
     public void deleteBookReturnsTrueIfBookDeleted() throws Exception {
         Book book = new Book("Creative Title", "Awesome Author", 333);
         book.setId(1);
@@ -62,9 +84,9 @@ public class BookmarkDaoTest {
         List<Book> books = service.getAllBooks();
         assertFalse(books.contains(book));
     }
-    
+
     @After
     public void tearDown() {
-        
+
     }
 }
