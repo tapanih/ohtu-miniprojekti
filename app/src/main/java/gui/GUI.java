@@ -25,6 +25,9 @@ import dao.Database;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import dao.BookmarkDao;
+import java.util.ArrayList;
+import java.util.Iterator;
+import javafx.event.EventType;
 
 public class GUI extends Application {
     
@@ -37,6 +40,10 @@ public class GUI extends Application {
     
     private Stage stage;
     private BookmarkDao service;
+    
+    private ObservableList<Book> bookList;
+    private ArrayList<Book> fullBookList;
+    private ListView<Book> listView;
     
     public static void main(String[] args) {
         launch(args);
@@ -84,9 +91,29 @@ public class GUI extends Application {
         menu.setAlignment(Pos.CENTER);
         
         layout.setTop(menu);
-        ListView<Book> listView = listBookmarks();
-        listView.getSelectionModel().getSelectedItem();
+        listBookmarks();
         layout.setCenter(listView);
+        
+        TextField searchField = new TextField();
+        searchField.setId("search");
+        menu.getChildren().add(searchField);
+        
+        searchField.textProperty().addListener(obs -> {
+            String filter = searchField.getText();
+            bookList.clear();
+            bookList.addAll(fullBookList);
+            if (filter != null && filter.length() > 0) {
+                for (Iterator<Book> iterator = bookList.iterator(); iterator.hasNext();) {
+                    Book item = iterator.next();
+                    if (!item.getTitle().toLowerCase().contains(filter.toLowerCase())) {
+                        iterator.remove();
+                    }
+                }
+            }
+            listView.setItems(bookList);
+            listView.refresh();
+            
+        });
         
         addBookmark.setOnAction(e -> stage.setScene(addRecommendation));
         
@@ -94,13 +121,14 @@ public class GUI extends Application {
         return new Scene(layout, windowWidth, windowHeight);
     }
 
-    private ListView<Book> listBookmarks() throws SQLException {
-        ObservableList<Book> bookList;
-        bookList = FXCollections.observableArrayList(service.getAllBooks());
-        ListView<Book> bookListView = new ListView<>(bookList);
-        bookListView.setId("listview");
-        bookListView.setCellFactory(param -> new CustomCell(service, bookListView, bookList));
-        return bookListView;
+    private void listBookmarks() throws SQLException {
+        fullBookList = new ArrayList<>(service.getAllBooks());
+        bookList = FXCollections.observableArrayList(fullBookList);
+        listView = new ListView<>(bookList);
+        listView.setId("listview");
+        listView.setCellFactory(param -> new CustomCell(service, 
+                listView, bookList, fullBookList));
+        
     }
     
     private Scene addBookmark() {
@@ -162,10 +190,12 @@ public class GUI extends Application {
     
     private void returnToMainPage() {
         try {
-            layout.setCenter(listBookmarks());
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            listBookmarks();
+        } catch (SQLException e) {
+            System.out.println("returnToMainPage error: " + e.getMessage());
         }
+        layout.setCenter(listView);
+
         stage.setScene(mainMenu);
     }
 

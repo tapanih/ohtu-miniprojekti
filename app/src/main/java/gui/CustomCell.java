@@ -3,6 +3,7 @@ package gui;
 
 import dao.BookmarkDao;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Optional;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -27,13 +28,15 @@ public class CustomCell extends ListCell<Book> {
     private GridPane pane;
     private ListView<Book> listView;
     private ObservableList<Book> bookList;
+    private ArrayList<Book> fullBookList;
  
     
     public CustomCell(BookmarkDao service, ListView<Book> listView, 
-        ObservableList<Book> bookList) {
+        ObservableList<Book> xbookList, ArrayList<Book> xfullBookList) {
         super();
         this.listView = listView;
-        this.bookList = bookList;
+        this.bookList = xbookList;
+        this.fullBookList = xfullBookList;
         
         this.service = service;
         deleteButton = new Button("Poista");
@@ -56,6 +59,7 @@ public class CustomCell extends ListCell<Book> {
                         e.getMessage());
                 return;
             }
+            fullBookList.remove(book);
             bookList.remove(book);
             updateListView(listView);
             updateItem(book, true);
