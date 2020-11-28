@@ -24,7 +24,6 @@ public class Database {
             String url = "jdbc:sqlite:" + databaseName;
             db = DriverManager.getConnection(url);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
     }
     
@@ -33,7 +32,6 @@ public class Database {
         try {
             initializeBookTable();
         } catch (Throwable t) {
-            System.out.println(t.getMessage());
         }
     }
 
@@ -48,7 +46,6 @@ public class Database {
             createBookTable.execute();
             createBookTable.close();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
         }
     }
 
@@ -71,7 +68,6 @@ public class Database {
             statement.close();
             return true;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return false;
         }
     }
@@ -141,7 +137,6 @@ public class Database {
             statement.close();
             
         } catch (Exception e) {
-            System.out.println("deleteExpense error message is..." + e.getMessage());
             return false;
         }
 
