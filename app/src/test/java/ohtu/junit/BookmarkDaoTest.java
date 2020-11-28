@@ -29,6 +29,19 @@ public class BookmarkDaoTest {
         assertTrue(bookAdded);
     }
     
+      
+    @Test
+    public void addBookReturnFalseIfAuthorIsMissing() throws Exception {
+        Book testbook = new Book("TestBook", null, 333);
+        assertFalse(service.addBook(testbook));
+    }
+    
+    @Test
+    public void addBookReturnFalseIfTitleIsMissing() throws Exception {
+        Book testbook = new Book(null, "anonymous", 333);
+        assertFalse(service.addBook(testbook));
+    }
+    
     @Test
     public void abbedBookIsPreservedInTheDatabase() throws Exception {
         Book book = new Book("Creative Title", "Awesome Author", 333);

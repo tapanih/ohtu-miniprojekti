@@ -18,6 +18,9 @@ public class BookmarkService implements BookmarkDao {
 
     @Override
     public boolean addBook(Book book) {
+        if (book.getAuthor() == null || book.getAuthor().equals("") || book.getTitle() == null || book.getTitle().equals("")) {
+            return false;
+        }
         try {
             db.addBook(book);
             return true;
