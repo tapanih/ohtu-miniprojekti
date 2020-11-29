@@ -95,9 +95,10 @@ public class GUI extends Application {
         layout.setCenter(listView);
         
         TextField searchField = new TextField();
+
+        searchField.setPromptText("Etsi nimellä");
         searchField.setId("search");
-        Label searchByTitle = new Label("Etsi nimellä");
-        menu.getChildren().addAll(searchByTitle, searchField);
+        menu.getChildren().add(searchField);
         menu.setSpacing(10);
         
         searchField.textProperty().addListener(obs -> {
@@ -105,12 +106,7 @@ public class GUI extends Application {
             bookList.clear();
             bookList.addAll(fullBookList);
             if (filter != null && filter.length() > 0) {
-                for (Iterator<Book> iterator = bookList.iterator(); iterator.hasNext();) {
-                    Book item = iterator.next();
-                    if (!item.getTitle().toLowerCase().contains(filter.toLowerCase())) {
-                        iterator.remove();
-                    }
-                }
+                bookList.removeIf(item -> !item.getTitle().toLowerCase().contains(filter.toLowerCase()));
             }
             listView.setItems(bookList);
             listView.refresh();
@@ -118,8 +114,7 @@ public class GUI extends Application {
         });
         
         addBookmark.setOnAction(e -> stage.setScene(addRecommendation));
-        
-        
+
         return new Scene(layout, windowWidth, windowHeight);
     }
 

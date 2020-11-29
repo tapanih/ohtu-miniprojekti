@@ -28,15 +28,8 @@ public class TestFXBase extends ApplicationTest {
         WaitForAsyncUtils.waitForFxEvents();
         FxAssert.verifyThat(".button", LabeledMatchers.hasText("Lisää kirja"));
     }
-    
-    @Test
-    public void thereIsLabelForSearchingForASpecificBook() {
-        WaitForAsyncUtils.waitForFxEvents();
-        FxAssert.verifyThat(".label", LabeledMatchers.hasText("Etsi nimellä"));
-    }
 
     public <T extends Node> T find(final String query) {
         return lookup(query).query();
     }
-    
 }
