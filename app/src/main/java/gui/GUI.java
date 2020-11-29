@@ -37,6 +37,7 @@ public class GUI extends Application {
     private Scene mainMenu;
     private Scene addRecommendation;
     private BorderPane layout;
+    private TextField searchField;
     
     private Stage stage;
     private BookmarkDao service;
@@ -91,10 +92,11 @@ public class GUI extends Application {
         menu.setAlignment(Pos.CENTER);
         
         layout.setTop(menu);
+
+        searchField = new TextField();
         listBookmarks();
+
         layout.setCenter(listView);
-        
-        TextField searchField = new TextField();
 
         searchField.setPromptText("Etsi nimellä");
         searchField.setId("search");
@@ -121,11 +123,14 @@ public class GUI extends Application {
     private void listBookmarks() throws SQLException {
         fullBookList = new ArrayList<>(service.getAllBooks());
         bookList = FXCollections.observableArrayList(fullBookList);
+        String filter = searchField.getText();
+        if (filter != null && filter.length() > 0) {
+            bookList.removeIf(item -> !item.getTitle().toLowerCase().contains(filter.toLowerCase()));
+        }
         listView = new ListView<>(bookList);
         listView.setId("listview");
         listView.setCellFactory(param -> new CustomCell(service, 
                 listView, bookList, fullBookList));
-        
     }
     
     private Scene addBookmark() {
