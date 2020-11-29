@@ -58,7 +58,11 @@ public class StepDefinitions extends TestFXBase {
         int i = listView.getItems().indexOf(book);
         book = listView.getItems().get(i);
         clickOn("#delete" + book.getId());
-        clickOn("OK");
+    }
+
+    @When("{string} is clicked in the confirmation dialog")
+    public void buttonWithMessageIsClicked(String message) {
+        clickOn(message);
     }
 
     @Then("book list contains a book with {string} as name and {string} as author and {int} as page count")

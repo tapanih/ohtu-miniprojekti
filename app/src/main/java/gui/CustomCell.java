@@ -21,14 +21,13 @@ import logic.Book;
 
 
 public class CustomCell extends ListCell<Book> {
-    private Button deleteButton;
+    private final Button deleteButton;
     private Book book;
-    private Label bookLabel;
-    private BookmarkDao service;
-    private GridPane pane;
-    private ListView<Book> listView;
-    private ObservableList<Book> bookList;
-    private ArrayList<Book> fullBookList;
+    private final Label bookLabel;
+    private final GridPane pane;
+    private final ListView<Book> listView;
+    private final ObservableList<Book> bookList;
+    private final ArrayList<Book> fullBookList;
  
     
     public CustomCell(BookmarkDao service, ListView<Book> listView, 
@@ -37,26 +36,24 @@ public class CustomCell extends ListCell<Book> {
         this.listView = listView;
         this.bookList = xbookList;
         this.fullBookList = xfullBookList;
-        
-        this.service = service;
+
         deleteButton = new Button("Poista");
         
         Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setContentText("Are you sure you want to delete this?");
+        alert.setContentText("Haluatko varmasti poistaa kyseisen kirjan?");
         
         
         deleteButton.setOnAction(event -> {
             try {
                 Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.CANCEL)  {
+                // check if "X" or "Cancel" is pressed
+                if (result.isEmpty() || result.get() == ButtonType.CANCEL)  {
                     return;
                 }
                 
                 service.deleteBook(book);
                 
             } catch (SQLException e) {
-                System.out.println("CustomCell handle error: " +
-                        e.getMessage());
                 return;
             }
             fullBookList.remove(book);
@@ -94,7 +91,4 @@ public class CustomCell extends ListCell<Book> {
             updateListView(listView);
         }
     }
-    
-
-
 }
