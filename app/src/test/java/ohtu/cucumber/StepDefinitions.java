@@ -6,6 +6,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
+import javafx.scene.input.KeyCode;
 import logic.*;
 import javafx.scene.control.Label;
 import ohtu.junit.TestFXBase;
@@ -63,6 +65,23 @@ public class StepDefinitions extends TestFXBase {
     @When("{string} is clicked in the confirmation dialog")
     public void buttonWithMessageIsClicked(String message) {
         clickOn(message);
+    }
+
+    @When("{string} is entered as the search term")
+    public void textIsEnteredAsTheSearchTerm(String text) {
+        clickOn("#search").write(text);
+    }
+
+    @When("the search field is cleared")
+    public void clearTheSearchField() {
+        TextField searchField = find("#search");
+        String text = searchField.getText();
+        clickOn("#search");
+
+        // setting text to "" or null did not work so I did it like this
+        for (int i = 0; i < text.length(); i++) {
+            push(KeyCode.BACK_SPACE);
+        }
     }
 
     @Then("book list contains a book with {string} as name and {string} as author and {int} as page count")
