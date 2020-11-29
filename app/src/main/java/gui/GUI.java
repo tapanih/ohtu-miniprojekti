@@ -96,7 +96,9 @@ public class GUI extends Application {
         
         TextField searchField = new TextField();
         searchField.setId("search");
-        menu.getChildren().add(searchField);
+        Label searchByTitle = new Label("Etsi nimellä");
+        menu.getChildren().addAll(searchByTitle, searchField);
+        menu.setSpacing(10);
         
         searchField.textProperty().addListener(obs -> {
             String filter = searchField.getText();
