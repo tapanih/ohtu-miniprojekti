@@ -174,7 +174,6 @@ public class GUI extends Application {
             try {
                 Book book = new Book(title, author, pageCountInt);
                 if (!service.addBook(book)) {
-                    error.setText("Samanniminen kirja on jo lisätty sovellukseen.");
                     return;
                 }
             } catch (Exception ex) {
