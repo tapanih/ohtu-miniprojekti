@@ -27,6 +27,13 @@ public class Article {
         this.tags = tags;
     }
 
+    public Article(String title, String hyperlink) {
+
+        this.title = title;
+        this.hyperlink = hyperlink;
+
+    }
+
     public int getId() {
         return id;
     }
