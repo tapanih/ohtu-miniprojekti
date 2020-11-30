@@ -20,6 +20,7 @@ Projekti on Ohjelmistotuotanto-kurssin miniprojekti.
 ## Releaset ## 
 
 + [Release 1](https://github.com/tapanih/ohtu-miniprojekti/releases/tag/release1)
++ [Release 2](https://github.com/tapanih/ohtu-miniprojekti/releases/tag/2)
 
 ## Asennus- ja käyttöohjeet ##
 
