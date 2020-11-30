@@ -1,6 +1,7 @@
 package logic;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Book {
 
@@ -26,6 +27,18 @@ public class Book {
         this.pageCount = pageCount;
     }
 
+    public Book(String title, String author, int currentPage, int pageCount, ArrayList<String> tags) {
+        this.title = title;
+        this.author = author;
+        this.currentPage = currentPage;
+        this.pageCount = pageCount;
+        this.tags = tags;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -36,6 +49,10 @@ public class Book {
 
     public int getPages() {
         return pageCount;
+    }
+
+    public int getCurrentPage() {
+        return currentPage;
     }
 
     public int getId() {
