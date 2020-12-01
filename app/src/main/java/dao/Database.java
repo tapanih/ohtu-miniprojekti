@@ -65,7 +65,6 @@ public class Database {
         }
     }
 
-
 //    
 //    private void initializeBookmarkTable() {
 //        try {
@@ -195,7 +194,7 @@ public class Database {
 
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
-            String tag = new String(resultSet.getString("keyword").trim());
+            String tag = resultSet.getString("keyword").trim();
             tags.add(tag);
         }
         statement.close();
@@ -267,22 +266,21 @@ public class Database {
         return true;
     }
 
-    /// * deleteTag method not finished
-//    public boolean deleteTag(String tag) throws SQLException {
-//
-//        try {
+    public boolean deleteTag(int id) throws SQLException {
 
-            //PreparedStatement statement = db.prepareStatement("DELETE FROM tags WHERE id = ?");
-            // how do we get the id?
-            //       statement.setInt(1,);
+        try {
 
-//            statement.executeUpdate();
-//
-//            statement.close();
-//
-//        } catch (Exception e) {
-//            return false;
-//        }
-//        return true;
-//    }
+            PreparedStatement statement = db.prepareStatement("DELETE FROM tags WHERE id = ?");
+
+            statement.setInt(1, id);
+
+            statement.executeUpdate();
+
+            statement.close();
+
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
 }

@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BookmarkService implements BookmarkDao {
-    
+
     private Database db;
 
     public BookmarkService(Database db) throws SQLException {
@@ -38,6 +38,14 @@ public class BookmarkService implements BookmarkDao {
 //            return null;
 //        }
 //    }
+    public List<Article> getAllArticles() {
+        try {
+            return db.getAllArticles();
+        } catch (SQLException ex) {
+            return new ArrayList<>();
+        }
+
+    }
 
     @Override
     public List<Book> getAllBooks() {
@@ -47,7 +55,7 @@ public class BookmarkService implements BookmarkDao {
             return new ArrayList<>();
         }
     }
-    
+
     @Override
     public boolean deleteBook(Book b) throws SQLException {
         try {
