@@ -103,15 +103,22 @@ public class Database {
      * @return true, if book added successfully, false otherwise.
      * @throws SQLException if adding book to the database fails.
      */
+
+         /**
+     * Adds a book to the database.
+     *
+     * @param book
+     * @return true, if book added successfully, false otherwise.
+     * @throws SQLException if adding book to the database fails.
+     */
     public boolean addBook(Book book) throws SQLException {
         try {
             PreparedStatement statement = db.prepareStatement(
-                    "INSERT OR REPLACE INTO books (title, author, currentPage, pageCount) VALUES (?, ?, ?, ?);"
+                    "INSERT OR REPLACE INTO books (title, author, pageCount) VALUES (?, ?, ?);"
             );
             statement.setString(1, book.getTitle());
             statement.setString(2, book.getAuthor());
-            statement.setInt(3, book.getCurrentPage());
-            statement.setInt(4, book.getPages());
+            statement.setInt(3, book.getPages());
             statement.executeUpdate();
             statement.close();
             return true;
@@ -119,6 +126,22 @@ public class Database {
             return false;
         }
     }
+    // public boolean addBook(Book book) throws SQLException {
+    //     try {
+    //         PreparedStatement statement = db.prepareStatement(
+    //                 "INSERT OR REPLACE INTO books (title, author, currentPage, pageCount) VALUES (?, ?, ?, ?);"
+    //         );
+    //         statement.setString(1, book.getTitle());
+    //         statement.setString(2, book.getAuthor());
+    //         statement.setInt(3, book.getCurrentPage());
+    //         statement.setInt(4, book.getPages());
+    //         statement.executeUpdate();
+    //         statement.close();
+    //         return true;
+    //     } catch (Exception e) {
+    //         return false;
+    //     }
+    // }
 
     public boolean addArticle(Article article) throws SQLException {
         try {
@@ -162,7 +185,7 @@ public class Database {
 
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
-            Book book = new Book(resultSet.getString("title").trim(), resultSet.getString("author").trim(), resultSet.getInt("currentPage"), resultSet.getInt("pageCount"));
+            Book book = new Book(resultSet.getString("title").trim(), resultSet.getString("author"), resultSet.getInt("pageCount"));
             book.setId(resultSet.getInt("id"));
             books.add(book);
         }
@@ -170,6 +193,21 @@ public class Database {
 
         return books;
     }
+    // public List<Book> getAllBooks() throws SQLException {
+    //     List<Book> books = new ArrayList<>();
+
+    //     PreparedStatement statement = db.prepareStatement("SELECT * FROM books");
+
+    //     ResultSet resultSet = statement.executeQuery();
+    //     while (resultSet.next()) {
+    //         Book book = new Book(resultSet.getString("title").trim(), resultSet.getString("author").trim(), resultSet.getInt("currentPage"), resultSet.getInt("pageCount"));
+    //         book.setId(resultSet.getInt("id"));
+    //         books.add(book);
+    //     }
+    //     statement.close();
+
+    //     return books;
+    // }
 
     public List<Article> getAllArticles() throws SQLException {
         List<Article> articles = new ArrayList<>();
