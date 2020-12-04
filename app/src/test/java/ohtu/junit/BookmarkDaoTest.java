@@ -61,9 +61,9 @@ public class BookmarkDaoTest {
 
     @Test
     public void getAllBooksReturnsAllBooks() throws Exception {
-        Book book1 = new Book("Creative Title", "Awesome Author", 100, 333);
-        Book book2 = new Book("Fantastic Title", "Such A Good Author", 100, 222);
-        Book book3 = new Book("Funny Title", "Mediocre Author", 100, 111);
+        Book book1 = new Book("Creative Title", "Awesome Author", 333, 100);
+        Book book2 = new Book("Fantastic Title", "Such A Good Author", 222, 100);
+        Book book3 = new Book("Funny Title", "Mediocre Author", 111, 100);
         service.addBook(book1);
         service.addBook(book2);
         service.addBook(book3);
