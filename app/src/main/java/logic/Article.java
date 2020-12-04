@@ -2,7 +2,7 @@ package logic;
 
 import java.util.ArrayList;
 
-public class Article {
+public class Article implements Bookmark {
 
     private int id;
     private String title;
@@ -34,6 +34,7 @@ public class Article {
 
     }
 
+    @Override
     public int getId() {
         return id;
     }
@@ -42,6 +43,7 @@ public class Article {
         this.id = id;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
@@ -58,6 +60,7 @@ public class Article {
         this.hyperlink = hyperlink;
     }
 
+    @Override
     public ArrayList<String> getTags() {
         return tags;
     }

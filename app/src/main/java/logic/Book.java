@@ -3,7 +3,9 @@ package logic;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Book {
+import dao.BookmarkDao;
+
+public class Book implements Bookmark {
 
     private String title;
     private String author;
@@ -35,10 +37,12 @@ public class Book {
         this.tags = tags;
     }
 
+    @Override
     public List<String> getTags() {
         return tags;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
@@ -55,6 +59,7 @@ public class Book {
         return currentPage;
     }
 
+    @Override
     public int getId() {
         return id;
     }
