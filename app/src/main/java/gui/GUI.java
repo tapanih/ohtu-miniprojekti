@@ -28,6 +28,8 @@ import dao.BookmarkDao;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javafx.event.EventType;
+import logic.Article;
+import logic.Bookmark;
 
 public class GUI extends Application {
     
@@ -35,16 +37,17 @@ public class GUI extends Application {
     private final int windowHeight = 500;
     
     private Scene mainMenu;
-    private Scene addRecommendation;
+    private Scene addBookScene;
+    private Scene addArticleScene;
     private BorderPane layout;
     private TextField searchField;
     
     private Stage stage;
     private BookmarkDao service;
     
-    private ObservableList<Book> bookList;
-    private ArrayList<Book> fullBookList;
-    private ListView<Book> listView;
+    private ObservableList<Bookmark> bookmarkList;
+    private ArrayList<Bookmark> fullBookmarkList;
+    private ListView<Bookmark> listView;
     
     public static void main(String[] args) {
         launch(args);
@@ -72,7 +75,8 @@ public class GUI extends Application {
         this.stage = stage;
         this.stage.setTitle("Lukuvinkkikirjanpito");
         mainMenu = mainMenu();
-        addRecommendation = addBookmark();
+        addBookScene = addBook();
+        addArticleScene = addArticle();
         
         this.stage.setScene(mainMenu);
         this.stage.show();
@@ -82,13 +86,18 @@ public class GUI extends Application {
         
         layout = new BorderPane();
 
-        Button addBookmark = new Button();
-        addBookmark.setText("Lisää kirja");
-        addBookmark.setId("add");
+        Button addBook = new Button();
+        addBook.setText("Lisää kirja");
+        addBook.setId("add");
+        
+        Button addArticle = new Button();
+        addArticle.setText("Lisää artikkeli");
+        addArticle.setId("add");
+        
         
         
         HBox menu = new HBox(10);
-        menu.getChildren().addAll(addBookmark);
+        menu.getChildren().addAll(addBook, addArticle);
         menu.setAlignment(Pos.CENTER);
         
         layout.setTop(menu);
@@ -105,35 +114,36 @@ public class GUI extends Application {
         
         searchField.textProperty().addListener(obs -> {
             String filter = searchField.getText();
-            bookList.clear();
-            bookList.addAll(fullBookList);
+            bookmarkList.clear();
+            bookmarkList.addAll(fullBookmarkList);
             if (filter != null && filter.length() > 0) {
-                bookList.removeIf(item -> !item.getTitle().toLowerCase().contains(filter.toLowerCase()));
+                bookmarkList.removeIf(item -> !item.getTitle().toLowerCase().contains(filter.toLowerCase()));
             }
-            listView.setItems(bookList);
+            listView.setItems(bookmarkList);
             listView.refresh();
             
         });
         
-        addBookmark.setOnAction(e -> stage.setScene(addRecommendation));
+        addBook.setOnAction(e -> stage.setScene(addBookScene));
+        addArticle.setOnAction(e -> stage.setScene(addArticleScene));
 
         return new Scene(layout, windowWidth, windowHeight);
     }
 
     private void listBookmarks() throws SQLException {
-        fullBookList = new ArrayList<>(service.getAllBooks());
-        bookList = FXCollections.observableArrayList(fullBookList);
+        fullBookmarkList = new ArrayList<>(service.getAllBookmarks());
+        bookmarkList = FXCollections.observableArrayList(fullBookmarkList);
         String filter = searchField.getText();
         if (filter != null && filter.length() > 0) {
-            bookList.removeIf(item -> !item.getTitle().toLowerCase().contains(filter.toLowerCase()));
+            bookmarkList.removeIf(item -> !item.getTitle().toLowerCase().contains(filter.toLowerCase()));
         }
-        listView = new ListView<>(bookList);
+        listView = new ListView<>(bookmarkList);
         listView.setId("listview");
         listView.setCellFactory(param -> new CustomCell(service, 
-                listView, bookList, fullBookList));
+                listView, bookmarkList, fullBookmarkList));
     }
     
-    private Scene addBookmark() {
+    private Scene addBook() {
         VBox addLayout = new VBox(10);
         addLayout.setPadding(new Insets(10, 10, 10, 10));
         addLayout.setId("addview");
@@ -174,6 +184,55 @@ public class GUI extends Application {
             try {
                 Book book = new Book(title, author, pageCountInt);
                 if (!service.addBook(book)) {
+                    return;
+                }
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+            returnToMainPage();
+        });
+        
+        back.setOnAction(e -> {
+            returnToMainPage();
+        });
+        
+        return new Scene(addLayout, windowWidth, windowHeight);
+    }
+    
+    private Scene addArticle() {
+        VBox addLayout = new VBox(10);
+        addLayout.setPadding(new Insets(10, 10, 10, 10));
+        addLayout.setId("addarticle");
+        
+        Label createNewRecommendation = new Label("Lisää artikkeli lukuvinkkeihin");
+        Button add = new Button("Lisää!");
+        Label error = new Label("");
+        error.setId("errorMessage");
+        add.setId("submit");
+        Label titleLabel = new Label("Otsikko: ");
+        TextField titleInput = new TextField();
+        titleInput.setId("name");
+        titleInput.setMaxWidth(350);
+        Label hyperlinkLabel = new Label("Osoite: ");
+        TextField hyperlinkInput = new TextField();
+        hyperlinkInput.setId("hyperlink");
+        hyperlinkInput.setMaxWidth(350);
+        Button back = new Button("Takaisin");
+        back.setId("back");
+        
+        addLayout.getChildren().addAll(back, createNewRecommendation, titleLabel, titleInput, hyperlinkLabel,
+            hyperlinkInput, error, add);
+        
+        add.setOnAction(e -> {
+            String title = titleInput.getText().trim();
+            String hyperlink = hyperlinkInput.getText().trim();
+            if (title.isEmpty() || hyperlink.isEmpty()) {
+                error.setText("Täytä kaikki tiedot.");
+                return;
+            }
+            try {
+                Article article = new Article(title, hyperlink);
+                if (!service.addArticle(article)) {
                     return;
                 }
             } catch (Exception ex) {

@@ -17,25 +17,27 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import logic.Article;
 import logic.Book;
+import logic.Bookmark;
 
 
-public class CustomCell extends ListCell<Book> {
+public class CustomCell extends ListCell<Bookmark> {
     private final Button deleteButton;
-    private Book book;
-    private final Label bookLabel;
+    private Bookmark bookmark;
+    private final Label bookmarkLabel;
     private final GridPane pane;
-    private final ListView<Book> listView;
-    private final ObservableList<Book> bookList;
-    private final ArrayList<Book> fullBookList;
+    private final ListView<Bookmark> listView;
+    private final ObservableList<Bookmark> bookmarkList;
+    private final ArrayList<Bookmark> fullBookmarkList;
  
     
-    public CustomCell(BookmarkDao service, ListView<Book> listView, 
-        ObservableList<Book> xbookList, ArrayList<Book> xfullBookList) {
+    public CustomCell(BookmarkDao service, ListView<Bookmark> listView, 
+        ObservableList<Bookmark> bookmarkList, ArrayList<Bookmark> fullBookmarkList) {
         super();
         this.listView = listView;
-        this.bookList = xbookList;
-        this.fullBookList = xfullBookList;
+        this.bookmarkList = bookmarkList;
+        this.fullBookmarkList = fullBookmarkList;
 
         deleteButton = new Button("Poista");
         
@@ -51,19 +53,23 @@ public class CustomCell extends ListCell<Book> {
                     return;
                 }
                 
-                service.deleteBook(book);
+                if (bookmark.getClass().getName().equals(Article.class.getName())) {
+                    service.deleteArticle((Article) bookmark);
+                } else {
+                    service.deleteBook((Book) bookmark);
+                }
                 
             } catch (SQLException e) {
                 return;
             }
-            fullBookList.remove(book);
-            bookList.remove(book);
+            fullBookmarkList.remove(bookmark);
+            bookmarkList.remove(bookmark);
             updateListView(listView);
-            updateItem(book, true);
+            updateItem(bookmark, true);
         });
         
         pane = new GridPane();
-        bookLabel = new Label();
+        bookmarkLabel = new Label();
         HBox deleteButtonBox = new HBox();
         deleteButtonBox.getChildren().add(deleteButton);
         HBox labelBox = new HBox();
@@ -71,24 +77,29 @@ public class CustomCell extends ListCell<Book> {
         ColumnConstraints contraints = new ColumnConstraints();
         contraints.setHgrow(Priority.ALWAYS);
         pane.getColumnConstraints().add(contraints);
-        labelBox.getChildren().add(bookLabel);
+        labelBox.getChildren().add(bookmarkLabel);
         pane.add(deleteButtonBox, 2, 0);
     }
     
     @Override
-    public void updateItem(Book book, boolean empty) {
-        super.updateItem(book, empty);
-        this.book = book;
-        if (empty || book == null || book.getTitle() == null) {
+    public void updateItem(Bookmark bookmark, boolean empty) {
+        super.updateItem(bookmark, empty);
+        this.bookmark = bookmark;
+        if (empty || bookmark == null || bookmark.getTitle() == null) {
             setText(null);
             setGraphic(null);
             updateListView(listView);
         } else {
-            deleteButton.setId("delete" + book.getId());
-            bookLabel.setText(book.getTitle() + ", " + book.getAuthor() + ", " + 
-                    book.getPages() + " sivua");
+            deleteButton.setId("delete" + bookmark.getId());
+            if (bookmark.getClass().getName().equals(Book.class.getName())) {
+                bookmarkLabel.setText(bookmark.getTitle() + ", " + ((Book) bookmark).getAuthor() + ", " + 
+                        ((Book) bookmark).getPages() + " sivua");
+            } else {
+                bookmarkLabel.setText(((Article) bookmark).getTitle() + " " + ((Article) bookmark).getHyperlink());
+            }
             setGraphic(pane);
             updateListView(listView);
+            
         }
     }
 }

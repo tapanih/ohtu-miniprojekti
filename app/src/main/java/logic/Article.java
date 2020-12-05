@@ -78,7 +78,7 @@ public class Article implements Bookmark {
             return false;
         }
         Article article = (Article) o;
-        return hyperlink == article.hyperlink
+        return hyperlink.equals(article.hyperlink)
                 && title.equals(article.title);
     }
 

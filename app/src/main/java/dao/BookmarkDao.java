@@ -31,8 +31,9 @@ public interface BookmarkDao {
      */
     List<Book> getAllBooks() throws SQLException;
 
-    boolean deleteBook(Book b) throws SQLException;
+    boolean deleteBook(Book book) throws SQLException;
     boolean deleteArticle(Article article) throws SQLException;
+    boolean deleteBookmark(Bookmark bookmark) throws SQLException;
 
     List<Bookmark> getAllBookmarks() throws SQLException;
 
