@@ -53,6 +53,7 @@ public class BookmarkService implements BookmarkDao {
 
     @Override
     public List<Book> getAllBooks() {
+//        db.alterTagTable();
         try {
             return db.getAllBooks();
         } catch (SQLException ex) {
