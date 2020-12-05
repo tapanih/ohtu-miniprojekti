@@ -131,14 +131,14 @@ public class StepDefinitions extends TestFXBase {
     public void theBookAtIndexEquals(int index, String name, String author, int pageCount) {
         ListView<Bookmark> listView = find("#listview");
         Bookmark book = new Book(name, author, pageCount);
-        assertTrue(listView.getItems().get(index-1).equals(book));
+        assertTrue(listView.getItems().get(index - 1).equals(book));
     }
 
     @Then("the element number {int} of the bookmark list is a bookmark with {string} as title and {string} as hyperlink")
     public void theArticleAtIndexEquals(int index, String title, String hyperlink) {
         ListView<Bookmark> listView = find("#listview");
         Bookmark article = new Article(title, hyperlink);
-        assertTrue(listView.getItems().get(index-1).equals(article));
+        assertTrue(listView.getItems().get(index - 1).equals(article));
     }
     
     @Then("view contains error message {string}")
