@@ -29,15 +29,19 @@ public class BookmarkService implements BookmarkDao {
         }
     }
 
-//    @Override
-//    public Book getBookByTitle(String title) {
-//        try {
-//            return db.getBookByTitle(title);
-//        } catch (SQLException ex) {
-//            System.out.println(ex.getMessage());
-//            return null;
-//        }
-//    }
+    @Override
+    public boolean addArticle(Article article) throws SQLException {
+        if (article.getTitle() == null || article.getTitle().equals("") || article.getHyperlink() == null || article.getHyperlink().equals("")) {
+            return false;
+        }
+        try {
+            db.addArticle(article);
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
+
     public List<Article> getAllArticles() {
         try {
             return db.getAllArticles();
@@ -57,9 +61,31 @@ public class BookmarkService implements BookmarkDao {
     }
 
     @Override
+    public List<Bookmark> getAllBookmarks() throws SQLException {
+        ArrayList<Bookmark> bookmarkList = new ArrayList<>();
+        try {
+
+            db.getAllBooks().forEach(a -> bookmarkList.add(a));
+            db.getAllArticles().forEach(a -> bookmarkList.add(a));
+            return bookmarkList;
+        } catch (SQLException ex) {
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
     public boolean deleteBook(Book b) throws SQLException {
         try {
             return db.deleteBook(b);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteArticle(Article article) throws SQLException {
+        try {
+            return db.deleteArticle(article);
         } catch (Exception e) {
             return false;
         }
