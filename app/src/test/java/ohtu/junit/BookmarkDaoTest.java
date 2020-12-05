@@ -72,7 +72,7 @@ public class BookmarkDaoTest {
     }
 
     @Test
-    public void addedArticlekIsPreservedInTheDatabase() throws Exception {
+    public void addedArticleIsPreservedInTheDatabase() throws Exception {
 
         Article newArticle = new Article("Shrinking massive neural networks used to model language", "https://news.mit.edu/2020/neural-model-language-1201");
         service.addArticle(newArticle);
