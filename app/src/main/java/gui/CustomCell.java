@@ -64,8 +64,8 @@ public class CustomCell extends ListCell<Bookmark> {
             } catch (SQLException e) {
                 return;
             }
-            fullBookmarkList.remove(bookmark);
-            bookmarkList.remove(bookmark);
+            this.fullBookmarkList.remove(bookmark);
+            this.bookmarkList.remove(bookmark);
             updateListView(listView);
             updateItem(bookmark, true);
         });
@@ -77,7 +77,6 @@ public class CustomCell extends ListCell<Bookmark> {
         HBox labelBox = new HBox();
         pane.add(labelBox, 0, 0);
         hyperlink = new Hyperlink();
-        pane.add(hyperlink, 1, 0);
         ColumnConstraints contraints = new ColumnConstraints();
         contraints.setHgrow(Priority.ALWAYS);
         pane.getColumnConstraints().add(contraints);
@@ -90,16 +89,18 @@ public class CustomCell extends ListCell<Bookmark> {
         super.updateItem(bookmark, empty);
         this.bookmark = bookmark;
         if (empty || bookmark == null || bookmark.getTitle() == null) {
+            pane.getChildren().remove(hyperlink);
             setText(null);
             setGraphic(null);
             updateListView(listView);
         } else {
             deleteButton.setId("delete" + bookmark.getId());
             if (bookmark.getClass().getName().equals(Book.class.getName())) {
-                hyperlink.setText("");
+                pane.getChildren().remove(hyperlink);
                 bookmarkLabel.setText(bookmark.getTitle() + ", " + ((Book) bookmark).getAuthor() + ", " + 
                         ((Book) bookmark).getPages() + " sivua");
             } else {
+                pane.add(hyperlink, 1, 0);
                 bookmarkLabel.setText(((Article) bookmark).getTitle());
                 hyperlink.setText(((Article) bookmark).getHyperlink());
                 hyperlink.setOnAction(e -> {
