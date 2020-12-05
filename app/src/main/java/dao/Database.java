@@ -44,8 +44,7 @@ public class Database {
                     + "title  varchar(100), "
                     + "author  varchar(100), "
                     + "currentPage integer(100), "
-                    + "pageCount  integer(100),"
-                    + "Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP "
+                    + "pageCount  integer(100) "
                     + ");");
             createBookTable.execute();
             createBookTable.close();
@@ -53,8 +52,8 @@ public class Database {
         }
     }
 
-    public void alterTable() {
-        String sql = "ALTER TABLE books ADD COLUMN Timestamp DATETIME";
+    private void alterTable() {
+        String sql = "ALTER TABLE books ADD COLUMN currentPage integer";
         try {
             PreparedStatement alterBookTable = db.prepareStatement(sql);
             alterBookTable.execute();
@@ -65,7 +64,7 @@ public class Database {
     }
 
     public void alterTagTable() {
-        String sql = "ALTER TABLE Tags ADD COLUMN Timestamp DATETIME";
+        String sql = "ALTER TABLE Tags ADD COLUMN referenceId integer";
         try {
             PreparedStatement alterBookTable = db.prepareStatement(sql);
             alterBookTable.execute();
@@ -80,8 +79,7 @@ public class Database {
             PreparedStatement createArticleTable = db.prepareStatement("CREATE TABLE IF NOT EXISTS Articles ("
                     + "id INTEGER PRIMARY KEY,"
                     + "title  varchar(100), "
-                    + "hyperlink  varchar(300),"
-                    + "Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP"
+                    + "hyperlink  varchar(300)"
                     + ");");
             createArticleTable.execute();
             createArticleTable.close();

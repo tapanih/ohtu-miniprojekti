@@ -44,7 +44,7 @@ public class CustomCell extends ListCell<Bookmark> {
         deleteButton = new Button("Poista");
         
         Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setContentText("Haluatko varmasti poistaa kyseisen lukuvinkin?");
+        alert.setContentText("Haluatko varmasti poistaa kyseisen kirjan?");
         
         
         deleteButton.setOnAction(event -> {
