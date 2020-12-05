@@ -33,34 +33,15 @@ public class BookmarkDaoTest {
     }
 
     @Test
-    public void addArticleReturnTrueIfArticleWithTitleeIsAdded() throws Exception {
-        Article article = new Article("Shrinking massive neural networks used to model language", "https://news.mit.edu/2020/neural-model-language-1201");
-        boolean articleAdded = service.addArticle(article);
-        assertTrue(articleAdded);
-    }
-
-    @Test
     public void addBookReturnFalseIfAuthorIsMissing() throws Exception {
         Book testbook = new Book("TestBook", null, 333);
         assertFalse(service.addBook(testbook));
     }
 
     @Test
-    public void addArticleReturnFalseIfTitleIsMissing() throws Exception {
-        Article newArticle = new Article(null, "https://news.mit.edu/2020/neural-model-language-1201");
-        assertFalse(service.addArticle(newArticle));
-    }
-
-    @Test
     public void addBookReturnFalseIfTitleIsMissing() throws Exception {
         Book testbook = new Book(null, "anonymous", 333);
         assertFalse(service.addBook(testbook));
-    }
-
-    @Test
-    public void addArticleReturnFalseIfHyperlinkIsMissing() throws Exception {
-        Article newArticle = new Article("newArticle", null);
-        assertFalse(service.addArticle(newArticle));
     }
 
     @Test
@@ -71,14 +52,6 @@ public class BookmarkDaoTest {
         assertTrue(books.contains(book));
     }
 
-    @Test
-    public void addedArticleIsPreservedInTheDatabase() throws Exception {
-
-        Article newArticle = new Article("Shrinking massive neural networks used to model language", "https://news.mit.edu/2020/neural-model-language-1201");
-        service.addArticle(newArticle);
-        List<Article> articles = service.getAllArticles();
-        assertTrue(articles.contains(newArticle));
-    }
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
@@ -105,6 +78,45 @@ public class BookmarkDaoTest {
     }
 
     @Test
+    public void deleteBookReturnsTrueIfBookDeleted() throws Exception {
+        Article a1 = new Article("Article1", "www.a1.com");
+        a1.setId(1);
+        boolean successfulAdd = service.addArticle(a1);
+        assertTrue(successfulAdd);
+        service.deleteArticle(a1);
+        List<Article> articles = service.getAllArticles();
+        assertFalse(articles.contains(a1));
+    }
+
+    @Test
+    public void addArticleReturnFalseIfTitleIsMissing() throws Exception {
+        Article newArticle = new Article(null, "https://news.mit.edu/2020/neural-model-language-1201");
+        assertFalse(service.addArticle(newArticle));
+    }
+
+    @Test
+    public void addedArticlekIsPreservedInTheDatabase() throws Exception {
+
+        Article newArticle = new Article("Shrinking massive neural networks used to model language", "https://news.mit.edu/2020/neural-model-language-1201");
+        service.addArticle(newArticle);
+        List<Article> articles = service.getAllArticles();
+        assertTrue(articles.contains(newArticle));
+    }
+
+    @Test
+    public void addArticleReturnFalseIfHyperlinkIsMissing() throws Exception {
+        Article newArticle = new Article("newArticle", null);
+        assertFalse(service.addArticle(newArticle));
+    }
+
+    @Test
+    public void addArticleReturnTrueIfArticleWithTitleeIsAdded() throws Exception {
+        Article article = new Article("Shrinking massive neural networks used to model language", "https://news.mit.edu/2020/neural-model-language-1201");
+        boolean articleAdded = service.addArticle(article);
+        assertTrue(articleAdded);
+    }
+
+    @Test
     public void getAllArticlesReturnsAllArticles() throws Exception {
         Article a1 = new Article("Article1", "www.a1.com");
         Article a2 = new Article("Article2", "www.a2.com");
@@ -117,17 +129,6 @@ public class BookmarkDaoTest {
         assertTrue(articles.contains(a1));
         assertTrue(articles.contains(a2));
         assertTrue(articles.contains(a3));
-    }
-
-    @Test
-    public void deleteBookReturnsTrueIfBookDeleted() throws Exception {
-        Article a1 = new Article("Article1", "www.a1.com");
-        a1.setId(1);
-        boolean successfulAdd = service.addArticle(a1);
-        assertTrue(successfulAdd);
-        service.deleteArticle(a1);
-        List<Article> articles = service.getAllArticles();
-        assertFalse(articles.contains(a1));
     }
 
     @Test
