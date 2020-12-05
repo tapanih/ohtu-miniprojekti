@@ -1,7 +1,10 @@
 package gui;
 
 
+import com.sun.javafx.application.HostServicesDelegate;
 import dao.BookmarkDao;
+import java.awt.Desktop;
+import java.net.URI;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -10,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -26,6 +30,7 @@ public class CustomCell extends ListCell<Bookmark> {
     private final Button deleteButton;
     private Bookmark bookmark;
     private final Label bookmarkLabel;
+    private final Hyperlink hyperlink;
     private final GridPane pane;
     private final ListView<Bookmark> listView;
     private final ObservableList<Bookmark> bookmarkList;
@@ -74,6 +79,8 @@ public class CustomCell extends ListCell<Bookmark> {
         deleteButtonBox.getChildren().add(deleteButton);
         HBox labelBox = new HBox();
         pane.add(labelBox, 0, 0);
+        hyperlink = new Hyperlink();
+        pane.add(hyperlink, 0, 1);
         ColumnConstraints contraints = new ColumnConstraints();
         contraints.setHgrow(Priority.ALWAYS);
         pane.getColumnConstraints().add(contraints);
@@ -95,7 +102,16 @@ public class CustomCell extends ListCell<Bookmark> {
                 bookmarkLabel.setText(bookmark.getTitle() + ", " + ((Book) bookmark).getAuthor() + ", " + 
                         ((Book) bookmark).getPages() + " sivua");
             } else {
-                bookmarkLabel.setText(((Article) bookmark).getTitle() + " " + ((Article) bookmark).getHyperlink());
+                bookmarkLabel.setText(((Article) bookmark).getTitle());
+                hyperlink.setText(((Article) bookmark).getHyperlink());
+                hyperlink.setOnAction(e -> {
+                    try {
+                        new ProcessBuilder("x-www-browser", hyperlink.getText()).start();
+                    } catch (Exception ex) {
+                        System.out.println("Exception in hyperlink.setOnAction: " 
+                                + ex.getMessage());
+                    }
+                });
             }
             setGraphic(pane);
             updateListView(listView);
