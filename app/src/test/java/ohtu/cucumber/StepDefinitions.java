@@ -6,7 +6,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCode;
 import logic.*;
 import javafx.scene.control.Label;
@@ -27,7 +26,12 @@ public class StepDefinitions extends TestFXBase {
 
     @When("add book button is clicked")
     public void clickAddBookButton() {
-        clickOn("#add");
+        clickOn("#addbook");
+    }
+    
+    @When("add article button is clicked")
+    public void clickAddArticleButton() {
+        clickOn("#addarticle");
     }
 
     @When("form is filled with {string} as name and {string} as author and {string} as page count")
@@ -39,6 +43,14 @@ public class StepDefinitions extends TestFXBase {
         TextField pageCountField = find("#pageCount");
         pageCountField.setText(pageCount);
 
+    }
+    
+    @When("form is filled with {string} as title and {string} as hyperlink")
+    public void fillFormWith(String title, String hyperlink) {
+        TextField titleField = find("#title");
+        titleField.setText(title);
+        TextField hyperlinkField = find("#hyperlink");
+        hyperlinkField.setText(hyperlink);
     }
 
     @When("form is submitted")
@@ -52,14 +64,30 @@ public class StepDefinitions extends TestFXBase {
         fillFormWith(name, author, pageCount);
         submitForm();
     }
+    
+    @When("an article with {string} as title and {string} as hyperlink is added") 
+    public void applicationHasOpenedWithArticlesSaved(String title, String hyperlink) {
+        clickAddArticleButton();
+        fillFormWith(title, hyperlink);
+        submitForm();
+    }
 
-    @When("the delete button next to a book with {string} as name and {string} as author and {int} as page count is pressed")
-    public void theDeleteButtonNextToBookIsPressed(String name, String author, int pageCount) {
-        ListView<Book> listView = find("#listview");
-        Book book = new Book(name, author, pageCount);
+    @When("the delete button next to a bookmark with {string} as name and {string} as author and {int} as page count is pressed")
+    public void theDeleteButtonNextToBookmarkIsPressed(String name, String author, int pageCount) {
+        ListView<Bookmark> listView = find("#listview");
+        Bookmark book = new Book(name, author, pageCount);
         int i = listView.getItems().indexOf(book);
         book = listView.getItems().get(i);
         clickOn("#delete" + book.getId());
+    }
+
+    @When("the delete button next to a bookmark with {string} as title and {string} as hyperlink is pressed")
+    public void theDeleteButtonNextToBookmarkIsPressed(String title, String hyperlink) {
+        ListView<Bookmark> listView = find("#listview");
+        Bookmark article = new Article(title, hyperlink);
+        int i = listView.getItems().indexOf(article);
+        article = listView.getItems().get(i);
+        clickOn("#delete" + article.getId());
     }
 
     @When("{string} is clicked in the confirmation dialog")
@@ -84,34 +112,33 @@ public class StepDefinitions extends TestFXBase {
         }
     }
 
-    @Then("book list contains a book with {string} as name and {string} as author and {int} as page count")
+    @Then("bookmark list contains a book with {string} as name and {string} as author and {int} as page count")
     public void bookListContainsAddedBook(String name, String author, int pageCount) {
-        ListView<Book> listView = find("#listview");
+        ListView<Bookmark> listView = find("#listview");
         Book book = new Book(name, author, pageCount);
         assertTrue(listView.getItems().contains(book));
     }
-
-    @Then("the first element of the book list is a book with {string} as name and {string} as author " +
-            "and {int} as page count")
-    public void theFirstElementIsABookWith(String name, String author, int pageCount) {
-        theBookAtIndexEquals(0, new Book(name, author, pageCount));
+    
+    @Then("bookmark list contains an article with {string} as title and {string} as hyperlink")
+    public void bookListContainsAddedBook(String title, String hyperlink) {
+        ListView<Bookmark> listView = find("#listview");
+        Bookmark article = new Article(title, hyperlink);
+        assertTrue(listView.getItems().contains(article));
+    }
+    
+    
+    @Then("the element number {int} of the bookmark list is a bookmark with {string} as name and {string} as author and {int} as page count")
+    public void theBookAtIndexEquals(int index, String name, String author, int pageCount) {
+        ListView<Bookmark> listView = find("#listview");
+        Bookmark book = new Book(name, author, pageCount);
+        assertTrue(listView.getItems().get(index-1).equals(book));
     }
 
-    @Then("the second element of the book list is a book with {string} as name and {string} as author " +
-            "and {int} as page count")
-    public void theSecondElementIsABookWith(String name, String author, int pageCount) {
-        theBookAtIndexEquals(1, new Book(name, author, pageCount));
-    }
-
-    @Then("the third element of the book list is a book with {string} as name and {string} as author " +
-            "and {int} as page count")
-    public void theThirdElementIsABookWith(String name, String author, int pageCount) {
-        theBookAtIndexEquals(2, new Book(name, author, pageCount));
-    }
-
-    private void theBookAtIndexEquals(int index, Book book) {
-        ListView<Book> listView = find("#listview");
-        assertTrue(listView.getItems().get(index).equals(book));
+    @Then("the element number {int} of the bookmark list is a bookmark with {string} as title and {string} as hyperlink")
+    public void theArticleAtIndexEquals(int index, String title, String hyperlink) {
+        ListView<Bookmark> listView = find("#listview");
+        Bookmark article = new Article(title, hyperlink);
+        assertTrue(listView.getItems().get(index-1).equals(article));
     }
     
     @Then("view contains error message {string}")
@@ -121,14 +148,14 @@ public class StepDefinitions extends TestFXBase {
         returnToMainPage();
     }
 
-    @Then("the book list is empty")
-    public void bookListIsEmpty() {
-        checkThatBookListSizeIs(0);
+    @Then("the bookmark list is empty")
+    public void bookmarkListIsEmpty() {
+        checkThatBookmarkListSizeIs(0);
     }
 
-    @Then("the book list contains {int} books")
-    public void checkThatBookListSizeIs(int count) {
-        ListView<Book> listView = find("#listview");
+    @Then("the bookmark list contains {int} bookmarks")
+    public void checkThatBookmarkListSizeIs(int count) {
+        ListView<Bookmark> listView = find("#listview");
         assertEquals(count, listView.getItems().size());
     }
     

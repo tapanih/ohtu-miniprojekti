@@ -6,8 +6,8 @@ Feature: As a user I want to be able to add a book to the application
       When  add book button is clicked
       When  form is filled with "Title" as name and "Author" as author and "444" as page count
       When  form is submitted
-      Then  the book list contains 1 books
-      Then  book list contains a book with "Title" as name and "Author" as author and 444 as page count
+      Then  the bookmark list contains 1 bookmarks
+      Then  bookmark list contains a book with "Title" as name and "Author" as author and 444 as page count
 
     Scenario Outline: Book cannot be added without a heading
       Given application has opened

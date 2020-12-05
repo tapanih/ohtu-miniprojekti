@@ -87,16 +87,15 @@ public class CustomCell extends ListCell<Bookmark> {
     @Override
     public void updateItem(Bookmark bookmark, boolean empty) {
         super.updateItem(bookmark, empty);
+        pane.getChildren().remove(hyperlink);
         this.bookmark = bookmark;
         if (empty || bookmark == null || bookmark.getTitle() == null) {
-            pane.getChildren().remove(hyperlink);
             setText(null);
             setGraphic(null);
             updateListView(listView);
         } else {
             deleteButton.setId("delete" + bookmark.getId());
             if (bookmark.getClass().getName().equals(Book.class.getName())) {
-                pane.getChildren().remove(hyperlink);
                 bookmarkLabel.setText(bookmark.getTitle() + ", " + ((Book) bookmark).getAuthor() + ", " + 
                         ((Book) bookmark).getPages() + " sivua");
             } else {

@@ -9,7 +9,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.VBox;
@@ -26,8 +25,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import dao.BookmarkDao;
 import java.util.ArrayList;
-import java.util.Iterator;
-import javafx.event.EventType;
 import logic.Article;
 import logic.Bookmark;
 
@@ -88,13 +85,11 @@ public class GUI extends Application {
 
         Button addBook = new Button();
         addBook.setText("Lisää kirja");
-        addBook.setId("add");
+        addBook.setId("addbook");
         
         Button addArticle = new Button();
         addArticle.setText("Lisää artikkeli");
-        addArticle.setId("add");
-        
-        
+        addArticle.setId("addarticle");
         
         HBox menu = new HBox(10);
         menu.getChildren().addAll(addBook, addArticle);
@@ -146,7 +141,7 @@ public class GUI extends Application {
     private Scene addBook() {
         VBox addLayout = new VBox(10);
         addLayout.setPadding(new Insets(10, 10, 10, 10));
-        addLayout.setId("addview");
+        addLayout.setId("addbookview");
         
         Label createNewRecommendation = new Label("Luo uusi lukuvinkki");
         Button add = new Button("Lisää!");
@@ -202,7 +197,7 @@ public class GUI extends Application {
     private Scene addArticle() {
         VBox addLayout = new VBox(10);
         addLayout.setPadding(new Insets(10, 10, 10, 10));
-        addLayout.setId("addarticle");
+        addLayout.setId("addarticleview");
         
         Label createNewRecommendation = new Label("Lisää artikkeli lukuvinkkeihin");
         Button add = new Button("Lisää!");
@@ -211,7 +206,7 @@ public class GUI extends Application {
         add.setId("submit");
         Label titleLabel = new Label("Otsikko: ");
         TextField titleInput = new TextField();
-        titleInput.setId("name");
+        titleInput.setId("title");
         titleInput.setMaxWidth(350);
         Label hyperlinkLabel = new Label("Osoite: ");
         TextField hyperlinkInput = new TextField();
