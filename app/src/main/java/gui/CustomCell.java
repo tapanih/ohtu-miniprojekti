@@ -1,10 +1,7 @@
 package gui;
 
 
-import com.sun.javafx.application.HostServicesDelegate;
 import dao.BookmarkDao;
-import java.awt.Desktop;
-import java.net.URI;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -80,7 +77,7 @@ public class CustomCell extends ListCell<Bookmark> {
         HBox labelBox = new HBox();
         pane.add(labelBox, 0, 0);
         hyperlink = new Hyperlink();
-        pane.add(hyperlink, 0, 1);
+        pane.add(hyperlink, 1, 0);
         ColumnConstraints contraints = new ColumnConstraints();
         contraints.setHgrow(Priority.ALWAYS);
         pane.getColumnConstraints().add(contraints);
@@ -99,6 +96,7 @@ public class CustomCell extends ListCell<Bookmark> {
         } else {
             deleteButton.setId("delete" + bookmark.getId());
             if (bookmark.getClass().getName().equals(Book.class.getName())) {
+                hyperlink.setText("");
                 bookmarkLabel.setText(bookmark.getTitle() + ", " + ((Book) bookmark).getAuthor() + ", " + 
                         ((Book) bookmark).getPages() + " sivua");
             } else {
