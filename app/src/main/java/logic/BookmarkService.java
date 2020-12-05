@@ -41,8 +41,8 @@ public class BookmarkService implements BookmarkDao {
             return false;
         }
     }
-
-    public List<Article> getAllArticles() {
+    @Override
+    public List<Article> getAllArticles() throws SQLException {
         try {
             return db.getAllArticles();
         } catch (SQLException ex) {

@@ -33,12 +33,12 @@ public interface BookmarkDao {
      * @throws SQLException when retrieving data from the database fails
      */
     List<Book> getAllBooks() throws SQLException;
-
+    List<Article> getAllArticles() throws SQLException;
     boolean deleteBook(Book book) throws SQLException;
     boolean deleteArticle(Article article) throws SQLException;
     boolean deleteBookmark(Bookmark bookmark) throws SQLException;
     boolean deleteTag(int id) throws SQLException;
-
+    
     List<Bookmark> getAllBookmarks() throws SQLException;
 
 }
