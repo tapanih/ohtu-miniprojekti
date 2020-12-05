@@ -9,12 +9,15 @@ import logic.Bookmark;
 public interface BookmarkDao {
 
     /**
-     * @param kirja
+     * @param book
      * @return true, if successfully added book, false otherwise
      * @throws SQLException if saving the book object fails
      */
     boolean addBook(Book book) throws SQLException, Exception;
+
     boolean addArticle(Article article) throws SQLException;
+
+    boolean addTag(String keyword) throws SQLException;
 
     /**
      * Retrieves all the books in the database
@@ -34,6 +37,7 @@ public interface BookmarkDao {
     boolean deleteBook(Book book) throws SQLException;
     boolean deleteArticle(Article article) throws SQLException;
     boolean deleteBookmark(Bookmark bookmark) throws SQLException;
+    boolean deleteTag(int id) throws SQLException;
 
     List<Bookmark> getAllBookmarks() throws SQLException;
 

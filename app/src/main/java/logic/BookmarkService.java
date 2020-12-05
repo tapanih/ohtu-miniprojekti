@@ -53,6 +53,7 @@ public class BookmarkService implements BookmarkDao {
 
     @Override
     public List<Book> getAllBooks() {
+//    db.alterTagTable();
         try {
             return db.getAllBooks();
         } catch (SQLException ex) {
@@ -95,6 +96,29 @@ public class BookmarkService implements BookmarkDao {
     public boolean deleteArticle(Article article) throws SQLException {
         try {
             return db.deleteArticle(article);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean addTag(String keyword) throws SQLException {
+
+        if (keyword == null || keyword.equals("")) {
+            return false;
+        }
+        try {
+            db.addTag(keyword);
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteTag(int id) throws SQLException {
+        try {
+            return db.deleteTag(id);
         } catch (Exception e) {
             return false;
         }

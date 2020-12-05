@@ -63,6 +63,17 @@ public class Database {
         }
     }
 
+    public void alterTagTable() {
+        String sql = "ALTER TABLE Tags ADD COLUMN referenceId integer";
+        try {
+            PreparedStatement alterBookTable = db.prepareStatement(sql);
+            alterBookTable.execute();
+            alterBookTable.close();
+        } catch (SQLException e) {
+
+        }
+    }
+
     private void initializeArticleTable() {
         try {
             PreparedStatement createArticleTable = db.prepareStatement("CREATE TABLE IF NOT EXISTS Articles ("
@@ -99,7 +110,11 @@ public class Database {
 //    }
     private void initializeTagTable() {
         try {
-            PreparedStatement createTagTable = db.prepareStatement("CREATE TABLE IF NOT EXISTS Tags (id integer PRIMARY KEY, keyword varchar(50));");
+            PreparedStatement createTagTable = db.prepareStatement("CREATE TABLE IF NOT EXISTS Tags (id integer PRIMARY KEY, referenceId integer, keyword varchar(50), isBook boolean,   CONSTRAINT FK_1 FOREIGN KEY(referenceId)  \n"
+                    + "         REFERENCES books(id), \n"
+                    + "    CONSTRAINT FK_2 FOREIGN KEY (referenceId)  \n"
+                    + "         REFERENCES Articles(id)"
+                    + ");");
             createTagTable.execute();
             createTagTable.close();
         } catch (SQLException e) {
@@ -140,7 +155,7 @@ public class Database {
 //        alterTable();
 
         try {
-            
+
             PreparedStatement statement = db.prepareStatement(
                     "INSERT OR REPLACE INTO books (title, author, currentPage, pageCount) VALUES (?, ?, ?, ?);"
             );
@@ -213,7 +228,7 @@ public class Database {
         PreparedStatement statement = db.prepareStatement("SELECT * FROM books");
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
-            Book book = new Book(resultSet.getString("title").trim(), resultSet.getString("author").trim(), resultSet.getInt("pageCount"),  resultSet.getInt("currentPage"));
+            Book book = new Book(resultSet.getString("title").trim(), resultSet.getString("author").trim(), resultSet.getInt("pageCount"), resultSet.getInt("currentPage"));
             book.setId(resultSet.getInt("id"));
             books.add(book);
         }
