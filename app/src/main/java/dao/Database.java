@@ -64,7 +64,7 @@ public class Database {
     }
 
     public void alterTagTable() {
-        String sql = "ALTER TABLE Tags ADD COLUMN isBook boolean";
+        String sql = "ALTER TABLE Tags ADD COLUMN referenceId integer";
         try {
             PreparedStatement alterBookTable = db.prepareStatement(sql);
             alterBookTable.execute();
@@ -110,7 +110,11 @@ public class Database {
 //    }
     private void initializeTagTable() {
         try {
-            PreparedStatement createTagTable = db.prepareStatement("CREATE TABLE IF NOT EXISTS Tags (id integer PRIMARY KEY, keyword varchar(50), isBook boolean);");
+            PreparedStatement createTagTable = db.prepareStatement("CREATE TABLE IF NOT EXISTS Tags (id integer PRIMARY KEY, referenceId integer, keyword varchar(50), isBook boolean,   CONSTRAINT FK_1 FOREIGN KEY(referenceId)  \n"
+                    + "         REFERENCES books(id), \n"
+                    + "    CONSTRAINT FK_2 FOREIGN KEY (referenceId)  \n"
+                    + "         REFERENCES Articles(id)"
+                    + ");");
             createTagTable.execute();
             createTagTable.close();
         } catch (SQLException e) {

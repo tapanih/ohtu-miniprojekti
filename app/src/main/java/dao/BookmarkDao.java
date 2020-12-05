@@ -14,7 +14,10 @@ public interface BookmarkDao {
      * @throws SQLException if saving the book object fails
      */
     boolean addBook(Book book) throws SQLException, Exception;
+
     boolean addArticle(Article article) throws SQLException;
+
+    boolean addTag(String keyword) throws SQLException;
 
     /**
      * Retrieves all the books in the database
@@ -32,7 +35,10 @@ public interface BookmarkDao {
     List<Book> getAllBooks() throws SQLException;
 
     boolean deleteBook(Book b) throws SQLException;
+
     boolean deleteArticle(Article article) throws SQLException;
+
+    boolean deleteTag(int id) throws SQLException;
 
     List<Bookmark> getAllBookmarks() throws SQLException;
 
