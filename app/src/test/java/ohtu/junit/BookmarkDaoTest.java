@@ -3,6 +3,8 @@ package ohtu.junit;
 import dao.BookmarkDao;
 import dao.Database;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import logic.Book;
 import logic.Article;
@@ -70,6 +72,7 @@ public class BookmarkDaoTest {
         service.addBook(book1);
         service.addBook(book2);
         service.addBook(book3);
+
         List<Book> books = service.getAllBooks();
         assertEquals(books.size(), 3);
         assertTrue(books.contains(book1));
@@ -125,6 +128,7 @@ public class BookmarkDaoTest {
         service.addArticle(a2);
         service.addArticle(a3);
         List<Article> articles = service.getAllArticles();
+
         assertEquals(articles.size(), 3);
         assertTrue(articles.contains(a1));
         assertTrue(articles.contains(a2));
@@ -132,6 +136,22 @@ public class BookmarkDaoTest {
     }
 
     @Test
+    public void getAllBookmarksReturnsAllArticlesAndBooks() throws Exception {
+        Article a1 = new Article("Article1", "www.a1.com");
+        service.addArticle(a1);
+        Book book1 = new Book("Creative Title", "Awesome Author", 333, 100);
+        Book book2 = new Book("Fantastic Title", "Such A Good Author", 222, 100);
+        service.addBook(book1);
+        service.addBook(book2);
+        List<Bookmark> bookmarklist = new ArrayList<>();
+        bookmarklist = service.getAllBookmarks();
+        assertTrue(bookmarklist.size() == 3);
+        assertTrue(bookmarklist.contains(a1));
+        assertTrue(bookmarklist.contains(book1));
+        assertTrue(bookmarklist.contains(book2));
+
+    }
+
     public void deleteARticleReturnsTrueIfBookDeleted() throws Exception {
         Book book = new Book("Creative Title", "Awesome Author", 333);
         book.setId(1);
