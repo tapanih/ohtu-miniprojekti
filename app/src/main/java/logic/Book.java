@@ -90,4 +90,9 @@ public class Book implements Bookmark {
         return BookmarkType.BOOK;
     }
 
+    @Override
+    public void addTag(String tag) {
+        this.tags.add(tag);
+    }
+
 }

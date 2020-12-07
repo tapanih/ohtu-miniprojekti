@@ -25,13 +25,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import dao.BookmarkDao;
 import java.util.ArrayList;
+import java.util.List;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import logic.Article;
 import logic.Bookmark;
 
 public class GUI extends Application {
     
-    private final int windowWidth = 500;
-    private final int windowHeight = 500;
+    private final int windowWidth = 900;
+    private final int windowHeight = 700;
     
     private Scene mainMenu;
     private Scene addBookScene;
@@ -91,6 +94,7 @@ public class GUI extends Application {
         addArticle.setId("addarticle");
         
         HBox menu = new HBox(10);
+        menu.setPadding(new Insets(20, 20, 20, 20));
         menu.getChildren().addAll(addBook, addArticle);
         menu.setAlignment(Pos.CENTER);
         
@@ -100,8 +104,19 @@ public class GUI extends Application {
         listBookmarks();
 
         layout.setCenter(listView);
-
-        searchField.setPromptText("Etsi nimellä");
+        
+        VBox radiobuttons = new VBox();
+        radiobuttons.setSpacing(10);
+        ToggleGroup choises = new ToggleGroup();
+        RadioButton titleSearch = new RadioButton("Hae otsikon perusteella");
+        titleSearch.setToggleGroup(choises);
+        titleSearch.setSelected(true);
+        RadioButton tagSearch = new RadioButton("Hae tagin perusteella");
+        tagSearch.setToggleGroup(choises);
+        radiobuttons.getChildren().addAll(titleSearch, tagSearch);
+        menu.getChildren().add(radiobuttons);
+        
+        searchField.setPromptText("Etsi");
         searchField.setId("search");
         menu.getChildren().add(searchField);
         menu.setSpacing(10);
@@ -110,12 +125,18 @@ public class GUI extends Application {
             String filter = searchField.getText();
             bookmarkList.clear();
             bookmarkList.addAll(fullBookmarkList);
-            if (filter != null && filter.length() > 0) {
-                bookmarkList.removeIf(item -> !item.getTitle().toLowerCase().contains(filter.toLowerCase()));
+            if (titleSearch.isSelected()) {
+                if (filter != null && filter.length() > 0) {
+                    bookmarkList.removeIf(item -> !item.getTitle().toLowerCase().contains(filter.toLowerCase()));
+                }
+            } else {
+                //Tagin perusteella haku, tarvitaan vielä 
+                if (filter != null && filter.length() > 0) {
+                    bookmarkList.removeIf(item -> !service.getTagsLowerCase(item).contains(filter.toLowerCase()));
+                }
             }
             listView.setItems(bookmarkList);
             listView.refresh();
-            
         });
         
         addBook.setOnAction(e -> stage.setScene(addBookScene));
@@ -151,7 +172,8 @@ public class GUI extends Application {
         addLayout.setPadding(new Insets(10, 10, 10, 10));
         addLayout.setId("addbookview");
         
-        Label createNewRecommendation = new Label("Luo uusi lukuvinkki");
+        Label createNewRecommendation = new Label("Lisää kirja lukuvinkkeihin");
+        createNewRecommendation.setStyle("-fx-font-weight: bold");
         Button add = new Button("Lisää!");
         Label error = new Label("");
         error.setId("errorMessage");
@@ -203,6 +225,7 @@ public class GUI extends Application {
         addLayout.setId("addarticleview");
         
         Label createNewRecommendation = new Label("Lisää artikkeli lukuvinkkeihin");
+        createNewRecommendation.setStyle("-fx-font-weight: bold");
         Button add = new Button("Lisää!");
         Label error = new Label("");
         error.setId("errorMessage");

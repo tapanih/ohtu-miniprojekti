@@ -113,7 +113,7 @@ public class BookmarkService implements BookmarkDao {
     }
     
     @Override
-    public List<String> getTags(Bookmark bookmark) throws SQLException {
+    public List<String> getTags(Bookmark bookmark) {
         int id = bookmark.getId();
         BookmarkType type = bookmark.getType();
         return db.getTags(id, type);
@@ -131,7 +131,24 @@ public class BookmarkService implements BookmarkDao {
     }
 
     @Override
-    public boolean addBookmark(Bookmark bookmark) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<String> getAllTags() {
+        try {
+            return db.getAllTags();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<String> getTagsLowerCase(Bookmark bookmark) {
+        int id = bookmark.getId();
+        BookmarkType type = bookmark.getType();
+        List<String> tags = db.getTags(id, type);
+        List<String> result = new ArrayList<>();
+        for (String tag : tags) {
+            result.add(tag.toLowerCase());
+        }
+        return result;
     }
 }

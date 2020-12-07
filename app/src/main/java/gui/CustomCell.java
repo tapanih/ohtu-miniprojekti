@@ -13,13 +13,11 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import logic.Article;
 import logic.Book;
 import logic.Bookmark;
+import logic.BookmarkType;
 
 
 public class CustomCell extends ListCell<Bookmark> {
@@ -27,7 +25,7 @@ public class CustomCell extends ListCell<Bookmark> {
     private Bookmark bookmark;
     private final Label bookmarkLabel;
     private final Hyperlink hyperlink;
-    private final GridPane pane;
+    private final HBox pane;
     private final ListView<Bookmark> listView;
     private final ObservableList<Bookmark> bookmarkList;
     private final ArrayList<Bookmark> fullBookmarkList;
@@ -69,24 +67,20 @@ public class CustomCell extends ListCell<Bookmark> {
             updateItem(bookmark, true);
         });
         
-        pane = new GridPane();
+        pane = new HBox();
+        pane.setSpacing(10);
+        pane.setMaxWidth(880);
         bookmarkLabel = new Label();
-        HBox deleteButtonBox = new HBox();
-        deleteButtonBox.getChildren().add(deleteButton);
-        HBox labelBox = new HBox();
-        pane.add(labelBox, 0, 0);
         hyperlink = new Hyperlink();
-        ColumnConstraints contraints = new ColumnConstraints();
-        contraints.setHgrow(Priority.ALWAYS);
-        pane.getColumnConstraints().add(contraints);
-        labelBox.getChildren().add(bookmarkLabel);
-        pane.add(deleteButtonBox, 2, 0);
+        deleteButton.setMinWidth(60);
+        pane.getChildren().addAll(bookmarkLabel, hyperlink, deleteButton);
     }
     
     @Override
     public void updateItem(Bookmark bookmark, boolean empty) {
         super.updateItem(bookmark, empty);
         pane.getChildren().remove(hyperlink);
+        pane.getChildren().remove(deleteButton);
         this.bookmark = bookmark;
         if (empty || bookmark == null || bookmark.getTitle() == null) {
             setText(null);
@@ -94,12 +88,14 @@ public class CustomCell extends ListCell<Bookmark> {
             updateListView(listView);
         } else {
             deleteButton.setId("delete" + bookmark.getId());
-            if (bookmark.getClass().getName().equals(Book.class.getName())) {
-                bookmarkLabel.setText(bookmark.getTitle() + ", " + ((Book) bookmark).getAuthor() + ", " + 
-                        ((Book) bookmark).getPages() + " sivua");
+            if (bookmark.getType() == BookmarkType.BOOK) {
+                String title = bookmark.getTitle() + ", " + ((Book) bookmark).getAuthor() + ", " + 
+                        ((Book) bookmark).getPages() + " sivua";
+                bookmarkLabel.setText(title);
             } else {
-                pane.add(hyperlink, 1, 0);
-                bookmarkLabel.setText(((Article) bookmark).getTitle());
+                pane.getChildren().add(hyperlink);
+                String title = ((Article) bookmark).getTitle();
+                bookmarkLabel.setText(title);
                 hyperlink.setText(((Article) bookmark).getHyperlink());
                 hyperlink.setOnAction(e -> {
                     try {
@@ -110,6 +106,7 @@ public class CustomCell extends ListCell<Bookmark> {
                     }
                 });
             }
+            pane.getChildren().add(deleteButton);
             setGraphic(pane);
             updateListView(listView);
             

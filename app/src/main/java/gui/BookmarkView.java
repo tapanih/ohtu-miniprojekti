@@ -57,11 +57,7 @@ public class BookmarkView extends VBox {
     }
 
     private ListView<String> tagListView(Bookmark bookmark) {
-        try {
-            tags = FXCollections.observableArrayList(service.getTags(bookmark));
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        tags = FXCollections.observableArrayList(service.getTags(bookmark));
         ListView<String> listView = new ListView<>(tags);
         listView.setId("taglistview");
         listView.setCellFactory(param -> new TagCell(bookmark, listView, tags, service));

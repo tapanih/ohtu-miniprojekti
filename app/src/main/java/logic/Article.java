@@ -85,4 +85,9 @@ public class Article implements Bookmark {
         return BookmarkType.ARTICLE;
     }
 
+    @Override
+    public void addTag(String tag) {
+        this.tags.add(tag);
+    }
+
 }
