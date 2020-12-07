@@ -136,6 +136,15 @@ public class GUI extends Application {
         listView.setId("listview");
         listView.setCellFactory(param -> new CustomCell(service, 
                 listView, bookmarkList, fullBookmarkList));
+
+        listView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) { //tuplaklikkaus
+                Bookmark selected = listView.getSelectionModel()
+                    .getSelectedItem();
+                VBox layout = new BookmarkView(selected, backButton());
+                this.stage.setScene(new Scene(layout, windowWidth, windowHeight));
+            }
+        });
     }
     
     private Scene addBook() {
@@ -161,8 +170,7 @@ public class GUI extends Application {
         pageCountInput.setId("pageCount");
         pageCountInput.setTextFormatter((new TextFormatter<>(new IntegerStringConverter())));
         pageCountInput.setMaxWidth(100);
-        Button back = new Button("Takaisin");
-        back.setId("back");
+        Button back = backButton();
         
         addLayout.getChildren().addAll(back, createNewRecommendation, titleLabel, titleInput, authorLabel,
             authorInput, pageCountLabel, pageCountInput, error, add);
@@ -187,10 +195,6 @@ public class GUI extends Application {
             returnToMainPage();
         });
         
-        back.setOnAction(e -> {
-            returnToMainPage();
-        });
-        
         return new Scene(addLayout, windowWidth, windowHeight);
     }
     
@@ -212,8 +216,7 @@ public class GUI extends Application {
         TextField hyperlinkInput = new TextField();
         hyperlinkInput.setId("hyperlink");
         hyperlinkInput.setMaxWidth(350);
-        Button back = new Button("Takaisin");
-        back.setId("back");
+        Button back = backButton();
         
         addLayout.getChildren().addAll(back, createNewRecommendation, titleLabel, titleInput, hyperlinkLabel,
             hyperlinkInput, error, add);
@@ -236,10 +239,6 @@ public class GUI extends Application {
             returnToMainPage();
         });
         
-        back.setOnAction(e -> {
-            returnToMainPage();
-        });
-        
         return new Scene(addLayout, windowWidth, windowHeight);
     }
     
@@ -252,6 +251,15 @@ public class GUI extends Application {
         layout.setCenter(listView);
 
         stage.setScene(mainMenu);
+    }
+
+    private Button backButton() {
+        Button back = new Button("Takaisin");
+        back.setId("back");
+        back.setOnAction(e -> {
+            returnToMainPage();
+        });
+        return back;
     }
 
 }
