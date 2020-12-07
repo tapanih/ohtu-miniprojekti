@@ -7,7 +7,7 @@ public class Article implements Bookmark {
     private int id;
     private String title;
     private String hyperlink;
-    private ArrayList<String> tags;
+    private ArrayList<String> tags = new ArrayList<>(); // TODO: alusta tietokannasta
 
     public Article() {
 
