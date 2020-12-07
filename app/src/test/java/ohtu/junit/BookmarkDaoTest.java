@@ -82,13 +82,13 @@ public class BookmarkDaoTest {
 
     @Test
     public void deleteBookReturnsTrueIfBookDeleted() throws Exception {
-        Article a1 = new Article("Article1", "www.a1.com");
-        a1.setId(1);
-        boolean successfulAdd = service.addArticle(a1);
+        Article article = new Article("Supercomputer simulations could unlock mystery of Moon's formation", "https://www.sciencedaily.com/releases/2020/12/201204110254.htm");
+        article.setId(1);
+        boolean successfulAdd = service.addArticle(article);
         assertTrue(successfulAdd);
-        service.deleteArticle(a1);
+        service.deleteArticle(article);
         List<Article> articles = service.getAllArticles();
-        assertFalse(articles.contains(a1));
+        assertFalse(articles.contains(article));
     }
 
     @Test
@@ -121,24 +121,24 @@ public class BookmarkDaoTest {
 
     @Test
     public void getAllArticlesReturnsAllArticles() throws Exception {
-        Article a1 = new Article("Article1", "www.a1.com");
-        Article a2 = new Article("Article2", "www.a2.com");
-        Article a3 = new Article("Article1", "www.a1.com");
-        service.addArticle(a1);
-        service.addArticle(a2);
-        service.addArticle(a3);
+        Article supercomputerArticle = new Article("Supercomputer simulations could unlock mystery of Moon's formation", "https://www.sciencedaily.com/releases/2020/12/201204110254.htm");
+        Article phraseBasedNMTArticle = new Article("Phrase-Based & Neural Unsupervised Machine Translation", "https://www.aclweb.org/anthology/D18-1549.pdf");
+        Article quantumSupremacyArticle = new Article("China Stakes Its Claim to Quantum Supremacy", "https://www.wired.com/story/china-stakes-claim-quantum-supremacy/");
+        service.addArticle(supercomputerArticle);
+        service.addArticle(phraseBasedNMTArticle);
+        service.addArticle(quantumSupremacyArticle);
         List<Article> articles = service.getAllArticles();
 
         assertEquals(articles.size(), 3);
-        assertTrue(articles.contains(a1));
-        assertTrue(articles.contains(a2));
-        assertTrue(articles.contains(a3));
+        assertTrue(articles.contains(supercomputerArticle));
+        assertTrue(articles.contains(phraseBasedNMTArticle));
+        assertTrue(articles.contains(quantumSupremacyArticle));
     }
 
     @Test
     public void getAllBookmarksReturnsAllArticlesAndBooks() throws Exception {
-        Article a1 = new Article("Article1", "www.a1.com");
-        service.addArticle(a1);
+        Article supercomputerArticle = new Article("Supercomputer simulations could unlock mystery of Moon's formation", "https://www.sciencedaily.com/releases/2020/12/201204110254.htm");
+        service.addArticle(supercomputerArticle);
         Book book1 = new Book("Creative Title", "Awesome Author", 333, 100);
         Book book2 = new Book("Fantastic Title", "Such A Good Author", 222, 100);
         service.addBook(book1);
@@ -146,7 +146,7 @@ public class BookmarkDaoTest {
         List<Bookmark> bookmarklist = new ArrayList<>();
         bookmarklist = service.getAllBookmarks();
         assertTrue(bookmarklist.size() == 3);
-        assertTrue(bookmarklist.contains(a1));
+        assertTrue(bookmarklist.contains(supercomputerArticle));
         assertTrue(bookmarklist.contains(book1));
         assertTrue(bookmarklist.contains(book2));
 

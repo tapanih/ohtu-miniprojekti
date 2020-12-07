@@ -52,28 +52,26 @@ public class Database {
         }
     }
 
-    private void alterTable() {
-        String sql = "ALTER TABLE books ADD COLUMN currentPage integer";
-        try {
-            PreparedStatement alterBookTable = db.prepareStatement(sql);
-            alterBookTable.execute();
-            alterBookTable.close();
-        } catch (SQLException e) {
-
-        }
-    }
-
-    public void alterTagTable() {
-        String sql = "ALTER TABLE Tags ADD COLUMN referenceId integer";
-        try {
-            PreparedStatement alterBookTable = db.prepareStatement(sql);
-            alterBookTable.execute();
-            alterBookTable.close();
-        } catch (SQLException e) {
-
-        }
-    }
-
+//    private void alterTable() {
+//        String sql = "ALTER TABLE books ADD COLUMN currentPage integer";
+//        try {
+//            PreparedStatement alterBookTable = db.prepareStatement(sql);
+//            alterBookTable.execute();
+//            alterBookTable.close();
+//        } catch (SQLException e) {
+//
+//        }
+//    }
+//    public void alterTagTable() {
+//        String sql = "ALTER TABLE Tags ADD COLUMN referenceId integer";
+//        try {
+//            PreparedStatement alterBookTable = db.prepareStatement(sql);
+//            alterBookTable.execute();
+//            alterBookTable.close();
+//        } catch (SQLException e) {
+//
+//        }
+//    }
     private void initializeArticleTable() {
         try {
             PreparedStatement createArticleTable = db.prepareStatement("CREATE TABLE IF NOT EXISTS Articles ("
@@ -167,7 +165,7 @@ public class Database {
             statement.close();
             return true;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+
             return false;
         }
     }
