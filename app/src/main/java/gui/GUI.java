@@ -141,7 +141,7 @@ public class GUI extends Application {
             if (event.getClickCount() == 2) { //tuplaklikkaus
                 Bookmark selected = listView.getSelectionModel()
                     .getSelectedItem();
-                VBox layout = new BookmarkView(selected, backButton());
+                VBox layout = new BookmarkView(selected, backButton(), service);
                 this.stage.setScene(new Scene(layout, windowWidth, windowHeight));
             }
         });

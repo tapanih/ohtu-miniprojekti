@@ -11,7 +11,7 @@ public class Book implements Bookmark {
     private String author;
     private int pageCount;
     private int currentPage;
-    private ArrayList<String> tags;
+    private ArrayList<String> tags = new ArrayList<>(); // TODO: hae tietokannasta
 
     private int id;
 

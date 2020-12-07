@@ -65,9 +65,8 @@ public class BookmarkService implements BookmarkDao {
     public List<Bookmark> getAllBookmarks() throws SQLException {
         ArrayList<Bookmark> bookmarkList = new ArrayList<>();
         try {
-
-            db.getAllBooks().forEach(a -> bookmarkList.add(a));
-            db.getAllArticles().forEach(a -> bookmarkList.add(a));
+            bookmarkList.addAll(db.getAllBooks());
+            bookmarkList.addAll(db.getAllArticles());
             return bookmarkList;
         } catch (SQLException ex) {
             return new ArrayList<>();
