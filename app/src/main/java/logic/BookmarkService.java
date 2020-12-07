@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import dao.Database;
 import java.util.List;
 import dao.BookmarkDao;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class BookmarkService implements BookmarkDao {
 
@@ -53,7 +51,6 @@ public class BookmarkService implements BookmarkDao {
 
     @Override
     public List<Book> getAllBooks() {
-//    db.alterTagTable();
         try {
             return db.getAllBooks();
         } catch (SQLException ex) {
@@ -101,25 +98,40 @@ public class BookmarkService implements BookmarkDao {
     }
 
     @Override
-    public boolean addTag(String keyword) throws SQLException {
-
+    public boolean addTag(Bookmark bookmark, String keyword) throws SQLException {
+        int id = bookmark.getId();
+        BookmarkType type = bookmark.getType();
         if (keyword == null || keyword.equals("")) {
             return false;
         }
         try {
-            db.addTag(keyword);
+            db.addTag(keyword, id, type);
             return true;
         } catch (SQLException ex) {
             return false;
         }
     }
+    
+    @Override
+    public List<String> getTags(Bookmark bookmark) throws SQLException {
+        int id = bookmark.getId();
+        BookmarkType type = bookmark.getType();
+        return db.getTags(id, type);
+    }
 
     @Override
-    public boolean deleteTag(int id) throws SQLException {
+    public boolean deleteTag(Bookmark bookmark, String keyword) {
+        int id = bookmark.getId();
+        BookmarkType type = bookmark.getType();
         try {
-            return db.deleteTag(id);
+            return db.deleteTag(keyword, id, type);
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Override
+    public boolean addBookmark(Bookmark bookmark) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

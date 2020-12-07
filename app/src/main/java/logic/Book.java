@@ -3,8 +3,6 @@ package logic;
 import java.util.ArrayList;
 import java.util.List;
 
-import dao.BookmarkDao;
-
 public class Book implements Bookmark {
 
     private String title;
@@ -18,7 +16,6 @@ public class Book implements Bookmark {
     public Book(String title, String author, int pageCount) {
         this.title = title;
         this.author = author;
-
         this.pageCount = pageCount;
     }
 
@@ -86,6 +83,11 @@ public class Book implements Bookmark {
     public String toString() {
         return this.title + " ," + this.author + " ,sivumäärä: " + this.pageCount + ", nykyinen sivu: " + this.currentPage;
 
+    }
+
+    @Override
+    public BookmarkType getType() {
+        return BookmarkType.BOOK;
     }
 
 }

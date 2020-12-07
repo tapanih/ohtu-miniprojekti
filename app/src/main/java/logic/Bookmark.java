@@ -9,5 +9,7 @@ public interface Bookmark {
     String getTitle();
 
     int getId();
+    
+    BookmarkType getType();
 
 }

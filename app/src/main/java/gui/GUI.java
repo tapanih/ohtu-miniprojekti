@@ -68,7 +68,6 @@ public class GUI extends Application {
     
     @Override
     public void start(Stage stage) throws SQLException {
-        
         this.stage = stage;
         this.stage.setTitle("Lukuvinkkikirjanpito");
         mainMenu = mainMenu();

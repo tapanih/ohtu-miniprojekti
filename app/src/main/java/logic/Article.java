@@ -9,10 +9,6 @@ public class Article implements Bookmark {
     private String hyperlink;
     private ArrayList<String> tags = new ArrayList<>(); // TODO: alusta tietokannasta
 
-    public Article() {
-
-    }
-
     public Article(int id, String title, String hyperlink, ArrayList<String> tags) {
         this.id = id;
         this.title = title;
@@ -21,17 +17,14 @@ public class Article implements Bookmark {
     }
 
     public Article(String title, String hyperlink, ArrayList<String> tags) {
-
         this.title = title;
         this.hyperlink = hyperlink;
         this.tags = tags;
     }
 
     public Article(String title, String hyperlink) {
-
         this.title = title;
         this.hyperlink = hyperlink;
-
     }
 
     @Override
@@ -85,7 +78,11 @@ public class Article implements Bookmark {
     @Override
     public String toString() {
         return this.title + " linkki: " + this.hyperlink;
+    }
 
+    @Override
+    public BookmarkType getType() {
+        return BookmarkType.ARTICLE;
     }
 
 }

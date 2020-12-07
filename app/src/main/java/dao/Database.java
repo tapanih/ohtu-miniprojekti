@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import logic.Article;
 import logic.Book;
+import logic.BookmarkType;
 
 public class Database {
 
@@ -51,27 +52,7 @@ public class Database {
         } catch (SQLException e) {
         }
     }
-
-//    private void alterTable() {
-//        String sql = "ALTER TABLE books ADD COLUMN currentPage integer";
-//        try {
-//            PreparedStatement alterBookTable = db.prepareStatement(sql);
-//            alterBookTable.execute();
-//            alterBookTable.close();
-//        } catch (SQLException e) {
-//
-//        }
-//    }
-//    public void alterTagTable() {
-//        String sql = "ALTER TABLE Tags ADD COLUMN referenceId integer";
-//        try {
-//            PreparedStatement alterBookTable = db.prepareStatement(sql);
-//            alterBookTable.execute();
-//            alterBookTable.close();
-//        } catch (SQLException e) {
-//
-//        }
-//    }
+    
     private void initializeArticleTable() {
         try {
             PreparedStatement createArticleTable = db.prepareStatement("CREATE TABLE IF NOT EXISTS Articles ("
@@ -84,28 +65,7 @@ public class Database {
         } catch (SQLException e) {
         }
     }
-
-//    
-//    private void initializeBookmarkTable() {
-//        try {
-//            PreparedStatement createBookmarkTable = db.prepareStatement("CREATE TABLE Bookmarks (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-//                    + "name VARCHAR(255) NOT NULL,"
-//                    + "type VARCHAR(64) CHECK(Type IN ('book', 'article')) NOT NULL);");
-//            createBookmarkTable.execute();
-//            createBookmarkTable.close();
-//        } catch (SQLException e) {
-//
-//        }
-//    }
-//     
-//    private void initializeBookmarkTagTable() {
-//        try {
-//            PreparedStatement createBookmarkTagTable = db.prepareStatement("CREATE TABLE BookmarkTags(id integer PRIMARY KEY, bookmark_id integer, tag_id integer, FOREIGN KEY (bookmark_id) REFERENCES bookmarks(id), FOREIGN KEY (tag_id) REFERENCES Tag(id));");
-//        } catch (SQLException e) {
-//            
-//        }
-//        
-//    }
+    
     private void initializeTagTable() {
         try {
             PreparedStatement createTagTable = db.prepareStatement("CREATE TABLE IF NOT EXISTS Tags (id integer PRIMARY KEY, referenceId integer, keyword varchar(50), isBook boolean,   CONSTRAINT FK_1 FOREIGN KEY(referenceId)  \n"
@@ -127,31 +87,7 @@ public class Database {
      * @return true, if book added successfully, false otherwise.
      * @throws SQLException if adding book to the database fails.
      */
-    /**
-     * Adds a book to the database.
-     *
-     * @param book
-     * @return true, if book added successfully, false otherwise.
-     * @throws SQLException if adding book to the database fails.
-     */
-//    public boolean addBook(Book book) throws SQLException {
-//        try {
-//            PreparedStatement statement = db.prepareStatement(
-//                    "INSERT OR REPLACE INTO books (title, author, pageCount) VALUES (?, ?, ?);"
-//            );
-//            statement.setString(1, book.getTitle());
-//            statement.setString(2, book.getAuthor());
-//            statement.setInt(3, book.getPages());
-//            statement.executeUpdate();
-//            statement.close();
-//            return true;
-//        } catch (Exception e) {
-//            return false;
-//        }
-//    }
     public boolean addBook(Book book) throws SQLException {
-//        alterTable();
-
         try {
 
             PreparedStatement statement = db.prepareStatement(
@@ -185,41 +121,31 @@ public class Database {
         }
     }
 
-    public boolean addTag(String keyword) throws SQLException {
+    public boolean addTag(String keyword, int id, BookmarkType type) throws SQLException {
         try {
-            PreparedStatement statement = db.prepareStatement(
-                    "INSERT OR REPLACE INTO tags (keyword) VALUES (?);"
-            );
+            PreparedStatement statement = db.prepareStatement("INSERT OR REPLACE INTO tags (keyword, referenceId, isBook) VALUES (?, ?, ?);");
             statement.setString(1, keyword);
+            statement.setInt(2, id);
+            if (type == BookmarkType.BOOK) {
+                statement.setBoolean(3, true);
+            } else {
+                statement.setBoolean(3, false);
+            }
             statement.executeUpdate();
             statement.close();
             return true;
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return false;
         }
     }
-
+    
     /**
      * Returns all books from the database.
      *
      * @return returns a list of Books.
      * @throws SQLException if retrieving data from the database fails.
      */
-//    public List<Book> getAllBooks() throws SQLException {
-//        List<Book> books = new ArrayList<>();
-//
-//        PreparedStatement statement = db.prepareStatement("SELECT * FROM books");
-//
-//        ResultSet resultSet = statement.executeQuery();
-//        while (resultSet.next()) {
-//            Book book = new Book(resultSet.getString("title").trim(), resultSet.getString("author"), resultSet.getInt("pageCount"));
-//            book.setId(resultSet.getInt("id"));
-//            books.add(book);
-//        }
-//        statement.close();
-//
-//        return books;
-//    }
     public List<Book> getAllBooks() throws SQLException {
         List<Book> books = new ArrayList<>();
 
@@ -257,44 +183,36 @@ public class Database {
 
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
-            String tag = resultSet.getString("keyword").trim();
+            String tag = resultSet.getString("keyword");
             tags.add(tag);
         }
         statement.close();
 
         return tags;
     }
-
-    /**
-     * Retrieves a book with the given title from the database.
-     *
-     * @param title
-     * @return a Book with the given title.
-     * @throws SQLException if retrieving data from the database fails.
-     */
-//    public Book getBookByTitle(String title) throws SQLException {
-//        PreparedStatement statement = db.prepareStatement("SELECT * FROM books WHERE title = ?");
-//        statement.setString(1, title);
-//        ResultSet resultSet = statement.executeQuery();
-//        boolean findOne = resultSet.next();
-//        if (!findOne) {
-//            return null;
-//        } else {
-//            Book book = new Book(resultSet.getString("title"), resultSet.getString("author"), resultSet.getInt("pageCount"));
-//            statement.close();
-//            resultSet.close();
-//            return book;
-//        }
-//    }
-    /**
-     * Tells if a book with the given title already exists in the database.
-     *
-     * @param title
-     * @return true if title is already taken and false otherwise.
-     * @throws SQLException if retrieving data from the database fails.
-     */
+    
+    public List<String> getTags(int id, BookmarkType type) {
+        List<String> tags = new ArrayList<>();
+        try {
+            PreparedStatement statement = db.prepareStatement("SELECT * FROM tags WHERE referenceId = ? AND isBook = ?");
+            statement.setInt(1, id);
+            if (type == BookmarkType.BOOK) {
+                statement.setBoolean(2, true);
+            } else {
+                statement.setBoolean(2, false);
+            }
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String tag = resultSet.getString("keyword");
+                tags.add(tag);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return tags;
+    }
+    
     public boolean deleteBook(Book book) throws SQLException {
-
         try {
 
             PreparedStatement statement = db.prepareStatement("DELETE FROM books WHERE id = ?");
@@ -329,18 +247,18 @@ public class Database {
         return true;
     }
 
-    public boolean deleteTag(int id) throws SQLException {
-
+    public boolean deleteTag(String keyword, int id, BookmarkType type) throws SQLException {
         try {
-
-            PreparedStatement statement = db.prepareStatement("DELETE FROM tags WHERE id = ?");
-
-            statement.setInt(1, id);
-
+            PreparedStatement statement = db.prepareStatement("DELETE FROM tags WHERE keyword = ? AND referenceId = ? AND isBook = ?");
+            statement.setString(1, keyword);
+            statement.setInt(2, id);
+            if (type == BookmarkType.BOOK) {
+                statement.setBoolean(3, true);
+            } else {
+                statement.setBoolean(3, false);
+            }
             statement.executeUpdate();
-
             statement.close();
-
         } catch (Exception e) {
             return false;
         }

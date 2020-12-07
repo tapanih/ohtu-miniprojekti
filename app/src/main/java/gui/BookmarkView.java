@@ -1,6 +1,7 @@
 package gui;
 
 import dao.BookmarkDao;
+import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -10,6 +11,7 @@ import javafx.scene.layout.VBox;
 import logic.Article;
 import logic.Book;
 import logic.Bookmark;
+import logic.BookmarkType;
 
 /**
  * Lukuvinkin oma näkymä.
@@ -30,7 +32,7 @@ public class BookmarkView extends VBox {
         this.getChildren().addAll(back, header, titleLabel);
 
         // lisätään eri lukuvinkeille uniikit tiedot
-        if (bookmark.getClass().getName().equals(Article.class.getName())) {
+        if (bookmark.getType() == BookmarkType.ARTICLE) {
             articleView((Article) bookmark);
         } else {
             bookView((Book) bookmark);
@@ -41,8 +43,13 @@ public class BookmarkView extends VBox {
         addTagButton.setOnAction(event -> {
             String newTag = addTagField.getText();
             if (tags.stream().noneMatch(tag -> tag.equals(newTag))) {
-                // TODO: tietokannan päivitys
+                try {
+                    service.addTag(bookmark, newTag);
+                } catch (SQLException ex) {
+                    System.out.println(ex.getMessage());
+                }
                 tags.add(newTag);
+                addTagField.setText("");
             }
         });
         addTagBox.getChildren().addAll(addTagField, addTagButton);
@@ -50,10 +57,14 @@ public class BookmarkView extends VBox {
     }
 
     private ListView<String> tagListView(Bookmark bookmark) {
-        tags = FXCollections.observableArrayList(bookmark.getTags());
+        try {
+            tags = FXCollections.observableArrayList(service.getTags(bookmark));
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
         ListView<String> listView = new ListView<>(tags);
         listView.setId("taglistview");
-        listView.setCellFactory(param -> new TagCell(bookmark, listView, tags));
+        listView.setCellFactory(param -> new TagCell(bookmark, listView, tags, service));
         return listView;
     }
 

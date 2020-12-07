@@ -1,5 +1,6 @@
 package gui;
 
+import dao.BookmarkDao;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
@@ -10,13 +11,14 @@ import logic.Bookmark;
 import java.util.Optional;
 
 public class TagCell extends ListCell<String> {
+    
     private String tag;
     private final GridPane pane;
     private final ListView<String> listView;
     private final Label tagLabel;
     private final Button deleteButton;
 
-    public TagCell(Bookmark bookmark, ListView<String> listView, ObservableList<String> tags) {
+    public TagCell(Bookmark bookmark, ListView<String> listView, ObservableList<String> tags, BookmarkDao service) {
         super();
         this.listView = listView;
         deleteButton = new Button("Poista");
@@ -31,8 +33,7 @@ public class TagCell extends ListCell<String> {
             if (result.isEmpty() || result.get() == ButtonType.CANCEL) {
                 return;
             }
-            //TODO: tietokannan päivitys
-            bookmark.getTags().removeIf(t -> t.equals(this.tag));
+            service.deleteTag(bookmark, this.tag);
             tags.remove(this.tag);
         });
 

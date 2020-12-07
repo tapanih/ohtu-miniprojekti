@@ -8,36 +8,27 @@ import logic.Bookmark;
 
 public interface BookmarkDao {
 
-    /**
-     * @param book
-     * @return true, if successfully added book, false otherwise
-     * @throws SQLException if saving the book object fails
-     */
     boolean addBook(Book book) throws SQLException, Exception;
 
     boolean addArticle(Article article) throws SQLException;
+    
+    boolean addBookmark(Bookmark bookmark);
 
-    boolean addTag(String keyword) throws SQLException;
+    boolean addTag(Bookmark bookmark, String keyword) throws SQLException;
 
-    /**
-     * Retrieves all the books in the database
-     *
-     * @param title
-     * @return a book by title
-     * @throws SQLException if retrieving data from the database fails
-     *
-     */
-//    Book getBookByTitle(String title) throws SQLException;
-    /**
-     * @return returns a list of categories created by the given user
-     * @throws SQLException when retrieving data from the database fails
-     */
     List<Book> getAllBooks() throws SQLException;
+    
     List<Article> getAllArticles() throws SQLException;
+    
+    List<String> getTags(Bookmark bookmark) throws SQLException;
+    
     boolean deleteBook(Book book) throws SQLException;
+    
     boolean deleteArticle(Article article) throws SQLException;
+    
     boolean deleteBookmark(Bookmark bookmark) throws SQLException;
-    boolean deleteTag(int id) throws SQLException;
+    
+    boolean deleteTag(Bookmark bookmark, String keyword);
     
     List<Bookmark> getAllBookmarks() throws SQLException;
 
