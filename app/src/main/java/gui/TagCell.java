@@ -33,7 +33,7 @@ public class TagCell extends ListCell<String> {
             }
             //TODO: tietokannan päivitys
             bookmark.getTags().removeIf(t -> t.equals(this.tag));
-            tags.removeIf(t -> t.equals(this.tag));
+            tags.remove(this.tag);
         });
 
         pane = new GridPane();
