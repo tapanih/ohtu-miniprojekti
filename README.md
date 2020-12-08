@@ -13,9 +13,18 @@ Projekti on Ohjelmistotuotanto-kurssin miniprojekti.
 * Checkstyle-virheitä ei saa olla ja koodin pitää olla yleisesti siistiä ja luokka/metodi-jaon tulee olla järkevä.  
 * User storyn osalta oleellisten testien rivi- ja haaraumakattavuuden tulee olla vähintään 70%.
   
+
+
 **[Product Backlog](https://docs.google.com/spreadsheets/d/1f-38FdB34sLDpAlHOOb8wHRx4k4TWji5HSkWHmvbnTc/)**
 
 **[Projektin lisenssi](https://github.com/tapanih/ohtu-miniprojekti/blob/main/LICENSE.md)**
+
+**User Storyjen cucumber-featuret:**
++ [Adding book](https://github.com/tapanih/ohtu-miniprojekti/blob/main/app/src/test/resources/ohtu/cucumber/addingBook.feature)
++ [Adding article](https://github.com/tapanih/ohtu-miniprojekti/blob/main/app/src/test/resources/ohtu/cucumber/addingArticle.feature)
++ [Deleting bookmarks](https://github.com/tapanih/ohtu-miniprojekti/blob/main/app/src/test/resources/ohtu/cucumber/deleteBooks.feature)
++ [Listing bookmarks](https://github.com/tapanih/ohtu-miniprojekti/blob/main/app/src/test/resources/ohtu/cucumber/listBooks.feature)
++ [Searching bookmarks](https://github.com/tapanih/ohtu-miniprojekti/blob/main/app/src/test/resources/ohtu/cucumber/searchBooks.feature)
 
 ## Releaset ## 
 
