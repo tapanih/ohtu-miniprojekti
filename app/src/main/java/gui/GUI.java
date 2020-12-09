@@ -130,9 +130,9 @@ public class GUI extends Application {
                     bookmarkList.removeIf(item -> !item.getTitle().toLowerCase().contains(filter.toLowerCase()));
                 }
             } else {
-                //Tagin perusteella haku, tarvitaan vielä 
                 if (filter != null && filter.length() > 0) {
-                    bookmarkList.removeIf(item -> !service.getTagsLowerCase(item).contains(filter.toLowerCase()));
+                    bookmarkList.removeIf(item -> service.getTagsLowerCase(item)
+                        .stream().noneMatch(tag -> tag.contains(filter.toLowerCase())));
                 }
             }
             listView.setItems(bookmarkList);
