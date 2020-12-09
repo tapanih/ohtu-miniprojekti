@@ -41,6 +41,7 @@ public class GUI extends Application {
     private Scene addArticleScene;
     private BorderPane layout;
     private TextField searchField;
+    private RadioButton titleSearch;
     
     private Stage stage;
     private BookmarkDao service;
@@ -101,25 +102,45 @@ public class GUI extends Application {
         layout.setTop(menu);
 
         searchField = new TextField();
-        listBookmarks();
 
-        layout.setCenter(listView);
-        
         VBox radiobuttons = new VBox();
         radiobuttons.setSpacing(10);
         ToggleGroup choises = new ToggleGroup();
-        RadioButton titleSearch = new RadioButton("Hae otsikon perusteella");
+
+        titleSearch = new RadioButton("Hae otsikon perusteella");
         titleSearch.setToggleGroup(choises);
         titleSearch.setSelected(true);
         RadioButton tagSearch = new RadioButton("Hae tagin perusteella");
         tagSearch.setToggleGroup(choises);
         radiobuttons.getChildren().addAll(titleSearch, tagSearch);
         menu.getChildren().add(radiobuttons);
+
+        listBookmarks();
+
+        layout.setCenter(listView);
         
         searchField.setPromptText("Etsi");
         searchField.setId("search");
         menu.getChildren().add(searchField);
         menu.setSpacing(10);
+
+        choises.selectedToggleProperty().addListener(obs -> {
+            String filter = searchField.getText();
+            bookmarkList.clear();
+            bookmarkList.addAll(fullBookmarkList);
+            if (titleSearch.isSelected()) {
+                if (filter != null && filter.length() > 0) {
+                    bookmarkList.removeIf(item -> !item.getTitle().toLowerCase().contains(filter.toLowerCase()));
+                }
+            } else {
+                if (filter != null && filter.length() > 0) {
+                    bookmarkList.removeIf(item -> service.getTagsLowerCase(item)
+                        .stream().noneMatch(tag -> tag.contains(filter.toLowerCase())));
+                }
+            }
+            listView.setItems(bookmarkList);
+            listView.refresh();
+        });
         
         searchField.textProperty().addListener(obs -> {
             String filter = searchField.getText();
@@ -149,8 +170,15 @@ public class GUI extends Application {
         fullBookmarkList = new ArrayList<>(service.getAllBookmarks());
         bookmarkList = FXCollections.observableArrayList(fullBookmarkList);
         String filter = searchField.getText();
-        if (filter != null && filter.length() > 0) {
-            bookmarkList.removeIf(item -> !item.getTitle().toLowerCase().contains(filter.toLowerCase()));
+        if (titleSearch.isSelected()) {
+            if (filter != null && filter.length() > 0) {
+                bookmarkList.removeIf(item -> !item.getTitle().toLowerCase().contains(filter.toLowerCase()));
+            }
+        } else {
+            if (filter != null && filter.length() > 0) {
+                bookmarkList.removeIf(item -> service.getTagsLowerCase(item)
+                    .stream().noneMatch(tag -> tag.contains(filter.toLowerCase())));
+            }
         }
         listView = new ListView<>(bookmarkList);
         listView.setId("listview");
