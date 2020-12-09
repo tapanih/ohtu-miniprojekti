@@ -90,13 +90,27 @@ public class StepDefinitions extends TestFXBase {
         clickOn("#delete" + article.getId());
     }
 
+    @When("the details button next to a book with {string} as title and {string} as author and {int} as page count is clicked")
+    public void bookDetailsButtonIsPressed(String title, String author, int pageCount) {
+        ListView<Bookmark> listView = find("#listview");
+        Bookmark book = new Book(title, author, pageCount);
+        int i = listView.getItems().indexOf(book);
+        book = listView.getItems().get(i);
+        clickOn("#item" + book.getId());
+    }
+
     @When("the details button next to an article with {string} as title and {string} as hyperlink is clicked")
-    public void articleIsDoubleClicked(String title, String hyperlink) {
+    public void articleDetailsButtonIsPressed(String title, String hyperlink) {
         ListView<Bookmark> listView = find("#listview");
         Bookmark article = new Article(title, hyperlink);
         int i = listView.getItems().indexOf(article);
         article = listView.getItems().get(i);
         clickOn("#item" + article.getId());
+    }
+
+    @When("the delete button next to a tag named {string} is clicked")
+    public void deleteButtonNextToTagIsClicked(String tag) {
+        clickOn("#delete" + tag);
     }
 
     @When("{string} is entered as a new tag to be added")
