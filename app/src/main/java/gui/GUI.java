@@ -182,17 +182,8 @@ public class GUI extends Application {
         }
         listView = new ListView<>(bookmarkList);
         listView.setId("listview");
-        listView.setCellFactory(param -> new CustomCell(service, 
-                listView, bookmarkList, fullBookmarkList));
-
-        listView.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) { //tuplaklikkaus
-                Bookmark selected = listView.getSelectionModel()
-                    .getSelectedItem();
-                VBox layout = new BookmarkView(selected, backButton(), service);
-                this.stage.setScene(new Scene(layout, windowWidth, windowHeight));
-            }
-        });
+        listView.setCellFactory(param -> new CustomCell(stage, service,
+                listView, bookmarkList, fullBookmarkList, backButton()));
     }
     
     private Scene addBook() {

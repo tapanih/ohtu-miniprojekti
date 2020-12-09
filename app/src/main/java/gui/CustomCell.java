@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -14,6 +16,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import logic.Article;
 import logic.Book;
 import logic.Bookmark;
@@ -21,6 +27,7 @@ import logic.BookmarkType;
 
 
 public class CustomCell extends ListCell<Bookmark> {
+    private final Button detailsButton;
     private final Button deleteButton;
     private Bookmark bookmark;
     private final Label bookmarkLabel;
@@ -31,19 +38,24 @@ public class CustomCell extends ListCell<Bookmark> {
     private final ArrayList<Bookmark> fullBookmarkList;
  
     
-    public CustomCell(BookmarkDao service, ListView<Bookmark> listView, 
-        ObservableList<Bookmark> bookmarkList, ArrayList<Bookmark> fullBookmarkList) {
+    public CustomCell(Stage stage, BookmarkDao service, ListView<Bookmark> listView,
+                      ObservableList<Bookmark> bookmarkList, ArrayList<Bookmark> fullBookmarkList, Button back) {
         super();
         this.listView = listView;
         this.bookmarkList = bookmarkList;
         this.fullBookmarkList = fullBookmarkList;
 
+        detailsButton = new Button("Tiedot");
         deleteButton = new Button("Poista");
         
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setContentText("Haluatko varmasti poistaa kyseisen lukuvinkin?");
-        
-        
+
+        detailsButton.setOnMouseClicked(event -> {
+            VBox layout = new BookmarkView(bookmark, back, service);
+            stage.setScene(new Scene(layout, stage.getWidth(), stage.getHeight()));
+        });
+
         deleteButton.setOnAction(event -> {
             try {
                 Optional<ButtonType> result = alert.showAndWait();
@@ -70,16 +82,21 @@ public class CustomCell extends ListCell<Bookmark> {
         pane = new HBox();
         pane.setSpacing(10);
         pane.setMaxWidth(880);
+
+        final Pane spacer = new Pane();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
         bookmarkLabel = new Label();
         hyperlink = new Hyperlink();
+        detailsButton.setMinWidth(60);
         deleteButton.setMinWidth(60);
-        pane.getChildren().addAll(bookmarkLabel, hyperlink, deleteButton);
+        pane.getChildren().addAll(bookmarkLabel, hyperlink, spacer, detailsButton, deleteButton);
     }
     
     @Override
     public void updateItem(Bookmark bookmark, boolean empty) {
         super.updateItem(bookmark, empty);
         pane.getChildren().remove(hyperlink);
+        pane.getChildren().remove(detailsButton);
         pane.getChildren().remove(deleteButton);
         this.bookmark = bookmark;
         if (empty || bookmark == null || bookmark.getTitle() == null) {
@@ -88,7 +105,7 @@ public class CustomCell extends ListCell<Bookmark> {
             updateListView(listView);
         } else {
             deleteButton.setId("delete" + bookmark.getId());
-            bookmarkLabel.setId("item" + bookmark.getId());
+            detailsButton.setId("item" + bookmark.getId());
             if (bookmark.getType() == BookmarkType.BOOK) {
                 String title = bookmark.getTitle() + ", " + ((Book) bookmark).getAuthor() + ", " + 
                         ((Book) bookmark).getPages() + " sivua";
@@ -107,6 +124,7 @@ public class CustomCell extends ListCell<Bookmark> {
                     }
                 });
             }
+            pane.getChildren().add(detailsButton);
             pane.getChildren().add(deleteButton);
             setGraphic(pane);
             updateListView(listView);

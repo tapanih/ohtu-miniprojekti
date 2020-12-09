@@ -90,13 +90,13 @@ public class StepDefinitions extends TestFXBase {
         clickOn("#delete" + article.getId());
     }
 
-    @When("an article with {string} as title and {string} as hyperlink is double-clicked")
+    @When("the details button next to an article with {string} as title and {string} as hyperlink is clicked")
     public void articleIsDoubleClicked(String title, String hyperlink) {
         ListView<Bookmark> listView = find("#listview");
         Bookmark article = new Article(title, hyperlink);
         int i = listView.getItems().indexOf(article);
         article = listView.getItems().get(i);
-        doubleClickOn("#item" + article.getId());
+        clickOn("#item" + article.getId());
     }
 
     @When("{string} is entered as a new tag to be added")
