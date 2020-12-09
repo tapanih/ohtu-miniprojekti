@@ -39,6 +39,7 @@ public class BookmarkView extends VBox {
         }
         HBox addTagBox = new HBox();
         TextField addTagField = new TextField();
+        addTagField.setId("addTag");
         Button addTagButton = new Button("Lisää tagi");
         addTagButton.setOnAction(event -> {
             String newTag = addTagField.getText();

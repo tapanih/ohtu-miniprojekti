@@ -90,6 +90,26 @@ public class StepDefinitions extends TestFXBase {
         clickOn("#delete" + article.getId());
     }
 
+    @When("an article with {string} as title and {string} as hyperlink is double-clicked")
+    public void articleIsDoubleClicked(String title, String hyperlink) {
+        ListView<Bookmark> listView = find("#listview");
+        Bookmark article = new Article(title, hyperlink);
+        int i = listView.getItems().indexOf(article);
+        article = listView.getItems().get(i);
+        doubleClickOn("#item" + article.getId());
+    }
+
+    @When("{string} is entered as a new tag to be added")
+    public void tagTextFieldIsFilledWith(String tag) {
+        TextField textField = find("#addTag");
+        textField.setText(tag);
+    }
+
+    @When("button to add the entered tag is clicked")
+    public void buttonToAddTagIsClicked() {
+        clickOn("Lisää tagi");
+    }
+
     @When("{string} is clicked in the confirmation dialog")
     public void buttonWithMessageIsClicked(String message) {
         clickOn(message);
@@ -156,6 +176,12 @@ public class StepDefinitions extends TestFXBase {
     @Then("the bookmark list contains {int} bookmarks")
     public void checkThatBookmarkListSizeIs(int count) {
         ListView<Bookmark> listView = find("#listview");
+        assertEquals(count, listView.getItems().size());
+    }
+
+    @Then("the tag list contains {int} tags")
+    public void checkThatTagListSizeIs(int count) {
+        ListView<String> listView = find("#taglistview");
         assertEquals(count, listView.getItems().size());
     }
     

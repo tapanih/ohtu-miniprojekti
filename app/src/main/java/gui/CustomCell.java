@@ -88,6 +88,7 @@ public class CustomCell extends ListCell<Bookmark> {
             updateListView(listView);
         } else {
             deleteButton.setId("delete" + bookmark.getId());
+            bookmarkLabel.setId("item" + bookmark.getId());
             if (bookmark.getType() == BookmarkType.BOOK) {
                 String title = bookmark.getTitle() + ", " + ((Book) bookmark).getAuthor() + ", " + 
                         ((Book) bookmark).getPages() + " sivua";
