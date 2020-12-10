@@ -72,10 +72,18 @@ public class BookmarkService implements BookmarkDao {
     
     @Override
     public boolean deleteBookmark(Bookmark bookmark) throws SQLException {
+        deleteTags(bookmark);
         if (bookmark.getClass().getName().equals(Book.class.getName())) {
+            
             return deleteBook((Book) bookmark);
         } else {
             return deleteArticle((Article) bookmark);
+        }
+    }
+    
+    public void deleteTags(Bookmark bookmark) throws SQLException {
+        for (String tag : bookmark.getTags()) {
+            deleteTag(bookmark, tag);
         }
     }
 
