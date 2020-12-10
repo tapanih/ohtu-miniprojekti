@@ -81,7 +81,7 @@ public class Book implements Bookmark {
 
     @Override
     public String toString() {
-        return this.title + " ," + this.author + " ,sivumäärä: " + this.pageCount + ", nykyinen sivu: " + this.currentPage;
+        return this.title + " ," + this.author + ", sivumäärä: " + this.pageCount + ", nykyinen sivu: " + this.currentPage;
 
     }
 
