@@ -145,6 +145,21 @@ public class StepDefinitions extends TestFXBase {
             push(KeyCode.BACK_SPACE);
         }
     }
+    
+    @When("search by tags is clicked")
+    public void searchByTagsIsClicked() {
+        clickOn("Hae tagin perusteella");
+    }
+
+    @When("search by books is clicked")
+    public void searchByBooksIsClicked() {
+        clickOn("Hae otsikon perusteella");
+    }
+
+    @When("the return button is pressed")
+    public void theReturnButtonIsPressed(){
+        clickOn("Takaisin");
+    }
 
     @Then("bookmark list contains a book with {string} as name and {string} as author and {int} as page count")
     public void bookListContainsAddedBook(String name, String author, int pageCount) {
