@@ -104,13 +104,15 @@ public class CustomCell extends ListCell<Bookmark> {
             setGraphic(null);
             updateListView(listView);
         } else {
-            deleteButton.setId("delete" + bookmark.getId());
-            detailsButton.setId("item" + bookmark.getId());
             if (bookmark.getType() == BookmarkType.BOOK) {
                 String title = bookmark.getTitle() + ", " + ((Book) bookmark).getAuthor() + ", " + 
                         ((Book) bookmark).getPages() + " sivua";
                 bookmarkLabel.setText(title);
+                deleteButton.setId("deleteBook" + bookmark.getId());
+                detailsButton.setId("itemBook" + bookmark.getId());
             } else {
+                deleteButton.setId("deleteArticle" + bookmark.getId());
+                detailsButton.setId("itemArticle" + bookmark.getId());
                 pane.getChildren().add(hyperlink);
                 String title = ((Article) bookmark).getTitle();
                 bookmarkLabel.setText(title);
