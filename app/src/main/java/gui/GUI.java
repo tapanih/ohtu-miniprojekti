@@ -205,7 +205,7 @@ public class GUI extends Application {
         TextField authorInput = new TextField();
         authorInput.setId("author");
         authorInput.setMaxWidth(350);
-        Label pageCountLabel = new Label("Sivumaara: ");
+        Label pageCountLabel = new Label("Sivumäärä: ");
         TextField pageCountInput = new TextField();
         pageCountInput.setId("pageCount");
         pageCountInput.setTextFormatter((new TextFormatter<>(new IntegerStringConverter())));
