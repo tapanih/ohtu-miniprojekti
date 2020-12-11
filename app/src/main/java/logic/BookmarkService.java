@@ -82,7 +82,7 @@ public class BookmarkService implements BookmarkDao {
     }
     
     public void deleteTags(Bookmark bookmark) throws SQLException {
-        for (String tag : bookmark.getTags()) {
+        for (String tag : getTags(bookmark)) {
             deleteTag(bookmark, tag);
         }
     }
