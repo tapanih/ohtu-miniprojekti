@@ -157,7 +157,7 @@ public class StepDefinitions extends TestFXBase {
     }
 
     @When("the return button is pressed")
-    public void theReturnButtonIsPressed(){
+    public void theReturnButtonIsPressed() {
         clickOn("Takaisin");
     }
 
