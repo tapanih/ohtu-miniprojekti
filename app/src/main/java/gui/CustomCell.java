@@ -63,13 +63,7 @@ public class CustomCell extends ListCell<Bookmark> {
                 if (result.isEmpty() || result.get() == ButtonType.CANCEL)  {
                     return;
                 }
-                
-                if (bookmark.getClass().getName().equals(Article.class.getName())) {
-                    service.deleteArticle((Article) bookmark);
-                } else {
-                    service.deleteBook((Book) bookmark);
-                }
-                
+                service.deleteBookmark(bookmark);
             } catch (SQLException e) {
                 return;
             }
