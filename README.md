@@ -26,6 +26,7 @@ Projekti on Ohjelmistotuotanto-kurssin miniprojekti.
 + [Listing bookmarks](https://github.com/tapanih/ohtu-miniprojekti/blob/main/app/src/test/resources/ohtu/cucumber/listBooks.feature)
 + [Searching bookmarks](https://github.com/tapanih/ohtu-miniprojekti/blob/main/app/src/test/resources/ohtu/cucumber/searchBooks.feature)
 + [Adding and deleting tags](https://github.com/tapanih/ohtu-miniprojekti/blob/main/app/src/test/resources/ohtu/cucumber/addAndDeleteTags.feature)
++ [Searching by tags](https://github.com/tapanih/ohtu-miniprojekti/blob/main/app/src/test/resources/ohtu/cucumber/searchBooksByTags.feature)
 
 ## Releaset ## 
 
