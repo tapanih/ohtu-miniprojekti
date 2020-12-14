@@ -19,6 +19,8 @@ Projekti on Ohjelmistotuotanto-kurssin miniprojekti.
 
 **[Projektin lisenssi](https://github.com/tapanih/ohtu-miniprojekti/blob/main/LICENSE.md)**
 
+**[Loppuraportti](https://docs.google.com/document/d/1XnwWWoPEWqC8f4DWOaZyL8WRtGY0y8Tj_jGvVeYstWo/edit?usp=sharing)**
+
 **User Storyjen cucumber-featuret:**
 + [Adding book](https://github.com/tapanih/ohtu-miniprojekti/blob/main/app/src/test/resources/ohtu/cucumber/addingBook.feature)
 + [Adding article](https://github.com/tapanih/ohtu-miniprojekti/blob/main/app/src/test/resources/ohtu/cucumber/addingArticle.feature)
