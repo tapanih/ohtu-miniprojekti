@@ -64,3 +64,4 @@ Testien ajaminen /app/ kansiosta:
 
 Sovelluksen käyttö on yksinkertaista. Alkunäkymässä sovellus listaa siihen syötetyt kirjat. Voit lisätä kirjan painamalla lisää kirja, syöttämällä kirjan tiedot lomakkeisiin, ja painamalla Lisää.
 
+

@@ -223,10 +223,10 @@ public class Database {
 
             statement.close();
 
+            return true;
         } catch (Exception e) {
             return false;
         }
-        return true;
     }
 
     public boolean deleteArticle(Article article) throws SQLException {
@@ -241,10 +241,10 @@ public class Database {
 
             statement.close();
 
+            return true;
         } catch (Exception e) {
             return false;
         }
-        return true;
     }
 
     public boolean deleteTag(String keyword, int id, BookmarkType type) throws SQLException {
@@ -259,9 +259,10 @@ public class Database {
             }
             statement.executeUpdate();
             statement.close();
+
+            return true;
         } catch (Exception e) {
             return false;
         }
-        return true;
     }
 }
